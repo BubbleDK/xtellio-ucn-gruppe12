@@ -1,25 +1,28 @@
-<script setup>
-import { onMounted } from 'vue';
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import GetDataExample from './components/GetDataExample.vue';
 
-const finalRes = [];
+export default {
+  name: 'App',
+  components: {
+    GetDataExample
+  },
+  data() {
+    return {
 
-
-async function getData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  finalRes.values = await res.json();
+    }
+  },
+  methods: {
+    
+  },
+  mounted() {
+    
+  },
 }
-
-onMounted(() => {
-  getData();
-})
 
 </script>
 
 <template>
-  <div v-bind:key="item.id" v-for="item in finalRes.values">
-      <p>{{item.id}}</p>
-  </div>
+  <GetDataExample />
 </template>
 
 <style scoped>
