@@ -1,28 +1,43 @@
 <script>
 import GetDataExample from './components/GetDataExample.vue';
+import NavBar from './components/NavBar.vue'
+
+const routes = {
+  '/': GetDataExample,
+}
 
 export default {
   name: 'App',
   components: {
-    GetDataExample
+    GetDataExample,
+    NavBar
   },
   data() {
     return {
-
+      currentPath: window.location.hash
+    }
+  },
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || '/'] || NotFound
     }
   },
   methods: {
     
   },
   mounted() {
-    
+    window.addEventListener('hashchange', () => {
+		  this.currentPath = window.location.hash
+    })
   },
 }
 
 </script>
 
 <template>
+  <NavBar/>
   <GetDataExample />
+  <component :is="currentView" />
 </template>
 
 <style scoped>
