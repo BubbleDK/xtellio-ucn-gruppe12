@@ -1,6 +1,7 @@
 <script>
 import GetDataExample from './components/GetDataExample.vue';
-import NavBar from './components/NavBar.vue'
+import NavBar from './components/NavBar.vue';
+import Chart from './components/Chart.vue';
 
 const routes = {
   '/': GetDataExample,
@@ -10,7 +11,8 @@ export default {
   name: 'App',
   components: {
     GetDataExample,
-    NavBar
+    NavBar,
+    Chart
   },
   data() {
     return {
@@ -36,7 +38,8 @@ export default {
 
 <template>
   <NavBar/>
-  <GetDataExample />
+  <!-- <GetDataExample /> -->
+  <Chart />
   <component :is="currentView" />
 </template>
 
