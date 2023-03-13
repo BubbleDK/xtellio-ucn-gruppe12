@@ -34,6 +34,7 @@ export default {
     <router-link to="/example">Example</router-link>
   </div> -->
   <NavBar />
+  <SparkBox />
   <router-view />
 </template>
 

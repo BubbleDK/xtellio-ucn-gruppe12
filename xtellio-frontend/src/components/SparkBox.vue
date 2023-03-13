@@ -4,7 +4,9 @@ export default {
     name: "SparkBox",
     data() {
         return {
-            series: [44, 55, 13, 33],
+            series: [{
+                data: [44, 55, 13, 33]
+            }],
             chartOptions: {
                 chart: {
                     type: 'area',
@@ -22,7 +24,7 @@ export default {
                 yaxis: {
                     min: 0
                 },
-                colors: ['#FFFFFF'],
+                colors: ['#DCE6EC'],
                 title: {
                     text: '$424,652',
                     offsetX: 0,
@@ -36,6 +38,9 @@ export default {
                     style: {
                         fontSize: '14px',
                     }
+                },
+                tooltip: {
+                    theme: false,
                 }
             },
         }
@@ -45,12 +50,19 @@ export default {
 
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-4">
-                <div id="chart-spark1">
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div id="chart-spark1">
                     <apexchart type="area" height="160" :options="chartOptions" :series="series"></apexchart>
                 </div>
-            </div>
         </div>
     </div>
 </template>
+<style>
+.apexcharts-tooltip{
+    background-color: aqua !important;
+    color: black !important;
+}
+.apexcharts-tooltip-marker{
+    background-color: black !important;
+}
+</style>
