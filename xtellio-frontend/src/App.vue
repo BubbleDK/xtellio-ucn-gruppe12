@@ -2,14 +2,15 @@
 import GetDataExample from './components/GetDataExample.vue';
 import NavBar from './components/NavBar.vue';
 import Chart from './components/Chart.vue';
-
+import DonutChart from './components/DonutChart.vue';
 
 export default {
   name: 'App',
   components: {
     GetDataExample,
     NavBar,
-    Chart
+    Chart,
+    DonutChart
   },
   data() {
     return {
@@ -36,6 +37,7 @@ export default {
 <template>
   <NavBar/>
   <!-- <GetDataExample /> -->
+  <DonutChart />
   <Chart/>
 </template>
 
