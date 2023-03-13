@@ -3,6 +3,7 @@ import GetDataExample from './components/GetDataExample.vue';
 import NavBar from './components/NavBar.vue';
 import Chart from './components/Chart.vue';
 import DonutChart from './components/DonutChart.vue';
+import SparkBox from './components/SparkBox.vue';
 
 export default {
   name: 'App',
@@ -10,7 +11,8 @@ export default {
     GetDataExample,
     NavBar,
     Chart,
-    DonutChart
+    DonutChart,
+    SparkBox
   },
   data() {
     return {
