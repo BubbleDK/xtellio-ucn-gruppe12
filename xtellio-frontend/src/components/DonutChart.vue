@@ -13,6 +13,7 @@ export default {
             dataLabels: {
               enabled: false
             },
+            labels: ['Team A', 'Team B', 'Team C', 'Team D'],
             responsive: [{
               breakpoint: 480,
               options: {
