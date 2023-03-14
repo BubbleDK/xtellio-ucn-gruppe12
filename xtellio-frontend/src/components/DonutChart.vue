@@ -73,7 +73,7 @@ export default {
   <div>
     <div class="chart-wrap">
       <div id="chart">
-        <apexchart type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
+        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
 
@@ -98,7 +98,7 @@ export default {
 </template>
 
 <style>
-  .apexcharts-tooltip span {
-    color: #ffffff;
+  .donut .apexcharts-tooltip span {
+    color: white;
 }
 </style>
