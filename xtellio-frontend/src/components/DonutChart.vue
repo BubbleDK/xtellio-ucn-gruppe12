@@ -7,13 +7,14 @@ export default {
       series: [44, 55, 13, 33],
       chartOptions: {
         chart: {
+          foreColor: '#FFFFFF',
           width: 380,
           type: 'donut',
         },
         dataLabels: {
           enabled: false
         },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D'],
+        labels: ['v. 1.01', 'v. 1.12', 'v. 1.14', 'v. 1.17'],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -29,14 +30,17 @@ export default {
           position: 'right',
           offsetY: 0,
           height: 230,
+        },
+        title: {
+          text: 'Firmware version:',
+          style: {
+            color: '#FFFFFF'
+          }
         }
       },
     }
   },
   methods: {
-    whatever() {
-      console.log("Hello")
-    },
     appendData() {
       console.log("Pressed")
       var arr = this.series.slice()
@@ -73,7 +77,7 @@ export default {
       </div>
     </div>
 
-    <div class="actions" style="display: flex; gap: 25px;">
+    <!-- <div class="actions" style="display: flex; gap: 25px;">
       <button @click="appendData">
         + ADD
       </button>
@@ -89,8 +93,12 @@ export default {
       <button @click="reset">
         RESET
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
-<style></style>
+<style>
+  .apexcharts-tooltip span {
+    color: #ffffff;
+}
+</style>

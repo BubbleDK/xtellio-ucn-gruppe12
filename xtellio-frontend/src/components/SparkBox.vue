@@ -4,8 +4,18 @@ export default {
     name: "SparkBox",
     data() {
         return {
-            series: [{
-                data: [44, 55, 13, 33]
+            seriesUnits: [{
+                name: 'Battery %',
+                data: [{
+                    x: "2018-09-10",
+                    y: 50
+                }, {
+                    x: "2018-09-11",
+                    y: 40
+                }, {
+                    x: "2018-09-12",
+                    y: 33
+                }]
             }],
             chartOptions: {
                 chart: {
@@ -26,22 +36,16 @@ export default {
                 },
                 colors: ['#DCE6EC'],
                 title: {
-                    text: '$424,652',
+                    text: 'Batterystatus',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
-                    }
-                },
-                subtitle: {
-                    text: 'Sales',
-                    offsetX: 0,
-                    style: {
-                        fontSize: '14px',
+                        color: '#FFFFFF'
                     }
                 },
                 tooltip: {
                     theme: false,
-                }
+                },
             },
         }
     }
@@ -52,11 +56,12 @@ export default {
     <div>
         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div id="chart-spark1">
-                    <apexchart type="area" height="160" :options="chartOptions" :series="series"></apexchart>
+                    <apexchart type="area" height="160" :options="chartOptions" :series="seriesUnits"></apexchart>
                 </div>
         </div>
     </div>
 </template>
+
 <style>
 .apexcharts-tooltip{
     background-color: aqua !important;
