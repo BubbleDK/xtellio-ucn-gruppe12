@@ -76,24 +76,6 @@ export default {
         <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
-
-    <!-- <div class="actions" style="display: flex; gap: 25px;">
-      <button @click="appendData">
-        + ADD
-      </button>
-
-      <button @click="removeData">
-        - REMOVE
-      </button>
-
-      <button @click="randomize">
-        RANDOMIZE
-      </button>
-
-      <button @click="reset">
-        RESET
-      </button>
-    </div> -->
   </div>
 </template>
 
