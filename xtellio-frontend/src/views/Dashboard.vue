@@ -35,4 +35,5 @@
     <h1>Dashboard</h1>
     <DonutChart />
     <ColumnChart />
+    <SparkBox />
 </template>
