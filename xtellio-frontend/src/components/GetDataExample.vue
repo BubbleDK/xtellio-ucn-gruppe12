@@ -1,5 +1,4 @@
 <script>
-import dbConn from '../api/DbConnection';
 export default {
   name: 'GetDataExample',
   data() {
