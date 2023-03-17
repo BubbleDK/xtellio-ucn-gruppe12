@@ -1,4 +1,5 @@
 <script>
+import dbConn from '../api/DbConnection';
 export default {
   name: 'GetDataExample',
   data() {
@@ -11,6 +12,10 @@ export default {
       const res = await fetch("https://jsonplaceholder.typicode.com/posts");
       this.finalRes = await res.json();
       console.log(this.finalRes);
+    },
+    getNewData() {
+      const result = getDb;
+      console.log(result)
     }
   },
   mounted() {
