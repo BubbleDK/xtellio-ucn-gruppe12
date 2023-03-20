@@ -65,7 +65,7 @@ export default {
 </template>
 
 <style>
-.apexcharts-tooltip{
+#chart-spark2 .apexcharts-tooltip{
     background-color: aqua !important;
     color: black !important;
 }

@@ -5,6 +5,7 @@
     import GetDataExample from '../components/GetDataExample.vue';
     import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
     import SparkBoxSignal from '../components/SparkBoxSignal.vue';
+    import DonutChartOldFirmware from '../components/DonutChartOldFirmware.vue';
     // import ApiMethods from '../api/ApiMethods';
 
     export default {
@@ -16,6 +17,7 @@
     GetDataExample,
     SparkBoxFirmWare,
     SparkBoxSignal,
+    DonutChartOldFirmware,
   },
   data() {
     return {
@@ -48,6 +50,7 @@
   <div class="flex mt-5">
     <div class="mr-5">
       <DonutChartFirmware />
+      <DonutChartOldFirmware/>
 </div>
 <div class="ml-5">
   <ColumnChartBattery />
