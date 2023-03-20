@@ -1,6 +1,9 @@
 <script>
 import moment from 'moment'
 moment().format("MMM Do YY");
+var units2DaysAgo = 5;
+var units1DayAgo = 5;
+var unitsToday = 5;
 
 export default {
     name: "SparkBoxBattery",
@@ -11,15 +14,15 @@ export default {
                 data: [{
                     x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
                     //TODO: Indsæt reél data fra DB
-                    y: 4
+                    y: units2DaysAgo
                 }, {
                     x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
                     //TODO: Indsæt reél data fra DB
-                    y: 7
+                    y: units1DayAgo
                 }, {
                     x: moment().format("DD/MM/YYYY"),
                     //TODO: Indsæt reél data fra DB
-                    y: 7
+                    y: unitsToday
                 }]
             }],
             chartOptions: {
@@ -41,7 +44,7 @@ export default {
                 },
                 colors: ['#DCE6EC'],
                 title: {
-                    text: 'Amount of units on low battery in percentage:',
+                    text: '%Units on low battery:',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
@@ -49,8 +52,8 @@ export default {
                     }
                 },
                 subtitle:{
-                    //TODO: Indsæt den reélle mængde af enheder istedet for "7%"
-                    text: "Current amount of low battery units: 7%",
+                    //TODO: Indsæt den reélle mængde af enheder
+                    text: "%Units low battery now: " + unitsToday,
                     style: {
                         fontSize: '18px',
                         color: '#FFFFFF'
