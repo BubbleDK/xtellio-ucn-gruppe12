@@ -7,7 +7,7 @@
 
   <div>
     <div v-for="(device, index) in devices" v-bind:item="device" v-bind:index="index" v-bind:key="device._id">
-      <p>{{ device.state }}</p>
+      <p>{{ JSON.stringify(device.status) }}</p>
     </div>
   </div>
 </template>
@@ -23,19 +23,10 @@ export default {
       error: '',
     }
   },
-  methods: {
-    // getDevices() {
-    //   if (this.devices() === undefined) {
-    //     this.devices = DeviceService.getDevices()
-    //     this.getDevices()
-    //   }
-    //   console.log(this.getDevices())
-    // },
-  },
-
   async created() {
     try {
       this.devices = await DeviceService.getDevices();
+      console.log(this.devices)
     } catch(err) {
       this.error = err.message
     }
