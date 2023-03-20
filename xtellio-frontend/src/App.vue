@@ -2,7 +2,7 @@
 import GetDataExample from './components/GetDataExample.vue';
 import NavBar from './components/NavBar.vue';
 import Chart from './components/Chart.vue';
-import DonutChart from './components/DonutChart.vue';
+import DonutChartFirmware from './components/DonutChartFirmware.vue';
 
 
 export default {
@@ -11,7 +11,7 @@ export default {
     GetDataExample,
     NavBar,
     Chart,
-    DonutChart,
+    DonutChartFirmware,
   },
   data() {
     return {

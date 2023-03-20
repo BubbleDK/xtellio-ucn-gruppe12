@@ -1,16 +1,16 @@
 <script>
 
 export default {
+    name: 'ColumnChartBattery',
     data() {
         return {
             series: [{
                 name: 'Units',
-                data: [10, 5, 2, 1]
+                data: [10, 5, 2, 1, 5]
             }],
             chartOptions: {
                 chart: {
                     foreColor: "#FFFFFF",
-                    height: 350,
                     type: 'bar',
                 },
                 plotOptions: {
@@ -34,7 +34,7 @@ export default {
                     title: {
                         text: 'Battery percentage'
                     },
-                    categories: ["51-100%", "21-50%", "6-20%", "< 5%"],
+                    categories: ["51-100%", "21-50%", "6-20%", "< 5%", "399%"],
                     position: 'top',
                     axisBorder: {
                         show: false
@@ -71,12 +71,11 @@ export default {
                     title: {
                         text: 'Amount of units'
                     },
-
                 },
                 title: {
                     text: 'Battery status of Device pool',
                     floating: true,
-                    offsetY: 330,
+                    offsetY: 476,
                     align: 'center',
                     style: {
                         color: '#FFFFFF'
@@ -89,7 +88,18 @@ export default {
 </script>
 
 <template>
-    <div id="chart" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    <div id="chart" class="block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <apexchart id="column" height='500' type="bar" :options="chartOptions" :series="series"></apexchart>
     </div>
 </template>
+<style>
+.apexcharts-tooltip{
+    color: black !important;
+}
+#column {
+    width: 31em;
+} 
+#column .apexcharts-menu{
+    color: black;
+}
+</style>

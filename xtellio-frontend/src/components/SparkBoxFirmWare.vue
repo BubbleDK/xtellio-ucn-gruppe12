@@ -3,23 +3,20 @@ import moment from 'moment'
 moment().format("MMM Do YY");
 
 export default {
-    name: "SparkBox",
+    name: "SparkBoxFirmWare",
     data() {
         return {
             seriesUnits: [{
-                name: 'Units low',
+                name: '>Firmware %',
                 data: [{
                     x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: 4
+                    y: 50
                 }, {
                     x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: 7
+                    y: 40
                 }, {
                     x: moment().format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: 7
+                    y: 33
                 }]
             }],
             chartOptions: {
@@ -39,25 +36,17 @@ export default {
                 yaxis: {
                     min: 0
                 },
-                colors: ['#DCE6EC'],
+                colors: ['red'],
                 title: {
-                    text: 'Amount of units on low battery in percentage:',
+                    text: 'Firmware',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
                         color: '#FFFFFF'
                     }
                 },
-                subtitle:{
-                    //TODO: Indsæt den reélle mængde af enheder istedet for "7%"
-                    text: "Current amount of low battery units: 7%",
-                    style: {
-                        fontSize: '18px',
-                        color: '#FFFFFF'
-                    },
-                },
                 tooltip: {
-                    theme: false,
+                    enabled: true,
                 },
             },
         }
@@ -67,9 +56,8 @@ export default {
 
 <template>
     <div>
-        <!-- TODO: Lav if,else logik til styring af baggrundsfarve afhængigt af mængden af enheder med lav batteri -->
-        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
-            <div id="chart-spark1">
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div id="chart-spark2">
                     <apexchart type="area" height="160" :options="chartOptions" :series="seriesUnits"></apexchart>
                 </div>
         </div>
@@ -77,8 +65,7 @@ export default {
 </template>
 
 <style>
-.apexcharts-tooltip{
-    background-color: aqua !important;
+#chart-spark2 .apexcharts-tooltip{
     color: black !important;
 }
 .apexcharts-tooltip-marker{
