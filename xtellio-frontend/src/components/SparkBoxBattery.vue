@@ -2,8 +2,8 @@
 import moment from 'moment'
 moment().format("MMM Do YY");
 var units2DaysAgo = 5;
-var units1DayAgo = 5;
-var unitsToday = 5;
+var units1DayAgo = 3;
+var unitsToday = 1;
 
 export default {
     name: "SparkBoxBattery",
@@ -60,7 +60,7 @@ export default {
                     },
                 },
                 tooltip: {
-                    theme: false,
+                    enabled: true,
                 },
             },
         }
@@ -81,7 +81,6 @@ export default {
 
 <style>
 #chart-spark1 .apexcharts-tooltip{
-    background-color: aqua !important;
     color: black !important;
 }
 .apexcharts-tooltip-marker{

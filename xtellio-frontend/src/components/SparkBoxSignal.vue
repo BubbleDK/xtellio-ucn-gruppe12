@@ -46,7 +46,7 @@ export default {
                     }
                 },
                 tooltip: {
-                    theme: false,
+                    enabled: true,
                 },
             },
         }
@@ -66,7 +66,6 @@ export default {
 
 <style>
 #chart-spark1 .apexcharts-tooltip{
-    background-color: aqua !important;
     color: black !important;
 }
 .apexcharts-tooltip-marker{
