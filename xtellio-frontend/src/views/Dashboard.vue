@@ -3,6 +3,8 @@
     import DonutChart from '../components/DonutChart.vue';
     import ColumnChart from '../components/ColumnChart.vue';
     import GetDataExample from '../components/GetDataExample.vue';
+    import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
+    import SparkBoxSignal from '../components/SparkBoxSignal.vue';
     // import ApiMethods from '../api/ApiMethods';
 
     export default {
@@ -11,7 +13,9 @@
     SparkBox,
     DonutChart,
     ColumnChart,
-    GetDataExample
+    GetDataExample,
+    SparkBoxFirmWare,
+    SparkBoxSignal,
   },
   data() {
     return {
@@ -34,9 +38,14 @@
 </script>
 
 <template>
-    <h1>Dashboard</h1>
+  <div class="container mx-auto px-4 mt-4">
+    <div class="grid grid-cols-3">
     <!-- <GetDataExample/> -->
-    <DonutChart />
-    <ColumnChart />
     <SparkBox />
+    <SparkBoxFirmWare/>
+    <SparkBoxSignal/>
+  </div>
+  <DonutChart />
+  <ColumnChart />
+  </div>
 </template>
