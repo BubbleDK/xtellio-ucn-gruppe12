@@ -10,9 +10,9 @@
     export default {
   name: 'App',
   components: {
-    SparkBox,
-    DonutChart,
-    ColumnChart,
+    SparkBoxBattery,
+    DonutChartFirmware,
+    ColumnChartBattery,
     GetDataExample,
     SparkBoxFirmWare,
     SparkBoxSignal,
@@ -41,11 +41,11 @@
   <div class="container mx-auto px-4 mt-4">
     <div class="grid grid-cols-3">
     <!-- <GetDataExample/> -->
-    <SparkBox />
+    <SparkBoxBattery />
     <SparkBoxFirmWare/>
     <SparkBoxSignal/>
   </div>
-  <DonutChart />
-  <ColumnChart />
+  <DonutChartFirmware />
+  <ColumnChartBattery />
   </div>
 </template>
