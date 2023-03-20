@@ -1,7 +1,7 @@
 <script>
-    import SparkBox from '../components/SparkBox.vue';
-    import DonutChart from '../components/DonutChart.vue';
-    import ColumnChart from '../components/ColumnChart.vue';
+    import SparkBoxBattery from '../components/SparkBoxBattery.vue';
+    import DonutChartFirmware from '../components/DonutChartFirmware.vue';
+    import ColumnChartBattery from '../components/ColumnChartBattery.vue';
     import GetDataExample from '../components/GetDataExample.vue';
     import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
     import SparkBoxSignal from '../components/SparkBoxSignal.vue';

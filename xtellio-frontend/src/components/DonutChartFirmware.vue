@@ -1,7 +1,7 @@
 <script>
 
 export default {
-  name: 'DonutChart',
+  name: 'DonutChartFirmware',
   data() {
     return {
       series: [44, 55, 13, 33],
