@@ -7,16 +7,19 @@ export default {
     data() {
         return {
             seriesUnits: [{
-                name: 'Battery %',
+                name: 'Units low',
                 data: [{
                     x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
-                    y: 50
+                    //TODO: Indsæt reél data fra DB
+                    y: 4
                 }, {
                     x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
-                    y: 40
+                    //TODO: Indsæt reél data fra DB
+                    y: 7
                 }, {
                     x: moment().format("DD/MM/YYYY"),
-                    y: 33
+                    //TODO: Indsæt reél data fra DB
+                    y: 7
                 }]
             }],
             chartOptions: {
@@ -38,12 +41,20 @@ export default {
                 },
                 colors: ['#DCE6EC'],
                 title: {
-                    text: 'Batterystatus',
+                    text: 'Amount of units on low battery in percentage:',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
                         color: '#FFFFFF'
                     }
+                },
+                subtitle:{
+                    //TODO: Indsæt den reélle mængde af enheder istedet for "7%"
+                    text: "Current amount of low battery units: 7%",
+                    style: {
+                        fontSize: '18px',
+                        color: '#FFFFFF'
+                    },
                 },
                 tooltip: {
                     theme: false,
@@ -56,7 +67,8 @@ export default {
 
 <template>
     <div>
-        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <!-- TODO: Lav if,else logik til styring af baggrundsfarve afhængigt af mængden af enheder med lav batteri -->
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
             <div id="chart-spark1">
                     <apexchart type="area" height="160" :options="chartOptions" :series="seriesUnits"></apexchart>
                 </div>
