@@ -1,7 +1,7 @@
 <script>
-    import SparkBox from '../components/SparkBox.vue';
-    import DonutChart from '../components/DonutChart.vue';
-    import ColumnChart from '../components/ColumnChart.vue';
+    import SparkBoxBattery from '../components/SparkBoxBattery.vue';
+    import DonutChartFirmware from '../components/DonutChartFirmware.vue';
+    import ColumnChartBattery from '../components/ColumnChartBattery.vue';
     import GetDataExample from '../components/GetDataExample.vue';
     import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
     import SparkBoxSignal from '../components/SparkBoxSignal.vue';
@@ -10,9 +10,9 @@
     export default {
   name: 'App',
   components: {
-    SparkBox,
-    DonutChart,
-    ColumnChart,
+    SparkBoxBattery,
+    DonutChartFirmware,
+    ColumnChartBattery,
     GetDataExample,
     SparkBoxFirmWare,
     SparkBoxSignal,
@@ -41,10 +41,11 @@
   <div class="container mx-auto px-4 mt-4">
     <div class="grid grid-flow-col gap-2 pb-4">
     <!-- <GetDataExample/> -->
-    <SparkBox />
+    <SparkBoxBattery />
     <SparkBoxFirmWare/>
     <SparkBoxSignal/>
   </div>
+<<<<<<< HEAD
   <div class="flex mt-5">
     <div class="mr-5">
   <DonutChart />
@@ -53,5 +54,8 @@
   <ColumnChart />
 </div>
 </div>
+=======
+ 
+>>>>>>> 71172861c026bcc6064c9f875da5138cd36476e8
   </div>
 </template>

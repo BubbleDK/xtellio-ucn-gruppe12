@@ -3,7 +3,7 @@ import moment from 'moment'
 moment().format("MMM Do YY");
 
 export default {
-    name: "SparkBox",
+    name: "SparkBoxBattery",
     data() {
         return {
             seriesUnits: [{
