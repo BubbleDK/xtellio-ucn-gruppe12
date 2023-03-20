@@ -45,17 +45,13 @@
     <SparkBoxFirmWare/>
     <SparkBoxSignal/>
   </div>
-<<<<<<< HEAD
   <div class="flex mt-5">
     <div class="mr-5">
-  <DonutChart />
+      <DonutChartFirmware />
 </div>
 <div class="ml-5">
-  <ColumnChart />
+  <ColumnChartBattery />
 </div>
 </div>
-=======
- 
->>>>>>> 71172861c026bcc6064c9f875da5138cd36476e8
   </div>
 </template>
