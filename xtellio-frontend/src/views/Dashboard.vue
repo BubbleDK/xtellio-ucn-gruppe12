@@ -39,13 +39,19 @@
 
 <template>
   <div class="container mx-auto px-4 mt-4">
-    <div class="grid grid-cols-3">
+    <div class="grid grid-flow-col gap-2 pb-4">
     <!-- <GetDataExample/> -->
     <SparkBox />
     <SparkBoxFirmWare/>
     <SparkBoxSignal/>
   </div>
+  <div class="flex mt-5">
+    <div class="mr-5">
   <DonutChart />
+</div>
+<div class="ml-5">
   <ColumnChart />
+</div>
+</div>
   </div>
 </template>
