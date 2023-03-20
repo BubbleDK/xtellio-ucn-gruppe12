@@ -1,5 +1,6 @@
 <script>
 import moment from 'moment'
+moment().format("MMM Do YY");
 
 export default {
     name: "SparkBox",
@@ -8,13 +9,13 @@ export default {
             seriesUnits: [{
                 name: 'Battery %',
                 data: [{
-                    x: moment().date(),
+                    x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
                     y: 50
                 }, {
-                    x: "2018-09-11",
+                    x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
                     y: 40
                 }, {
-                    x: "2018-09-12",
+                    x: moment().format("DD/MM/YYYY"),
                     y: 33
                 }]
             }],
