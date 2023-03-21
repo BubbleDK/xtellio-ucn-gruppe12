@@ -26,7 +26,7 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-    //   console.log(this.devices);
+      console.log(await DeviceService.getDevice("D0:83:D4:00:A9:94"));
     //   this.devices.forEach(device => {
     //       var battery = JSON.stringify(device.status.batt);
     //       console.log(battery);
