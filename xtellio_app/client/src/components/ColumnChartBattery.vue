@@ -1,12 +1,15 @@
 <script>
+import DeviceService from '../DeviceService';
+
 
 export default {
     name: 'ColumnChartBattery',
     data() {
         return {
+            temp:[],
             series: [{
                 name: 'Units',
-                data: [10, 5, 2, 1, 5]
+                data: [1, 2, 3, 4, 5]
             }],
             chartOptions: {
                 chart: {
@@ -34,7 +37,7 @@ export default {
                     title: {
                         text: 'Battery percentage'
                     },
-                    categories: ["51-100%", "21-50%", "6-20%", "< 5%", "399%"],
+                    categories: ["0-1000", "1001-2000", "2001-3000", "3001-4000", ">4000"],
                     position: 'top',
                     axisBorder: {
                         show: false
@@ -59,6 +62,7 @@ export default {
                     }
                 },
                 yaxis: {
+                    min: -1,
                     axisBorder: {
                         show: false
                     },
@@ -82,6 +86,19 @@ export default {
                     }
                 }
             },
+        }
+    },
+    async created() {
+        try {
+            this.temp = await DeviceService.getAllDevices();
+            this.temp.forEach(device => {
+                var battery = Number(device.status.batt);
+                if(battery > 3000 && battery < 4000){
+                    this.series.data[3] ++
+                }
+            });
+        } catch (err) {
+            this.error = err.message
         }
     }
 }
