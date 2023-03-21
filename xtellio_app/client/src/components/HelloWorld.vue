@@ -26,11 +26,6 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-    //   console.log(this.devices);
-    //   this.devices.forEach(device => {
-    //       var battery = JSON.stringify(device.status.batt);
-    //       console.log(battery);
-    // });
     } catch(err) {
       this.error = err.message
     }
