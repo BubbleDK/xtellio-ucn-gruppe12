@@ -67,8 +67,6 @@ export default {
                     this.devices[0].data.push(newDevice);
                 }
                 });
-                console.log(this.devices);
-                console.log(this.seriesUnits)
                 } catch(err) {
                 this.error = err.message
                 }

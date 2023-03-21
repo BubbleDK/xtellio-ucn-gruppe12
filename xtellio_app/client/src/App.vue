@@ -1,8 +1,6 @@
 <template>
   <NavBar />
   <router-view />
-
-  <HelloWorld />
 </template>
 
 <script>
@@ -12,8 +10,7 @@ import HelloWorld from './components/HelloWorld.vue'
 export default {
   name: 'App',
   components: {
-    NavBar,
-    HelloWorld
+    NavBar
   }
 }
 </script>
