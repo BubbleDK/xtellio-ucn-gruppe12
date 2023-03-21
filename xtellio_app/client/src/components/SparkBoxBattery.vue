@@ -1,7 +1,6 @@
 <script>
 import moment from 'moment'
 import DeviceService from '../DeviceService'
-moment().format("MMM Do YY");
 
 
 export default {
@@ -10,7 +9,7 @@ export default {
         return {
             temp:[],
             devices:[{
-                name: 'Units now',
+                name: 'mv',
                 data:[]
             }],
             error: '',
@@ -33,7 +32,7 @@ export default {
                 },
                 colors: ['#DCE6EC'],
                 title: {
-                    text: '%Units on low battery:',
+                    text: 'Battery',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
@@ -42,7 +41,7 @@ export default {
                 },
                 subtitle:{
                     //TODO: Indsæt den reélle mængde af enheder
-                    text: "%Units battery now: ",
+                    text: "Battery per unit",
                     style: {
                         fontSize: '18px',
                         color: '#FFFFFF'
