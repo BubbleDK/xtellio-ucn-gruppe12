@@ -56,7 +56,7 @@ export default {
     },
     async created() {
                 try {
-                this.temp = await DeviceService.getDevices();
+                this.temp = await DeviceService.getAllDevices();
                 this.temp.forEach(device => {
                     var battery = Number(device.status.batt);
                     var name = String(device.name);
