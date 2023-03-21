@@ -1,30 +1,19 @@
 <script>
 import moment from 'moment'
+import DeviceService from '../DeviceService'
 moment().format("MMM Do YY");
-var units2DaysAgo = 5;
-var units1DayAgo = 3;
-var unitsToday = 1;
+
 
 export default {
     name: "SparkBoxBattery",
     data() {
         return {
-            seriesUnits: [{
-                name: 'Units low',
-                data: [{
-                    x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: units2DaysAgo
-                }, {
-                    x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: units1DayAgo
-                }, {
-                    x: moment().format("DD/MM/YYYY"),
-                    //TODO: Indsæt reél data fra DB
-                    y: unitsToday
-                }]
+            temp:[],
+            devices:[{
+                name: 'Units now',
+                data:[]
             }],
+            error: '',
             chartOptions: {
                 chart: {
                     type: 'area',
@@ -40,7 +29,7 @@ export default {
                     opacity: 0.3,
                 },
                 yaxis: {
-                    min: 0
+                    min: -1
                 },
                 colors: ['#DCE6EC'],
                 title: {
@@ -53,7 +42,7 @@ export default {
                 },
                 subtitle:{
                     //TODO: Indsæt den reélle mængde af enheder
-                    text: "%Units low battery now: " + unitsToday,
+                    text: "%Units battery now: ",
                     style: {
                         fontSize: '18px',
                         color: '#FFFFFF'
@@ -64,7 +53,27 @@ export default {
                 },
             },
         }
-    }
+    },
+    async created() {
+                try {
+                this.temp = await DeviceService.getAllDevices();
+                this.temp.forEach(device => {
+                    var battery = Number(device.status.batt);
+                    var name = String(device.name);
+                    if(name !== 'null') {
+                    var newDevice = {
+                        x: name,
+                        y: battery
+                    }
+                    this.devices[0].data.push(newDevice);
+                }
+                });
+                console.log(this.devices);
+                console.log(this.seriesUnits)
+                } catch(err) {
+                this.error = err.message
+                }
+            }
 }
 </script>
 
@@ -73,7 +82,7 @@ export default {
         <!-- TODO: Lav if,else logik til styring af baggrundsfarve afhængigt af mængden af enheder med lav batteri -->
         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
             <div id="chart-spark1">
-                    <apexchart type="area" height="160" :options="chartOptions" :series="seriesUnits"></apexchart>
+                    <apexchart type="area" height="160" :options="chartOptions" :series="devices"></apexchart>
                 </div>
         </div>
     </div>
