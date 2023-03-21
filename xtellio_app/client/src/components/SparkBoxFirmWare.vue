@@ -1,24 +1,16 @@
 <script>
-import moment from 'moment'
-moment().format("MMM Do YY");
+import DeviceService from '../DeviceService';
 
 export default {
     name: "SparkBoxFirmWare",
     data() {
         return {
-            seriesUnits: [{
-                name: '>Firmware %',
-                data: [{
-                    x: moment().subtract(2, 'days').format("DD/MM/YYYY"),
-                    y: 50
-                }, {
-                    x: moment().subtract(1, 'days').format("DD/MM/YYYY"),
-                    y: 40
-                }, {
-                    x: moment().format("DD/MM/YYYY"),
-                    y: 33
-                }]
+            temp: [],
+            devices: [{
+                name: 'Units on firmware',
+                data:[]
             }],
+            error: '',
             chartOptions: {
                 chart: {
                     type: 'area',
@@ -50,6 +42,34 @@ export default {
                 },
             },
         }
+    },
+    async created() {
+        try {
+            this.temp = await DeviceService.getAllDevices();
+            var mapName = new Map();
+            this.temp.forEach(element => {
+                var tempValue = element.status.sw;
+                
+                if(mapName.has(tempValue)){
+                    mapName.set(tempValue, mapName.get(tempValue) + 1)
+                    tempValue
+                }
+                else{
+                    mapName.set(tempValue, 1)
+                }
+            });
+            
+            mapName.forEach((value, key) => {
+                // firmware = String(device.status.sw);
+                    var newDevice = {
+                        x: key,
+                        y: value
+                    }
+                    this.devices[0].data.push(newDevice);
+            });
+        } catch (err) {
+            this.error = err.message
+        }
     }
 }
 </script>
@@ -58,7 +78,7 @@ export default {
     <div>
         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div id="chart-spark2">
-                    <apexchart type="area" height="160" :options="chartOptions" :series="seriesUnits"></apexchart>
+                    <apexchart type="area" height="160" :options="chartOptions" :series="devices"></apexchart>
                 </div>
         </div>
     </div>
