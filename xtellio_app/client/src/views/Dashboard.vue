@@ -78,7 +78,7 @@ export default {
       </div>
     </div>
 
-    <div class="container mx-auto px-4 mt-4">
+    <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       <div class="grid grid-flow-col gap-2 pb-4">
         <!-- <GetDataExample/> -->
         <SparkBoxBattery />

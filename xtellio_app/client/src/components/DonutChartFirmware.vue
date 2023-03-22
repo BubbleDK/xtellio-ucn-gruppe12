@@ -1,10 +1,12 @@
 <script>
-
+import DeviceService from '../DeviceService';
 export default {
   name: 'DonutChartFirmware',
   data() {
     return {
-      series: [44, 55, 13, 33],
+      temp: [],
+      devices: [],
+      // series: [44, 55, 13, 33],
       chartOptions: {
         chart: {
           foreColor: '#FFFFFF',
@@ -14,7 +16,7 @@ export default {
         dataLabels: {
           enabled: false
         },
-        labels: ['v. 1.01', 'v. 1.12', 'v. 1.14', 'v. 1.17'],
+        labels: [],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -40,31 +42,32 @@ export default {
       },
     }
   },
-  methods: {
-    appendData() {
-      console.log("Pressed")
-      var arr = this.series.slice()
-      arr.push(Math.floor(Math.random() * (100 - 1 + 1)) + 1)
-      this.series = arr
-    },
-
-    removeData() {
-      if (this.series.length === 1) return
-      var arr = this.series.slice()
-      arr.pop()
-      this.series = arr
-    },
-
-    randomize() {
-      this.series = this.series.map(function () {
-        return Math.floor(Math.random() * (100 - 1 + 1)) + 1
-      })
-    },
-
-    reset() {
-      this.series = [44, 55, 13, 33]
-    }
-  }
+  async created() {
+        try {
+            this.temp = await DeviceService.getAllDevices();
+            var mapName = new Map();
+            this.temp.forEach(element => {
+                var tempValue = element.status.sw;
+                // console.log(tempValue);
+                if(mapName.has(tempValue)){
+                    mapName.set(tempValue, mapName.get(tempValue) + 1)
+                    tempValue
+                }
+                else{
+                    mapName.set(tempValue, 1)
+                }
+            });
+            
+            mapName.forEach((key, value) => {
+             this.chartOptions.labels.push(value);
+              this.devices.push(key);
+              console.log(this.labels);
+            });
+            console.log(this.labels);
+        } catch (err) {
+            this.error = err.message
+        }
+  },
 }
 
 </script>
@@ -73,7 +76,7 @@ export default {
   <div>
     <div class="chart-wrap">
       <div id="chart">
-        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
+        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="devices"></apexchart>
       </div>
     </div>
   </div>

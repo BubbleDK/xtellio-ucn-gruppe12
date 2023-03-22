@@ -62,7 +62,7 @@ export default {
                     }
                 },
                 yaxis: {
-                    min: -1,
+                    min: 0,
                     axisBorder: {
                         show: false
                     },
