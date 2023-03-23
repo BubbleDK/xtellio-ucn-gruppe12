@@ -7,6 +7,7 @@ import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
 import SparkBoxSignal from '../components/SparkBoxSignal.vue';
 import DonutChartOldFirmware from '../components/DonutChartOldFirmware.vue';
 import DeviceService from '../DeviceService';
+import TestColumnChart from '../components/TestColumnChart.vue';
 
 export default {
   name: 'App',
@@ -18,6 +19,7 @@ export default {
     SparkBoxFirmWare,
     SparkBoxSignal,
     DonutChartOldFirmware,
+    TestColumnChart,
   },
   data() {
     return {
@@ -91,7 +93,7 @@ export default {
           <DonutChartOldFirmware />
         </div>
         <div class="ml-5">
-          <ColumnChartBattery />
+          <TestColumnChart />
         </div>
       </div>
     </div>

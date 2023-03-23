@@ -9,7 +9,7 @@ export default {
             temp:[],
             series: [{
                 name: 'Units',
-                data: [1, 2, 3, 4, 5]
+                data: [0, 2, 3, 4, 5]
             }],
             chartOptions: {
                 chart: {
