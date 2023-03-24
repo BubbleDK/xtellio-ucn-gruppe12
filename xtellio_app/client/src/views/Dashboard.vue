@@ -46,9 +46,7 @@ export default {
           Xtellio Statistics
         </h2>
         <p class="mt-4 text-gray-500 dark:text-gray-400 sm:text-xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolores
-          laborum labore provident impedit esse recusandae facere libero harum
-          sequi.
+          Verdens flotteste dashboard
         </p>
       </div>
       <div class="mt-8 sm:mt-12">

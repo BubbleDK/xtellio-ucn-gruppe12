@@ -48,7 +48,6 @@ export default {
             var mapName = new Map();
             this.temp.forEach(element => {
                 var tempValue = element.status.sw;
-                // console.log(tempValue);
                 if(mapName.has(tempValue)){
                     mapName.set(tempValue, mapName.get(tempValue) + 1)
                     tempValue
@@ -61,9 +60,7 @@ export default {
             mapName.forEach((key, value) => {
              this.chartOptions.labels.push(value);
               this.devices.push(key);
-              console.log(this.labels);
             });
-            console.log(this.labels);
         } catch (err) {
             this.error = err.message
         }

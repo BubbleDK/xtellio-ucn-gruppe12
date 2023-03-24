@@ -23,18 +23,17 @@ router.get('/', async (req, res) => {
   } else {
     const devices = await loadDeviceCollection();
     const response = await devices.find({}).toArray()
-    resDevices = response[0].results;
+    resDevices = response;
     startCountdown();
-    res.send(response[0].results);
+    res.send(response);
   };
 })
 
 // Get Devices
 router.get('/:id', async (req, res) => {
   const devices = await loadDeviceCollection();
-  const response = await devices.find({ "results.mac": req.params.id });
-
-  res.send(response);
+  const response = await devices.find({ mac : req.params.id }).toArray();
+  res.send(response[0]);
 })
 
 async function loadDeviceCollection() {
