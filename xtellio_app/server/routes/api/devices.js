@@ -8,7 +8,6 @@ let resDevices = [];
 let hasRecentlyUpdated = false;
 
 const startCountdown = () => {
-  console.log("I got triggered")
   hasRecentlyUpdated = true;
   setTimeout(() => {
     hasRecentlyUpdated = false;
