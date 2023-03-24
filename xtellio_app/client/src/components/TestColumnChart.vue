@@ -59,7 +59,6 @@ export default {
             this.temp = await DeviceService.getAllDevices();
             this.temp.forEach(device => {
                 var battery = Number(device.status.batt);
-                console.log(battery)
                 if(battery <= 1000){
                     this.series[0].data[0]++;
                 }
