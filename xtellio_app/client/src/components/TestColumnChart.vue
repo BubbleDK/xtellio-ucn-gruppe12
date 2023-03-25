@@ -38,12 +38,13 @@ export default {
                     title: {
                         text: 'Battery in mV'
                     },
-                    categories: ['0-1000', '1001-2000', '2001-3000', '3001-4000', '>4000'],
+                    categories: ['2000-2500', '2501-3000', '3001-3500', '3501-4000', '>4000'],
                 },
                 yaxis: {
                     title: {
                         text: 'Units'
-                    }
+                    },
+                    forceNiceScale: true,
                 },
                 fill: {
                     opacity: 1
@@ -59,16 +60,16 @@ export default {
             this.temp = await DeviceService.getAllDevices();
             this.temp.forEach(device => {
                 var battery = Number(device.status.batt);
-                if(battery <= 1000){
+                if(battery <= 2500 && battery >= 2000){
                     this.series[0].data[0]++;
                 }
-                else if(battery > 1000 && battery <= 2000){
+                else if(battery > 2500 && battery <= 3000){
                     this.series[0].data[1]++;
                 }
-                else if(battery > 2000 && battery <= 3000){
+                else if(battery > 3000 && battery <= 3500){
                     this.series[0].data[2]++;
                 }
-                else if(battery > 3000 && battery <= 4000){
+                else if(battery > 3500 && battery <= 4000){
                     this.series[0].data[3]++;
                 }
                 else if(battery > 4000){
