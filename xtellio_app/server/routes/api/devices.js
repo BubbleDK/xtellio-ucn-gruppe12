@@ -15,6 +15,9 @@ const startCountdown = () => {
   }, 3600000) // 1 hour
 }
 
+// router.post('/devices', async(req, res){
+//   req.body.
+// })
 
 router.get('/', async (req, res) => {
   if (hasRecentlyUpdated) { 
