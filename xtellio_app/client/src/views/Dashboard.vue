@@ -7,7 +7,7 @@ import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
 import StateBarChart from '../components/StateBarChart.vue';
 import SimProviderBarChart from '../components/SimProviderBarChart.vue';
 import LastStatusOld from '../components/LastStatusOld.vue';
-import DonutChartOldFirmware from '../components/DonutChartOldFirmware.vue';
+import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
 import TestColumnChart from '../components/TestColumnChart.vue';
 
@@ -21,7 +21,7 @@ export default {
     SparkBoxFirmWare,
     StateBarChart,
     SimProviderBarChart,
-    DonutChartOldFirmware,
+    DonutChartProvider,
     TestColumnChart,
     LastStatusOld
   },
@@ -96,7 +96,7 @@ export default {
       <div class="flex mt-5">
         <div class="mr-5">
           <DonutChartFirmware />
-          <DonutChartOldFirmware />
+          <DonutChartProvider />
         </div>
         <div class="ml-5">
           <TestColumnChart />
