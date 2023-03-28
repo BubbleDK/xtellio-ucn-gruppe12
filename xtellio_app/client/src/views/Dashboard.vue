@@ -5,6 +5,8 @@ import ColumnChartBattery from '../components/ColumnChartBattery.vue';
 import GetDataExample from '../components/GetDataExample.vue';
 import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
 import StateBarChart from '../components/StateBarChart.vue';
+import SimProviderBarChart from '../components/SimProviderBarChart.vue';
+import LastStatusOld from '../components/LastStatusOld.vue';
 import DonutChartOldFirmware from '../components/DonutChartOldFirmware.vue';
 import DeviceService from '../DeviceService';
 import TestColumnChart from '../components/TestColumnChart.vue';
@@ -18,8 +20,10 @@ export default {
     GetDataExample,
     SparkBoxFirmWare,
     StateBarChart,
+    SimProviderBarChart,
     DonutChartOldFirmware,
     TestColumnChart,
+    LastStatusOld
   },
   data() {
     return {
@@ -86,8 +90,8 @@ export default {
       </div>
       <div class="grid grid-flow-col gap-2 pb-4">
         <SparkBoxBattery />
-        <SparkBoxFirmWare />
-        <StateBarChart />
+        <LastStatusOld />
+        <SimProviderBarChart />
       </div>
       <div class="flex mt-5">
         <div class="mr-5">

@@ -5,7 +5,7 @@ import DeviceService from '../DeviceService';
 moment().format("MMM Do YY");
 
 export default {
-    name: "StateBarChart",
+    name: "SimProviderBarChart",
     data() {
         return {
             series: [{
@@ -38,12 +38,12 @@ export default {
                 },
                 xaxis: {
                     title: {
-                        text: 'State'
+                        text: 'Vendor'
                     },
-                    categories: ['Active', 'Inactive', 'Deactivated'],
+                    categories: ['Telia', 'Vodafone', 'Unknown'],
                 },
                 title: {
-                    text: 'State',
+                    text: 'SIM Provider',
                     offsetX: 0,
                     style: {
                         fontSize: '24px',
@@ -69,14 +69,14 @@ export default {
         try {
             this.temp = await DeviceService.getAllDevices();
             this.temp.forEach(device => {
-                var state = device.state;
-                if (state === "Active") {
+                var simProvider = device.sim.provider;
+                if (simProvider === "Telia") {
                     this.series[0].data[0]++;
                 }
-                else if (state === "Inactive") {
+                else if (simProvider === "Vodafone") {
                     this.series[0].data[1]++;
                 }
-                else if (state === "Deactivated") {
+                else if (simProvider === "Unkown") {
                     this.series[0].data[2]++;
                 }
             });
