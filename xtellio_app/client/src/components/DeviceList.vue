@@ -9,7 +9,7 @@ export default {
   },
   async created() {
         try {
-            this.temp = await DeviceService.getAllDevices();
+            this.devices = await DeviceService.getAllDevices();
         } catch (err) {
             this.error = err.message
         }
@@ -86,125 +86,70 @@ export default {
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="py-3 pl-4">
-                                    <div class="flex items-center h-5">
-                                        <input
-                                            id="checkbox-all"
-                                            type="checkbox"
-                                            class="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
-                                        />
-                                        <label for="checkbox" class="sr-only">
-                                            Checkbox
-                                        </label>
-                                    </div>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                                >
+                                    Type
                                 </th>
                                 <th
                                     scope="col"
                                     class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
                                 >
-                                    ID
+                                    Org
                                 </th>
                                 <th
                                     scope="col"
                                     class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
                                 >
-                                    Name
+                                    Customer
                                 </th>
                                 <th
                                     scope="col"
                                     class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
                                 >
-                                    Email
+                                    State
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                                >
+                                    Mac
                                 </th>
                                 <th
                                     scope="col"
                                     class="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase"
                                 >
-                                    Edit
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase"
-                                >
-                                    Delete
+                                    
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr>
-                                <td class="py-3 pl-4">
-                                    <div class="flex items-center h-5">
-                                        <input
-                                            type="checkbox"
-                                            class="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
-                                        />
-                                        <label for="checkbox" class="sr-only">
-                                            Checkbox
-                                        </label>
-                                    </div>
+                            <tr v-for="device in devices">
+                                <td
+                                    class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap"
+                                >
+                                    {{ device.type }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
                                 >
-                                    1
+                                    {{ device.org }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
                                 >
-                                    Jone Doe
+                                    {{ device.customer }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
                                 >
-                                    jonne62@gmail.com
+                                    {{ device.state }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap"
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
                                 >
-                                    <a
-                                        class="text-green-500 hover:text-green-700"
-                                        href="#"
-                                    >
-                                        Edit
-                                    </a>
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap"
-                                >
-                                    <a
-                                        class="text-red-500 hover:text-red-700"
-                                        href="#"
-                                    >
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 pl-4">
-                                    <div class="flex items-center h-5">
-                                        <input
-                                            type="checkbox"
-                                            class="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
-                                        />
-                                        <label for="checkbox" class="sr-only">
-                                            Checkbox
-                                        </label>
-                                    </div>
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"
-                                >
-                                    1
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
-                                >
-                                    Jone Doe
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
-                                >
-                                    jonne62@gmail.com
+                                    {{ device.mac }}
                                 </td>
                                 <td
                                     class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap"
@@ -213,17 +158,7 @@ export default {
                                         class="text-green-500 hover:text-green-700"
                                         href="#"
                                     >
-                                        Edit
-                                    </a>
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap"
-                                >
-                                    <a
-                                        class="text-red-500 hover:text-red-700"
-                                        href="#"
-                                    >
-                                        Delete
+                                        View
                                     </a>
                                 </td>
                             </tr>
