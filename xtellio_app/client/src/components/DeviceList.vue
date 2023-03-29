@@ -16,6 +16,7 @@ export default {
             this.error = err.message
         }
     },
+<<<<<<< Updated upstream
     computed: {
         filteredList: function(){
             return this.devices.filter((device) => {return device.type.toLowerCase().match(this.input.toLowerCase()) || 
@@ -28,6 +29,13 @@ export default {
             });
         },
     }
+=======
+    methods:{
+  goTodetail(mac) {
+    this.$router.push({name:'DeviceView', params: {Mac: mac}})
+  }
+}
+>>>>>>> Stashed changes
 }
 
 </script>
@@ -193,6 +201,7 @@ export default {
                                     <a
                                         class="text-green-500 hover:text-green-700"
                                         href="#"
+                                        @click="goTodetail(device.mac)"
                                     >
                                         View
                                     </a>
