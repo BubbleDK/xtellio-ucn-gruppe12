@@ -28,12 +28,29 @@ export default {
   data() {
     return {
       devices: [],
+      customers:[],
     }
   },
   async created() {
     console.log("Created")
     try {
       this.devices = await DeviceService.getAllDevices();
+      var mapName = new Map();
+            this.devices.forEach(element => {
+                var tempValue = element.customer;
+                if(mapName.has(!tempValue)){
+                    mapName.set(tempValue, mapName.get(tempValue) + 1)
+                }
+                else if(mapName.has(tempValue)){
+                    mapName.set(tempValue, 1)
+                }
+                else{
+                  mapName.set(tempValue, + 1)
+                }
+            });
+            mapName.forEach((key) => {
+              this.customers.push(key);
+            })
     } catch (err) {
       this.error = err.message
     }
@@ -76,7 +93,7 @@ export default {
               Total Customers
             </dt>
 
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">1</dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">{{ customers[0] }}</dd>
           </div>
         </dl>
       </div>
