@@ -4,16 +4,24 @@ export default {
   name: 'DeviceView',
   data() {
     return {
-      device: []
+      device: [],
+      macVal: this.$route.params.Mac,
     }
   },
   async created() {
         try {
-            this.device = await DeviceService.getDevice(this.$route.params.Mac);
-            console.log(this.device);
+            this.device = await DeviceService.getDevice(this.macVal);
+            console.log(this.device.status.batt);
         } catch (err) {
             this.error = err.message
         }
+    },
+    methods: {
+    currentDate(temp) {
+     const current = new Date(temp);
+    const date = current.toLocaleString();
+      return date;
+    }
     }
 }
 </script>
@@ -40,15 +48,15 @@ export default {
       </div>
       <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-white-500">Battery</dt>
-        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">{{ device.status.batt }}</dd>
+        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">{{ this.device?.status?.batt }}</dd>
       </div>
       <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-white-500">Firmware</dt>
-        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">{{ device.status.sw }}</dd>
+        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">{{ this.device?.status?.sw }}</dd>
       </div>
       <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-sm font-medium text-white-500">About</dt>
-        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</dd>
+        <dt class="text-sm font-medium text-white-500">Last Timestamp</dt>
+        <dd class="mt-1 text-sm text-white-900 sm:col-span-2 sm:mt-0">{{ currentDate(this.device?.status?.ts) }}</dd>
       </div>
     </dl>
         </div>

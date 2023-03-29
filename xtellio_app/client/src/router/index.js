@@ -21,7 +21,7 @@ const routes = [
     component: DeviceListView,
   },
   {
-    path: "/deviceview:Mac",
+    path: "/deviceview/:Mac",
     name: "DeviceView",
     component: DeviceView,
   },
