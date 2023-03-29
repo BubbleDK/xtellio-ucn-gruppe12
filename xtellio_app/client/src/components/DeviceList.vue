@@ -16,7 +16,6 @@ export default {
             this.error = err.message
         }
     },
-<<<<<<< Updated upstream
     computed: {
         filteredList: function(){
             return this.devices.filter((device) => {return device.type.toLowerCase().match(this.input.toLowerCase()) || 
@@ -28,14 +27,12 @@ export default {
                 device.status.sw.toLowerCase().match(this.input.toLowerCase())
             });
         },
-    }
-=======
+    },
     methods:{
   goTodetail(mac) {
     this.$router.push({name:'DeviceView', params: {Mac: mac}})
   }
 }
->>>>>>> Stashed changes
 }
 
 </script>
