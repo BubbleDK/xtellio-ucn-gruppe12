@@ -1,18 +1,32 @@
 <script>
 import DeviceService from '../DeviceService';
+
 export default {
-  name: 'DeviceList',
-  data() {
-    return {
-      devices: []
-    }
-  },
-  async created() {
+    name: 'DeviceList',
+    data() {
+        return {
+            devices: [],
+            input: ""
+        }
+    },
+    async created() {
         try {
             this.devices = await DeviceService.getAllDevices();
         } catch (err) {
             this.error = err.message
         }
+    },
+    computed: {
+        filteredList: function(){
+            return this.devices.filter((device) => {return device.type.toLowerCase().match(this.input.toLowerCase()) || 
+                device.org.toLowerCase().match(this.input.toLowerCase()) ||
+                device.customer.toLowerCase().match(this.input.toLowerCase()) ||
+                device.state.toLowerCase().match(this.input.toLowerCase()) ||
+                device.mac.toLowerCase().match(this.input.toLowerCase()) ||
+                device.status.batt.toString().toLowerCase().match(this.input.toLowerCase()) ||
+                device.status.sw.toLowerCase().match(this.input.toLowerCase())
+            });
+        },
     }
 }
 
@@ -26,6 +40,7 @@ export default {
                     <label for="search" class="sr-only"> Search </label>
                     <input
                         type="text"
+                        v-model="input"
                         name="search"
                         class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                         placeholder="Search..."
@@ -118,14 +133,25 @@ export default {
                                 </th>
                                 <th
                                     scope="col"
-                                    class="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase"
+                                    class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
                                 >
-                                    
+                                    Battery
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                                >
+                                    Firmware
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase"
+                                > 
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr v-for="device in devices">
+                            <tr v-for="device in filteredList">
                                 <td
                                     class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap"
                                 >
@@ -150,6 +176,16 @@ export default {
                                     class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
                                 >
                                     {{ device.mac }}
+                                </td>
+                                <td
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
+                                >
+                                    {{ device.status.batt }}
+                                </td>
+                                <td
+                                    class="px-6 py-4 text-sm text-white-800 whitespace-nowrap"
+                                >
+                                    {{ device.status.sw }}
                                 </td>
                                 <td
                                     class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap"
