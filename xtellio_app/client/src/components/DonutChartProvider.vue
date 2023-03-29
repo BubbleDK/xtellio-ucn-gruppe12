@@ -14,9 +14,6 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          formatter: function (val) {
-          return val + "%"
-        },
         },
         labels: [],
         responsive: [{
@@ -58,7 +55,6 @@ export default {
                     mapName.set(tempValue, 1)
                 }
             });
-            console.log(mapName);
             mapName.forEach((key, value) => {
              this.chartOptions.labels.push(value);
               this.devices.push(key);

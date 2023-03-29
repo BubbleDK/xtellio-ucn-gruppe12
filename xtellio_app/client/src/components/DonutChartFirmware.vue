@@ -14,7 +14,7 @@ export default {
           type: 'donut',
         },
         dataLabels: {
-          enabled: false
+          enabled: true, 
         },
         labels: [],
         responsive: [{
