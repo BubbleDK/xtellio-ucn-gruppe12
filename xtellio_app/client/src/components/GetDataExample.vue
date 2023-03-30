@@ -26,10 +26,8 @@ export default {
 
 <template>
   <div v-bind:key="item.id" v-for="item in finalRes">
-    <p>{{item.title}}</p>
+    <p>{{ item.title }}</p>
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

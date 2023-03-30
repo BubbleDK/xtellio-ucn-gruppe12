@@ -42,26 +42,26 @@ export default {
     }
   },
   async created() {
-        try {
-            this.temp = await DeviceService.getAllDevices();
-            var mapName = new Map();
-            this.temp.forEach(element => {
-                var tempValue = element.sim.provider;
-                if(mapName.has(tempValue)){
-                    mapName.set(tempValue, mapName.get(tempValue) + 1)
-                    tempValue
-                }
-                else{
-                    mapName.set(tempValue, 1)
-                }
-            });
-            mapName.forEach((key, value) => {
-             this.chartOptions.labels.push(value);
-              this.devices.push(key);
-            });
-        } catch (err) {
-            this.error = err.message
+    try {
+      this.temp = await DeviceService.getAllDevices();
+      var mapName = new Map();
+      this.temp.forEach(element => {
+        var tempValue = element.sim.provider;
+        if (mapName.has(tempValue)) {
+          mapName.set(tempValue, mapName.get(tempValue) + 1)
+          tempValue
         }
+        else {
+          mapName.set(tempValue, 1)
+        }
+      });
+      mapName.forEach((key, value) => {
+        this.chartOptions.labels.push(value);
+        this.devices.push(key);
+      });
+    } catch (err) {
+      this.error = err.message
+    }
   },
 }
 
@@ -78,7 +78,7 @@ export default {
 </template>
 
 <style>
-  .donut .apexcharts-tooltip span {
-    color: white;
+.donut .apexcharts-tooltip span {
+  color: white;
 }
 </style>

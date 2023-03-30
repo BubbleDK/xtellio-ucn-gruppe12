@@ -27,7 +27,7 @@ export default {
     try {
       this.devices = await DeviceService.getAllDevices();
       console.log(await DeviceService.getDevice("D0:83:D4:00:A9:94"));
-    } catch(err) {
+    } catch (err) {
       this.error = err.message
     }
   }
@@ -35,6 +35,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
