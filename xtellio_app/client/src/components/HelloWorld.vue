@@ -26,7 +26,6 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      console.log(await DeviceService.getDevice("D0:83:D4:00:A9:94"));
     } catch (err) {
       this.error = err.message
     }

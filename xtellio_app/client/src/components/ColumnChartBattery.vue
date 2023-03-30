@@ -91,7 +91,7 @@ export default {
     try {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
-        var battery = Number(device.status.batt);
+        const battery = Number(device.status.batt);
         if (battery > 3000 && battery < 4000) {
           this.series.data[3]++
         }

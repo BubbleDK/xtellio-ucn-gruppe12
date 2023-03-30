@@ -45,9 +45,9 @@ export default {
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();
-      var mapName = new Map();
+      const mapName = new Map();
       this.temp.forEach(element => {
-        var tempValue = element.status.sw;
+        const tempValue = element.status.sw;
         if (mapName.has(tempValue)) {
           mapName.set(tempValue, mapName.get(tempValue) + 1)
           tempValue

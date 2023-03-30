@@ -10,11 +10,9 @@ export default {
     async getData() {
       const res = await fetch("https://jsonplaceholder.typicode.com/posts");
       this.finalRes = await res.json();
-      console.log(this.finalRes);
     },
     getNewData() {
       const result = getDb;
-      console.log(result)
     }
   },
   mounted() {

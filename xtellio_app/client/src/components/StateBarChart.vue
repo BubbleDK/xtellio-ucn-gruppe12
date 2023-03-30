@@ -69,7 +69,7 @@ export default {
     try {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
-        var state = device.state;
+        const state = device.state;
         if (state === "Active") {
           this.series[0].data[0]++;
         }

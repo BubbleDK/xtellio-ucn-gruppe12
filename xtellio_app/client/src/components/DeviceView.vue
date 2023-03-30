@@ -11,7 +11,6 @@ export default {
   async created() {
     try {
       this.device = await DeviceService.getDevice(this.macVal);
-      console.log(this.device.status.batt);
     } catch (err) {
       this.error = err.message
     }

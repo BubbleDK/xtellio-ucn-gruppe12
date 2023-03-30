@@ -69,7 +69,7 @@ export default {
     try {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
-        var simProvider = device.sim.provider;
+        const simProvider = device.sim.provider;
         if (simProvider === "Telia") {
           this.series[0].data[0]++;
         }

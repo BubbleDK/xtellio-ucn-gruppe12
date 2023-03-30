@@ -15,9 +15,9 @@ export default {
     try {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
-        var lastStatus = device.status.ts;
-        var lastStatusToMoment = moment.utc(lastStatus).format("DD/MM/YYYY HH:mm:SS")
-        var hoursAgo24 = moment().subtract(24, 'hours').format("DD/MM/YYYY HH:mm:SS");
+        const lastStatus = device.status.ts;
+        const lastStatusToMoment = moment.utc(lastStatus).format("DD/MM/YYYY HH:mm:SS")
+        const hoursAgo24 = moment().subtract(24, 'hours').format("DD/MM/YYYY HH:mm:SS");
         if (lastStatusToMoment < hoursAgo24) {
           this.devices[0].data[0]++;
         }
