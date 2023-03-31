@@ -86,5 +86,6 @@ const navigation = [
   { name: 'Dashboard', href: '/', current: true },
   { name: 'Example', href: '/example', current: false },
   { name: 'Devices', href: '/devicelistview', current: false },
+  { name: 'Customers', href: '/orgview', current: false },
 ]
 </script>
