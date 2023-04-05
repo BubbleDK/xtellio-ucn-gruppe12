@@ -55,6 +55,7 @@ export default {
             text: 'Units'
           },
           forceNiceScale: true,
+          tickAmount: 3,
         },
         fill: {
           opacity: 1
@@ -76,7 +77,7 @@ export default {
         else if (simProvider === "Vodafone") {
           this.series[0].data[1]++;
         }
-        else if (simProvider === "Unkown") {
+        else if (simProvider === "Unknown") {
           this.series[0].data[2]++;
         }
       });

@@ -40,7 +40,7 @@ export default {
           title: {
             text: 'State'
           },
-          categories: ['Active', 'Inactive', 'Deactivated'],
+          categories: ['Active', 'Inactive', 'Factory'],
         },
         title: {
           text: 'State',
@@ -55,6 +55,7 @@ export default {
             text: 'Units'
           },
           forceNiceScale: true,
+          tickAmount: 3,
         },
         fill: {
           opacity: 1
@@ -76,7 +77,7 @@ export default {
         else if (state === "Inactive") {
           this.series[0].data[1]++;
         }
-        else if (state === "Deactivated") {
+        else if (state === "Factory") {
           this.series[0].data[2]++;
         }
       });

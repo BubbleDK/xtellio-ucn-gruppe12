@@ -58,8 +58,11 @@ export default {
       });
 
       mapName.forEach((key, value) => {
-        this.chartOptions.labels.push(value);
-        this.devices.push(key);
+        let reg = new RegExp(/^[-+]?[0-9]+\.[0-9]+\.[0-9]+$/);
+        if(reg.test(value)){
+          this.chartOptions.labels.push(value);
+          this.devices.push(key);
+        };
       });
     } catch (err) {
       this.error = err.message
