@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Example from "../views/Example.vue";
 import DeviceListView from "../views/DeviceListView.vue";
+import OrgView from "../views/OrgView.vue";
 import DeviceView from "../components/DeviceView.vue";
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     name: "DeviceView",
     component: DeviceView,
   },
+  {
+    path: "/orgview",
+    name: "OrgView",
+    component: OrgView,
+  }
 ];
 
 const router = createRouter({

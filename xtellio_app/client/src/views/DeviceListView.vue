@@ -12,6 +12,6 @@ export default {
 
 <template>
 <div>
-    <DeviceList/>
+    <DeviceList />
 </div>
 </template>
