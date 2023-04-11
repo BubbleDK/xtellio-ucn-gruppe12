@@ -1,11 +1,16 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const axios = require('axios');
 
 const router = express.Router();
 
 // Get Devices
 let resDevices = [];
 let hasRecentlyUpdated = false;
+
+const url = 'https://admin.xtellio.com/web/devices/?order=-updated_at&size=1000';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMDQwNzQ5OEB1Y24uZGsiLCJ0aWQiOiJMYWdlciBYdGVsOmFhYmRiMzI4NmQ4NDQ3ZWFhZWFlOTQ0YTdlMTNkZGZmIiwiYXVkIjoic2VydmVyOnRva2VuIn0.n1wKPHnk6Aue8ZJEHnlOTHCHBQ2BwpL0OeQqDjtwDxc';
+let page = 1;
 
 const startCountdown = () => {
   hasRecentlyUpdated = true;
@@ -15,35 +20,41 @@ const startCountdown = () => {
   }, 3600000) // 1 hour
 }
 
-// router.post('/devices', async(req, res){
-//   req.body.
-// })
-
 router.get('/', async (req, res) => {
   if (hasRecentlyUpdated) { 
     res.send(resDevices) 
   } else {
-    const devices = await loadDeviceCollection();
-    const response = await devices.find({}).toArray()
-    resDevices = response;
+    while (true) {
+      try {
+        const response = await axios.get(`${url}&page=${page}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const json_data = response.data.results;
+  
+        if (json_data.length === 0) {
+          break;
+        }
+  
+        resDevices = resDevices.concat(json_data);
+        page += 1;
+      } catch (error) {
+        console.error(error);
+        break;
+      }
+    }
     startCountdown();
-    res.send(response);
+    res.send(resDevices);
   };
 })
 
 // Get Devices
 router.get('/:id', async (req, res) => {
-  const devices = await loadDeviceCollection();
-  const response = await devices.find({ mac : req.params.id }).toArray();
-  res.send(response[0]);
+  for (let i = 0; i < resDevices.length; i++) {
+    if (resDevices[i].mac === req.params.id) {
+      res.send(resDevices[i]);
+    }
+  }
+  return null; // return null if the object is not found
 })
-
-async function loadDeviceCollection() {
-  const client = await mongodb.MongoClient.connect('mongodb+srv://gruppe12:test1234@cluster0.o9hgjso.mongodb.net/?retryWrites=true&w=majority', {
-    useNewUrlParser: true
-  });
-
-  return client.db('Xtellio_Api').collection('devices')
-}
 
 module.exports = router;

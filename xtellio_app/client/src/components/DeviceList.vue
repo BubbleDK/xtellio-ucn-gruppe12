@@ -12,6 +12,7 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
+      DeviceService.Test();
       
       const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
     
