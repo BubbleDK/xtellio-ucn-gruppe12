@@ -10,6 +10,7 @@ import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
 import BatteryColumnChart from '../components/BatteryColumnChart.vue';
 import LastLogOld from '../components/LastLogOld.vue';
+import LastLogUndefined from '../components/LastLogUndefined.vue';
 // import GpsColumn from '../components/GpsColumn.vue';
 
 export default {
@@ -25,6 +26,7 @@ export default {
     BatteryColumnChart,
     LastStatusOld,
     LastLogOld,
+    LastLogUndefined,
     // GpsColumn
   },
   data() {
@@ -106,10 +108,20 @@ export default {
         <SparkBoxFirmWare />
         <StateBarChart />
       </div>
-      <div class="grid grid-flow-col gap-2 pb-4">
-        <LastLogOld />
-        <LastStatusOld />
-        <SimProviderBarChart />
+    <div class="mt-8 sm:mt-4">
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+            <LastLogOld/>
+          </div>
+
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+            <LastLogUndefined/>
+          </div>
+
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+            <LastStatusOld/>
+          </div>
+        </dl>
       </div>
       <div class="flex mt-5">
         <div class="mr-5">
