@@ -8,12 +8,8 @@ import SimProviderBarChart from '../components/SimProviderBarChart.vue';
 import LastStatusOld from '../components/LastStatusOld.vue';
 import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
-<<<<<<< Updated upstream
 import BatteryColumnChart from '../components/BatteryColumnChart.vue';
-=======
-import TestColumnChart from '../components/TestColumnChart.vue';
 import LastLogOld from '../components/LastLogOld.vue';
->>>>>>> Stashed changes
 // import GpsColumn from '../components/GpsColumn.vue';
 
 export default {
