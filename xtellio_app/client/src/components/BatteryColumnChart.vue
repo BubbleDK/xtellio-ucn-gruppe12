@@ -2,14 +2,18 @@
 import DeviceService from '../DeviceService';
 
 export default {
-  name: 'TestColumnChart',
+  name: 'BatteryColumnChart',
   data() {
     return {
       series: [{
         name: 'Units',
-        data: [0, 0, 0, 0, 0]
+        data: [0, 0, 0, 0, 0, 0],
+        battAverage: 0
       }],
       chartOptions: {
+        title: {
+          text: 'Current average excluding 0 values: '
+        },
         chart: {
           foreColor: "#FFFFFF",
           type: 'bar',
@@ -36,9 +40,9 @@ export default {
         },
         xaxis: {
           title: {
-            text: 'Battery in mV'
+            text: 'Battery distribution'
           },
-          categories: ['2000-2500', '2501-3000', '3001-3500', '3501-4000', '>4000'],
+          categories: ['0 mV', '2000-2500 mV', '2501-3000 mV', '3001-3500 mV', '3501-4000 mV', '>4000 mV'],
         },
         yaxis: {
           title: {
@@ -60,20 +64,23 @@ export default {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
         const battery = Number(device.status.batt);
-        if (battery <= 2500 && battery >= 2000) {
+        if(battery === 0 && device.state === 'Active'){
           this.series[0].data[0]++;
         }
-        else if (battery > 2500 && battery <= 3000) {
+        else if (battery <= 2500 && battery >= 2000) {
           this.series[0].data[1]++;
         }
-        else if (battery > 3000 && battery <= 3500) {
+        else if (battery > 2500 && battery <= 3000) {
           this.series[0].data[2]++;
         }
-        else if (battery > 3500 && battery <= 4000) {
+        else if (battery > 3000 && battery <= 3500) {
           this.series[0].data[3]++;
         }
-        else if (battery > 4000) {
+        else if (battery > 3500 && battery <= 4000) {
           this.series[0].data[4]++;
+        }
+        else if (battery > 4000) {
+          this.series[0].data[5]++;
         }
 
       });
@@ -91,3 +98,16 @@ export default {
     <apexchart id="column" type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
+
+<style>
+.apexcharts-tooltip {
+  color: black !important;
+}
+
+#column {
+  width: 31em;
+}
+
+#column .apexcharts-menu {
+  color: black;
+}</style>
