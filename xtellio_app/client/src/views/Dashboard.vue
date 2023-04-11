@@ -10,6 +10,7 @@ import LastStatusOld from '../components/LastStatusOld.vue';
 import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
 import TestColumnChart from '../components/TestColumnChart.vue';
+// import GpsColumn from '../components/GpsColumn.vue';
 
 export default {
   name: 'App',
@@ -23,7 +24,8 @@ export default {
     SimProviderBarChart,
     DonutChartProvider,
     TestColumnChart,
-    LastStatusOld
+    LastStatusOld,
+    // GpsColumn
   },
   data() {
     return {
@@ -116,6 +118,7 @@ export default {
         </div>
         <div class="ml-5">
           <TestColumnChart />
+          <!-- <GpsColumn/> -->
         </div>
       </div>
     </div>
