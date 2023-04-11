@@ -8,7 +8,12 @@ import SimProviderBarChart from '../components/SimProviderBarChart.vue';
 import LastStatusOld from '../components/LastStatusOld.vue';
 import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
+<<<<<<< Updated upstream
 import BatteryColumnChart from '../components/BatteryColumnChart.vue';
+=======
+import TestColumnChart from '../components/TestColumnChart.vue';
+import LastLogOld from '../components/LastLogOld.vue';
+>>>>>>> Stashed changes
 // import GpsColumn from '../components/GpsColumn.vue';
 
 export default {
@@ -23,6 +28,7 @@ export default {
     DonutChartProvider,
     BatteryColumnChart,
     LastStatusOld,
+    LastLogOld,
     // GpsColumn
   },
   data() {
@@ -105,7 +111,7 @@ export default {
         <StateBarChart />
       </div>
       <div class="grid grid-flow-col gap-2 pb-4">
-        <SparkBoxBattery />
+        <LastLogOld />
         <LastStatusOld />
         <SimProviderBarChart />
       </div>
