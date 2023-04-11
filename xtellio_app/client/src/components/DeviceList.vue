@@ -160,10 +160,6 @@ export default {
                       </svg>
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
-<<<<<<< Updated upstream
-                    <div v-else
-                      class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
-=======
                     <div v-else-if="device.state == 'Factory'" class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-yellow-500 dark:bg-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
                         <path stroke-linejoin="round" stroke-width="1.5" stroke-linecap="round" fill="currentColor" stroke="currentColor" d="M0 10h24v4h-24z"/>
@@ -171,7 +167,6 @@ export default {
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
                     <div v-else class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
->>>>>>> Stashed changes
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                           stroke-linejoin="round" />
