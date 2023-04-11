@@ -1,11 +1,11 @@
 <script>
-import TestColumnChart from '../components/TestColumnChart.vue';
+import BatteryColumnChart from '../components/BatteryColumnChart.vue';
 import DeviceList from '../components/DeviceList.vue';
 
 export default {
   name: 'App',
   components: {
-    TestColumnChart,
+    BatteryColumnChart,
     DeviceList
   },
   data() {
@@ -19,7 +19,7 @@ export default {
 <template>
     <h1>Example</h1>
     <div>
-    <TestColumnChart/>
+    <BatteryColumnChart/>
     <DeviceList/>
   </div>
 </template>

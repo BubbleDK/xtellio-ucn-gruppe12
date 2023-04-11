@@ -93,7 +93,7 @@ export default {
     <div
       class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-blue-800 dark:border-gray-700">
       <div id="chart-spark1">
-        <apexchart type="bar" height="160" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="bar" height="146" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
   </div>

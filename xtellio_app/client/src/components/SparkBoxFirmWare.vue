@@ -46,6 +46,7 @@ export default {
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();
+      console.log(this.temp);
       const mapName = new Map();
       this.temp.forEach(element => {
         const tempValue = element.status.sw;

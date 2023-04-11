@@ -1,7 +1,6 @@
 <script>
 import SparkBoxBattery from '../components/SparkBoxBattery.vue';
 import DonutChartFirmware from '../components/DonutChartFirmware.vue';
-import ColumnChartBattery from '../components/ColumnChartBattery.vue';
 import GetDataExample from '../components/GetDataExample.vue';
 import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
 import StateBarChart from '../components/StateBarChart.vue';
@@ -9,21 +8,24 @@ import SimProviderBarChart from '../components/SimProviderBarChart.vue';
 import LastStatusOld from '../components/LastStatusOld.vue';
 import DonutChartProvider from '../components/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
-import TestColumnChart from '../components/TestColumnChart.vue';
+import BatteryColumnChart from '../components/BatteryColumnChart.vue';
+import LastLogOld from '../components/LastLogOld.vue';
+// import GpsColumn from '../components/GpsColumn.vue';
 
 export default {
   name: 'App',
   components: {
     SparkBoxBattery,
     DonutChartFirmware,
-    ColumnChartBattery,
     GetDataExample,
     SparkBoxFirmWare,
     StateBarChart,
     SimProviderBarChart,
     DonutChartProvider,
-    TestColumnChart,
-    LastStatusOld
+    BatteryColumnChart,
+    LastStatusOld,
+    LastLogOld,
+    // GpsColumn
   },
   data() {
     return {
@@ -105,7 +107,7 @@ export default {
         <StateBarChart />
       </div>
       <div class="grid grid-flow-col gap-2 pb-4">
-        <SparkBoxBattery />
+        <LastLogOld />
         <LastStatusOld />
         <SimProviderBarChart />
       </div>
@@ -115,7 +117,8 @@ export default {
           <DonutChartProvider />
         </div>
         <div class="ml-5">
-          <TestColumnChart />
+          <BatteryColumnChart />
+          <!-- <GpsColumn/> -->
         </div>
       </div>
     </div>
