@@ -12,6 +12,18 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
+      const status_order = {
+        Active: 1,
+        Factory: 2,
+        Inactive: 3
+      };
+      //console.log(this.devices)
+      const sorted_list = this.devices.sort((a, b) => {
+        return status_order[a.state] - status_order[b.state];
+      });
+      console.log(sorted_list)
+
+      this.devices = sorted_list
     } catch (err) {
       this.error = err.message
     }
@@ -61,6 +73,20 @@ export default {
                 </svg>
               </div>
             </div>
+            <button
+              class="relative z-0 inline-flex text-sm rounded-md shadow-sm hover:bg-gray-30 focus:z-10">
+              <span
+                class="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                  </svg>
+                </div>
+                <div class="hidden sm:block">Filters</div>
+              </span>
+            </button>
           </div>
           <div class="overflow-hidden border border-gray-200 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -134,8 +160,18 @@ export default {
                       </svg>
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
+<<<<<<< Updated upstream
                     <div v-else
                       class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+=======
+                    <div v-else-if="device.state == 'Factory'" class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-yellow-500 dark:bg-gray-800">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
+                        <path stroke-linejoin="round" stroke-width="1.5" stroke-linecap="round" fill="currentColor" stroke="currentColor" d="M0 10h24v4h-24z"/>
+                      </svg>
+                      <h2 class="text-sm font-normal">{{ device.state }}</h2>
+                    </div>
+                    <div v-else class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+>>>>>>> Stashed changes
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                           stroke-linejoin="round" />
