@@ -12,18 +12,12 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      const status_order = {
-        Active: 1,
-        Factory: 2,
-        Inactive: 3
-      };
-      //console.log(this.devices)
-      const sorted_list = this.devices.sort((a, b) => {
-        return status_order[a.state] - status_order[b.state];
+      
+      const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
+    
+      this.devices.sort((a, b) => {
+        return stateOrder[a.state] - stateOrder[b.state];
       });
-      console.log(sorted_list)
-
-      this.devices = sorted_list
     } catch (err) {
       this.error = err.message
     }
