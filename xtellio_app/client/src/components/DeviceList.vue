@@ -18,15 +18,20 @@ export default {
   },
   computed: {
     filteredList: function () {
-      return this.devices.filter((device) => {
-        return device.type.toLowerCase().match(this.input.toLowerCase()) ||
-          device.org.toLowerCase().match(this.input.toLowerCase()) ||
-          device.customer.toLowerCase().match(this.input.toLowerCase()) ||
-          device.state.toLowerCase().match(this.input.toLowerCase()) ||
-          device.mac.toLowerCase().match(this.input.toLowerCase()) ||
-          device.status.batt.toString().toLowerCase().match(this.input.toLowerCase()) ||
-          device.status.sw.toLowerCase().match(this.input.toLowerCase())
-      });
+      if (this.input === "") {
+        return this.devices;
+      } else {
+        let index = this.input.indexOf(":");
+        let field = this.input.substring(0, index);
+        let query = this.input.substring(index + 1);
+        if (field.toLocaleLowerCase() === "battery") {
+          return this.devices.filter((device) => device.status.batt.toString() === query);
+        }
+        else if (field.toLocaleLowerCase() === "firmware") {
+          return this.devices.filter((device) => device.status.sw === query);
+        }
+        return this.devices.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
+      }
     },
   },
   methods: {
@@ -61,7 +66,8 @@ export default {
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead class="dark:bg-gray-800">
                 <tr>
-                  <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <div class="flex items-center gap-x-3">
                       <button class="flex items-center gap-x-2">
                         <span>Type</span>
@@ -79,23 +85,29 @@ export default {
                       </button>
                     </div>
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     Org
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     Customer
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     State
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     Mac
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     Battery
                   </th>
-                  <th scope="col" class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    Fairmware
+                  <th scope="col"
+                    class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    Firmware
                   </th>
                   <th scope="col" class="relative py-3.5 px-4">
                     <span class="sr-only">Actions</span>
@@ -114,14 +126,16 @@ export default {
                     {{ device.customer }}
                   </td>
                   <td class="text-sm text-white-800 whitespace-nowrap">
-                    <div v-if="device.state == 'Active'" class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 dark:bg-gray-800">
+                    <div v-if="device.state == 'Active'"
+                      class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 dark:bg-gray-800">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                           stroke-linejoin="round" />
                       </svg>
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
-                    <div v-else class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                    <div v-else
+                      class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                           stroke-linejoin="round" />
@@ -151,7 +165,8 @@ export default {
       </div>
     </div>
     <div class="flex items-center justify-between mt-6">
-      <a href="#" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+      <a href="#"
+        class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-5 h-5 rtl:-scale-x-100">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
