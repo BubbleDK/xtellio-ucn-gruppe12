@@ -1,5 +1,6 @@
 <script>
 import DeviceService from '../DeviceService';
+let battTotal = 0;
 
 export default {
   name: 'BatteryColumnChart',
@@ -8,11 +9,12 @@ export default {
       series: [{
         name: 'Units',
         data: [0, 0, 0, 0, 0, 0],
-        battAverage: 0
       }],
+      textVal: '',
+      battAverage: 0,
       chartOptions: {
         title: {
-          text: 'Current average excluding 0 values: '
+          text: this.textVal
         },
         chart: {
           foreColor: "#FFFFFF",
@@ -61,6 +63,7 @@ export default {
   },
   async created() {
     try {
+      let unitsWithBatteryOverZero = 0;
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(device => {
         const battery = Number(device.status.batt);
@@ -82,8 +85,15 @@ export default {
         else if (battery > 4000) {
           this.series[0].data[5]++;
         }
-
-      });
+        if(battery !== 0){
+          battTotal += battery;
+          unitsWithBatteryOverZero++;
+        }
+      },
+      );
+        this.battAverage = battTotal/unitsWithBatteryOverZero,
+        this.textVal = 'Current average excluding 0 values: ' + Math.floor(this.battAverage) + 'mV',
+        this.chartOptions.title.text = this.textVal
     } catch (err) {
       this.error = err.message
     }
@@ -95,7 +105,7 @@ export default {
 <template>
   <div id="chart"
     class="block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart id="column" type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart id="column" :key="textVal" type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
