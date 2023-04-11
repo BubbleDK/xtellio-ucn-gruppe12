@@ -30,7 +30,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+  <div class="block max-w-sm flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
     <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
       Devices haven't sent status in the last 24 hours
     </dt>
