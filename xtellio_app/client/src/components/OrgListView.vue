@@ -5,11 +5,25 @@ export default {
   data() {
     return {
       devices: [],
+      mapName: new Map(),
     }
   },
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
+      // mapName = new Map();
+      this.devices.forEach(element => {
+        const tempValue = element.customer;
+        console.log(tempValue);
+        if (this.mapName.has(tempValue)) {
+          this.mapName.set(tempValue, this.mapName.get(tempValue) + 1)
+          tempValue
+        }
+        else {
+          this.mapName.set(tempValue, 1)
+        }
+      });
+      console.log(this.mapName);
     } catch (err) {
       this.error = err.message
     }
@@ -28,7 +42,7 @@ export default {
       <div class="mt-1 mb-4 flex items-center justify-between">
         <span class="text-sm">
           Total devices:
-          <strong>360</strong>
+          <strong>{{devices.length}}</strong>
         </span>
 
         <div class="flex items-center select-none">
@@ -83,7 +97,7 @@ export default {
           </button>
         </div>
       </div>
-
+      <div v-for="[key, value] in this.mapName">
       <div class="border dark:border-gray-700 transition duration-500
     				ease-in-out"></div>
       <div class="flex flex-col mt-2">
@@ -92,9 +106,11 @@ export default {
     						dark:bg-gray-800 px-8 py-6 border-l-4 border-green-500
     						dark:border-green-300">
             <!-- card -->
+            
             <div class="flex">
               <div class="flex flex-col ml-6">
-                <span class="text-lg font-bold">Xtel Sales</span>
+                <span v-if="key === ''" class="text-lg font-bold">Unknown</span>
+                <span v-else class="text-lg font-bold">{{ key }}</span>
                 <div class="mt-4 flex">
                   <div class="flex">
                     <svg class="h-5 w-5 fill-current
@@ -106,7 +122,7 @@ export default {
                     </svg>
                     <span class="ml-2 text-sm text-gray-600
     											dark:text-gray-300 capitalize">
-                      Xtel Sales
+                      
                     </span>
                   </div>
 
@@ -148,17 +164,19 @@ export default {
                   </svg>
                   <span class="ml-2 text-sm text-gray-600
   											dark:text-gray-300 capitalize">
-                    32
+                    {{ value }}
                   </span>
                 </div>
               </div>
             </div>
           </div>
+        
           <div>
             <button
               class="float-right py-2 px-4 bg-transparent text-green-400 font-semibold border border-green-400 rounded hover:bg-green-400 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0">
               View
             </button>
+          </div>
           </div>
         </div>
       </div>

@@ -179,7 +179,7 @@ export default {
                     {{ device.status.sw }}
                   </td>
                   <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                    <a class="text-green-500 hover:text-green-700" href="#" @click="goTodetail(device.mac)">
+                    <a class="text-green-500 hover:text-green-700" @click="goTodetail(device.mac)">
                       View
                     </a>
                   </td>
