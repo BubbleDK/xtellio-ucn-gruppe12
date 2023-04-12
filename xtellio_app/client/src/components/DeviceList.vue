@@ -12,8 +12,7 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      DeviceService.Test();
-      
+      console.log(this.devices[0].customer);
       const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
     
       this.devices.sort((a, b) => {
@@ -31,11 +30,17 @@ export default {
         let index = this.input.indexOf(":");
         let field = this.input.substring(0, index);
         let query = this.input.substring(index + 1);
+        if(!field){
+          return this.devices;
+        }
         if (field.toLocaleLowerCase() === "battery") {
           return this.devices.filter((device) => device.status.batt.toString() === query);
         }
         else if (field.toLocaleLowerCase() === "firmware") {
           return this.devices.filter((device) => device.status.sw === query);
+        }
+        else if (query.toLocaleLowerCase() === "unknown") {
+          return this.devices.filter((device) => device.customer === '');
         }
         return this.devices.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
       }
@@ -143,7 +148,10 @@ export default {
                   <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                     {{ device.org }}
                   </td>
-                  <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                  <td v-if="device.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                    Unknown
+                  </td>
+                  <td v-else class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                     {{ device.customer }}
                   </td>
                   <td class="text-sm text-white-800 whitespace-nowrap">

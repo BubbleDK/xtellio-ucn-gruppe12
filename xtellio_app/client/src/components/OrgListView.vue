@@ -11,10 +11,9 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      // mapName = new Map();
       this.devices.forEach(element => {
         const tempValue = element.customer;
-        console.log(tempValue);
+        console.log(element);
         if (this.mapName.has(tempValue)) {
           this.mapName.set(tempValue, this.mapName.get(tempValue) + 1)
           tempValue
@@ -28,9 +27,6 @@ export default {
       this.error = err.message
     }
   },
-  methods: {
-
-  }
 }
 </script>
 
