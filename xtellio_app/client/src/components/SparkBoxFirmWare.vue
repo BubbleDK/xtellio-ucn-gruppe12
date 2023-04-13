@@ -46,7 +46,6 @@ export default {
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();
-      console.log(this.temp);
       const mapName = new Map();
       this.temp.forEach(element => {
         const tempValue = element.status.sw;
@@ -59,7 +58,6 @@ export default {
       });
 
       mapName.forEach((value, key) => {
-        // firmware = String(device.status.sw);
         const newDevice = {
           x: key,
           y: value
