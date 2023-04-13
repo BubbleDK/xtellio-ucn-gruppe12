@@ -31,12 +31,12 @@ export default {
 </script>
 
 <template>
-  <a href="">
+  <router-link to="/devicelistview">
     <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToList()">
       {{ this.undefinedLog }}
     </dd>
     <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
       Inactive Devices
     </dt>
-  </a>
+  </router-link>
 </template>
