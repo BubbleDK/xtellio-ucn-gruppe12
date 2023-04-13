@@ -1,6 +1,5 @@
 <script>
 import DeviceService from '../DeviceService';
-let battTotal = 0;
 
 export default {
   name: 'BatteryColumnChart',
@@ -11,6 +10,7 @@ export default {
         data: [0, 0, 0, 0, 0, 0],
       }],
       textVal: '',
+      battTotal: 0,
       battAverage: 0,
       chartOptions: {
         title: {
@@ -86,12 +86,12 @@ export default {
           this.series[0].data[5]++;
         }
         if(battery !== 0){
-          battTotal += battery;
+          this.battTotal += battery;
           unitsWithBatteryOverZero++;
         }
       },
       );
-        this.battAverage = battTotal/unitsWithBatteryOverZero,
+        this.battAverage = this.battTotal/unitsWithBatteryOverZero,
         this.textVal = 'Current average excluding 0 values: ' + Math.floor(this.battAverage) + 'mV',
         this.chartOptions.title.text = this.textVal
     } catch (err) {
