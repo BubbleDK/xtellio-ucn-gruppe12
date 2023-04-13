@@ -1,20 +1,25 @@
 <script>
 import DeviceService from '../DeviceService';
+import moment from 'moment';
 
 export default {
   name: 'DeviceList',
   data() {
     return {
       devices: [],
-      input: ""
+      temp: [],
+      input: "",
+      inactiveInput: window.history.state.st,
+      lastLogOld: this.$route.query.lg,
+      lastLogOldList:[],
     }
   },
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      console.log(this.devices[0].customer);
       const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
-    
+      this.showInactive();
+      this.showLastLogOld();
       this.devices.sort((a, b) => {
         return stateOrder[a.state] - stateOrder[b.state];
       });
@@ -24,31 +29,55 @@ export default {
   },
   computed: {
     filteredList: function () {
+      let index = this.input.indexOf(":");
+      let field = this.input.substring(0, index);
+      let query = this.input.substring(index + 1);
+      if(this.lastLogOld === "true"){
+        this.temp = this.lastLogOldList;
+      }
+      else{
+        this.temp = this.devices;
+      }
       if (this.input === "") {
-        return this.devices;
-      } else {
-        let index = this.input.indexOf(":");
-        let field = this.input.substring(0, index);
-        let query = this.input.substring(index + 1);
+        return this.temp;
+      }
+      else {
         if(!field){
-          return this.devices;
+          return this.temp;
         }
         if (field.toLocaleLowerCase() === "battery") {
-          return this.devices.filter((device) => device.status.batt.toString() === query);
+          return this.temp.filter((device) => device.status.batt.toString() === query);
         }
         else if (field.toLocaleLowerCase() === "firmware") {
-          return this.devices.filter((device) => device.status.sw === query);
+          return this.temp.filter((device) => device.status.sw === query);
         }
         else if (query.toLocaleLowerCase() === "unknown") {
-          return this.devices.filter((device) => device.customer === '');
+          return this.temp.filter((device) => device.customer === '');
         }
-        return this.devices.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
+        return this.temp.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
       }
     },
   },
   methods: {
     goTodetail(mac) {
       this.$router.push({ name: 'DeviceView', params: { Mac: mac } })
+    },
+    showInactive() {
+      if(this.inactiveInput){
+        this.input = `state:${this.inactiveInput}`;
+      }
+    },
+    showLastLogOld(){
+      if(this.lastLogOld === "true"){
+        this.devices.forEach(device => {
+          const lastLog = device?.last_log?.ts;
+          const lastLogToMoment = moment.utc(lastLog).format("DD/MM/YYYY HH:mm:SS")
+          const hoursAgo24 = moment().subtract(24, 'hours').format("DD/MM/YYYY HH:mm:SS");
+          if (lastLogToMoment < hoursAgo24) {
+            this.lastLogOldList.push(device);
+          }
+        });
+      }
     }
   }
 }
@@ -63,7 +92,7 @@ export default {
           <div class="flex justify-between py-3 pl-2">
             <div class="relative max-w-xs">
               <label for="search" class="sr-only"> Search </label>
-              <input type="text" v-model="input" name="search"
+              <input type="text" v-model="input"  name="search"
                 class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                 placeholder="Search..." />
               <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">

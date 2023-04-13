@@ -20,6 +20,12 @@ export default {
     } catch (err) {
       this.error = err.message
     }
+  },
+  methods: {
+    goToList() {
+      const status = "inactive";
+      this.$router.push({ name: 'DeviceListView', state: {st: status} })
+    }
   }
 }
 </script>
@@ -28,7 +34,7 @@ export default {
     <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
       Inactive Devices
     </dt>
-    <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
+    <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToList()">
       {{ this.undefinedLog }}
     </dd>
   
