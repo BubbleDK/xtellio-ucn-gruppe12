@@ -15,6 +15,17 @@ export default {
       macFilterInput: "",
       batteryFilterInput: "",
       firmwareFilterInput: "",
+      options: [
+        { value: '0', label: '0' },
+        { value: '2000-2500', label: '2000 - 2500' },
+        { value: '2501-3000', label: '2501 - 3000' },
+        { value: '3001-3500', label: '3001 - 3500' },
+        { value: '3501-4000', label: '3501-4000' },
+        { value: '4000+', label: '4000+' }
+      ],
+      filters: {
+        batteryLevel: []
+      },
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
@@ -65,19 +76,32 @@ export default {
       if (this.orgFilterInput !== "") {
         this.temp = this.temp.filter((device) => device.org.toLowerCase() === this.orgFilterInput.toLowerCase());
       }
-      if (this.customerFilterInput !== ""){
+      if (this.customerFilterInput !== "") {
         this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
       }
-      if (this.stateFilterInput !== ""){
+      if (this.stateFilterInput !== "") {
         this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
       }
-      if (this.macFilterInput !== ""){
-      this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
+      if (this.macFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
       }
-      if (this.batteryFilterInput !== ""){
-        this.temp = this.temp.filter((device) => device.status.batt.toString() === this.batteryFilterInput.toLowerCase());
+      if (this.filters.batteryLevel.length > 0) {
+        const batteryLevel = this.filters.batteryLevel[0];
+        if (batteryLevel === '0') {
+          this.temp = this.temp.filter(device => device.status.batt === 0);
+        } else if (batteryLevel === '2000-2500') {
+          this.temp = this.temp.filter(device => device.status.batt >= 2000 && device.status.batt <= 2500);
+        } else if (batteryLevel === '2501-3000') {
+          this.temp = this.temp.filter(device => device.status.batt >= 2501 && device.status.batt <= 3000);
+        } else if (batteryLevel === '3001-3500') {
+          this.temp = this.temp.filter(device => device.status.batt >= 3001 && device.status.batt <= 3500);
+        } else if (batteryLevel === '3501-4000') {
+          this.temp = this.temp.filter(device => device.status.batt >= 3501 && device.status.batt <= 4000);
+        } else if (batteryLevel === '4000+') {
+          this.temp = this.temp.filter(device => device.status.batt > 4000);
+        }
       }
-      if (this.firmwareFilterInput !== ""){
+      if (this.firmwareFilterInput !== "") {
         this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
       }
       return this.temp;
@@ -102,6 +126,16 @@ export default {
             this.lastLogOldList.push(device);
           }
         });
+      }
+    },
+    selectOption(option) {
+      this.selectedOption = option.label;
+      if (option.value === 'all') {
+        this.filters = {
+          batteryLevel: []
+        };
+      } else {
+        this.filters.batteryLevel = [option.value];
       }
     }
   }
@@ -140,24 +174,29 @@ export default {
               </span>
             </button>
           </div>
-          <label for="orgFilter" class="sr-only"> Org </label>
+          <label for="orgFilter" class="sr-only"></label>
           <input type="text" v-model="orgFilterInput" name="orgFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="Org..." />
-          <label for="customerFilter" class="sr-only"> Org </label>
+          <label for="customerFilter" class="sr-only"></label>
           <input type="text" v-model="customerFilterInput" name="customerFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="Customer..." />
-            <input type="text" v-model="macFilterInput" name="macFilter"
+          <input type="text" v-model="macFilterInput" name="macFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="Mac..." />
-            <input type="text" v-model="stateFilterInput" name="stateFilter"
+          <input type="text" v-model="stateFilterInput" name="stateFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="State..." />
-            <input type="text" v-model="batteryFilterInput" name="batteryFilter"
-            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-            placeholder="Battery..." />
-            <input type="text" v-model="firmwareFilterInput" name="firmwareFilter"
+          <div class="dropdown-menu">
+            <ul>
+              <li v-for="option in options" :key="option.value" @click="selectOption(option)">
+                {{ option.label }}
+              </li>
+            </ul>
+          </div>
+          <input type="text" v-model="selectedOption" @click="showDropdown = true">
+          <input type="text" v-model="firmwareFilterInput" name="firmwareFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="Firmware..." />
           <div class="overflow-hidden border border-gray-200 dark:border-gray-700">
