@@ -31,6 +31,26 @@ class DeviceService {
       }
     })
   }
+
+  static getAllCustomerDevices(customerName) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(url);
+        const data = res.data;
+        const resData = [];
+
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].customer === customerName) {
+            resData.push(data[i])
+          }
+        }
+
+        resolve(resData);
+      } catch(err) {
+        reject(err.message)
+      }
+    });
+  }
 }
 
 export default DeviceService;

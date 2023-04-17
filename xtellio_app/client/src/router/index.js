@@ -4,6 +4,7 @@ import Example from "../views/Example.vue";
 import DeviceListView from "../views/DeviceListView.vue";
 import OrgView from "../views/OrgView.vue";
 import DeviceView from "../components/DeviceView.vue";
+import CustomerView from '../components/CustomerView.vue';
 
 const routes = [
   {
@@ -30,7 +31,12 @@ const routes = [
     path: "/orgview",
     name: "OrgView",
     component: OrgView,
-  }
+  },
+  {
+    path: "/orgview/:customerName",
+    name: "CustomerView",
+    component: CustomerView,
+  },
 ];
 
 const router = createRouter({
