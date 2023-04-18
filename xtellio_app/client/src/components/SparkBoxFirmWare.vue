@@ -9,15 +9,15 @@ export default {
       devices: [{
         name: 'Units on firmware',
         data: [{
-          x: "1.0.0 and up",
+          x: "X.0.0",
           y: 0,
         },
         {
-          x: "0.1.0",
+          x: "0.X.0",
           y: 0,
         },
         {
-          x: "0.0.1 and lower",
+          x: "0.0.X",
           y: 0,
         },
         {
@@ -34,16 +34,20 @@ export default {
             enabled: true
           },
         },
+        plotOptions: {
+          bar: {
+              distributed: true,
+          }
+        },
         stroke: {
-          curve: 'straight'
+          curve: 'straight',
         },
         fill: {
-          opacity: 0.3,
+          opacity: 0.6,
         },
         yaxis: {
           min: 0
         },
-        colors: ['red', '#E91E63', '#E91E63'],
         title: {
           text: 'Firmware',
           offsetX: 0,
