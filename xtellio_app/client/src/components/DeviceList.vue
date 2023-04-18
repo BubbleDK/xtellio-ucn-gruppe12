@@ -113,7 +113,7 @@ export default {
     },
     showInactive() {
       if (this.inactiveInput) {
-        this.input = `state:${this.inactiveInput}`;
+        this.stateFilterInput = this.inactiveInput;
       }
     },
     showLastLogOld() {
