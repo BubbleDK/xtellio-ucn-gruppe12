@@ -43,7 +43,7 @@ export default {
         yaxis: {
           min: 0
         },
-        colors: ['red'],
+        colors: ['red', '#E91E63', '#E91E63'],
         title: {
           text: 'Firmware',
           offsetX: 0,
