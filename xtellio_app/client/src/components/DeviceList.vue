@@ -8,10 +8,27 @@ export default {
     return {
       devices: [],
       temp: [],
-      input: "",
+      // input: "",
+      orgFilterInput: "",
+      customerFilterInput: "",
+      stateFilterInput: "",
+      macFilterInput: "",
+      batteryFilterInput: "",
+      firmwareFilterInput: "",
+      options: [
+        { value: '0', label: '0' },
+        { value: '2000-2500', label: '2000 - 2500' },
+        { value: '2501-3000', label: '2501 - 3000' },
+        { value: '3001-3500', label: '3001 - 3500' },
+        { value: '3501-4000', label: '3501-4000' },
+        { value: '4000+', label: '4000+' }
+      ],
+      filters: {
+        batteryLevel: []
+      },
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
-      lastLogOldList:[],
+      lastLogOldList: [],
     }
   },
   async created() {
@@ -29,33 +46,65 @@ export default {
   },
   computed: {
     filteredList: function () {
-      let index = this.input.indexOf(":");
-      let field = this.input.substring(0, index);
-      let query = this.input.substring(index + 1);
-      if(this.lastLogOld === "true"){
+      // let index = this.input.indexOf(":");
+      // let field = this.input.substring(0, index);
+      // let query = this.input.substring(index + 1);
+      if (this.lastLogOld === "true") {
         this.temp = this.lastLogOldList;
       }
-      else{
+      else {
         this.temp = this.devices;
       }
-      if (this.input === "") {
-        return this.temp;
+      // if (this.input === "") {
+      //   return this.temp;
+      // }
+      // else {
+      //   if (!field) {
+      //     return this.temp;
+      //   }
+      //   if (field.toLocaleLowerCase() === "battery") {
+      //     return this.temp.filter((device) => device.status.batt.toString() === query);
+      //   }
+      //   else if (field.toLocaleLowerCase() === "firmware") {
+      //     return this.temp.filter((device) => device.status.sw === query);
+      //   }
+      //   else if (query.toLocaleLowerCase() === "unknown") {
+      //     return this.temp.filter((device) => device.customer === '');
+      //   }
+      //   return this.temp.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
+      // }
+      if (this.orgFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.org.toLowerCase() === this.orgFilterInput.toLowerCase());
       }
-      else {
-        if(!field){
-          return this.temp;
-        }
-        if (field.toLocaleLowerCase() === "battery") {
-          return this.temp.filter((device) => device.status.batt.toString() === query);
-        }
-        else if (field.toLocaleLowerCase() === "firmware") {
-          return this.temp.filter((device) => device.status.sw === query);
-        }
-        else if (query.toLocaleLowerCase() === "unknown") {
-          return this.temp.filter((device) => device.customer === '');
-        }
-        return this.temp.filter((device) => device[field.toLowerCase()]?.toLowerCase().match(query));
+      if (this.customerFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
       }
+      if (this.stateFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
+      }
+      if (this.macFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
+      }
+      if (this.filters.batteryLevel.length > 0) {
+        const batteryLevel = this.filters.batteryLevel[0];
+        if (batteryLevel === '0') {
+          this.temp = this.temp.filter(device => device.status.batt === 0);
+        } else if (batteryLevel === '2000-2500') {
+          this.temp = this.temp.filter(device => device.status.batt >= 2000 && device.status.batt <= 2500);
+        } else if (batteryLevel === '2501-3000') {
+          this.temp = this.temp.filter(device => device.status.batt >= 2501 && device.status.batt <= 3000);
+        } else if (batteryLevel === '3001-3500') {
+          this.temp = this.temp.filter(device => device.status.batt >= 3001 && device.status.batt <= 3500);
+        } else if (batteryLevel === '3501-4000') {
+          this.temp = this.temp.filter(device => device.status.batt >= 3501 && device.status.batt <= 4000);
+        } else if (batteryLevel === '4000+') {
+          this.temp = this.temp.filter(device => device.status.batt > 4000);
+        }
+      }
+      if (this.firmwareFilterInput !== "") {
+        this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
+      }
+      return this.temp;
     },
   },
   methods: {
@@ -63,12 +112,12 @@ export default {
       this.$router.push({ name: 'DeviceView', params: { Mac: mac } })
     },
     showInactive() {
-      if(this.inactiveInput){
+      if (this.inactiveInput) {
         this.input = `state:${this.inactiveInput}`;
       }
     },
-    showLastLogOld(){
-      if(this.lastLogOld === "true"){
+    showLastLogOld() {
+      if (this.lastLogOld === "true") {
         this.devices.forEach(device => {
           const lastLog = device?.last_log?.ts;
           const lastLogToMoment = moment.utc(lastLog).format("DD/MM/YYYY HH:mm:SS")
@@ -77,6 +126,16 @@ export default {
             this.lastLogOldList.push(device);
           }
         });
+      }
+    },
+    selectOption(option) {
+      this.selectedOption = option.label;
+      if (option.value === 'all') {
+        this.filters = {
+          batteryLevel: []
+        };
+      } else {
+        this.filters.batteryLevel = [option.value];
       }
     }
   }
@@ -92,7 +151,7 @@ export default {
           <div class="flex justify-between py-3 pl-2">
             <div class="relative max-w-xs">
               <label for="search" class="sr-only"> Search </label>
-              <input type="text" v-model="input"  name="search"
+              <input type="text" v-model="input" name="search"
                 class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                 placeholder="Search..." />
               <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -102,8 +161,7 @@ export default {
                 </svg>
               </div>
             </div>
-            <button
-              class="relative z-0 inline-flex text-sm rounded-md shadow-sm hover:bg-gray-30 focus:z-10">
+            <button class="relative z-0 inline-flex text-sm rounded-md shadow-sm hover:bg-gray-30 focus:z-10">
               <span
                 class="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md">
                 <div>
@@ -113,10 +171,34 @@ export default {
                       d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                   </svg>
                 </div>
-                <div class="hidden sm:block">Filters</div>
               </span>
             </button>
           </div>
+          <label for="orgFilter" class="sr-only"></label>
+          <input type="text" v-model="orgFilterInput" name="orgFilter"
+            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            placeholder="Org..." />
+          <label for="customerFilter" class="sr-only"></label>
+          <input type="text" v-model="customerFilterInput" name="customerFilter"
+            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            placeholder="Customer..." />
+          <input type="text" v-model="macFilterInput" name="macFilter"
+            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            placeholder="Mac..." />
+          <input type="text" v-model="stateFilterInput" name="stateFilter"
+            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            placeholder="State..." />
+          <div class="dropdown-menu">
+            <ul>
+              <li v-for="option in options" :key="option.value" @click="selectOption(option)">
+                {{ option.label }}
+              </li>
+            </ul>
+          </div>
+          <input type="text" v-model="selectedOption" @click="showDropdown = true">
+          <input type="text" v-model="firmwareFilterInput" name="firmwareFilter"
+            class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            placeholder="Firmware..." />
           <div class="overflow-hidden border border-gray-200 dark:border-gray-700">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead class="dark:bg-gray-800">
@@ -192,13 +274,16 @@ export default {
                       </svg>
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
-                    <div v-else-if="device.state == 'Factory'" class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-yellow-500 dark:bg-gray-800">
+                    <div v-else-if="device.state == 'Factory'"
+                      class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-yellow-500 dark:bg-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
-                        <path stroke-linejoin="round" stroke-width="1.5" stroke-linecap="round" fill="currentColor" stroke="currentColor" d="M0 10h24v4h-24z"/>
+                        <path stroke-linejoin="round" stroke-width="1.5" stroke-linecap="round" fill="currentColor"
+                          stroke="currentColor" d="M0 10h24v4h-24z" />
                       </svg>
                       <h2 class="text-sm font-normal">{{ device.state }}</h2>
                     </div>
-                    <div v-else class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                    <div v-else
+                      class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                           stroke-linejoin="round" />
