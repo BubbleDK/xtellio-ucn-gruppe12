@@ -8,12 +8,27 @@ export default {
       temp: [],
       devices: [{
         name: 'Units on firmware',
-        data: []
+        data: [{
+          x: "1.0.0 and up",
+          y: 0,
+        },
+        {
+          x: "0.1.0",
+          y: 0,
+        },
+        {
+          x: "0.0.1 and lower",
+          y: 0,
+        },
+        {
+          x: "dirty firmware",
+          y: 0,
+        }]
       }],
       error: '',
       chartOptions: {
         chart: {
-          type: 'area',
+          type: 'bar',
           height: 160,
           sparkline: {
             enabled: true
@@ -46,23 +61,23 @@ export default {
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();
-      const mapName = new Map();
       this.temp.forEach(element => {
-        const tempValue = element.status.sw;
-        if (mapName.has(tempValue)) {
-          mapName.set(tempValue, mapName.get(tempValue) + 1)
-          tempValue
-        } else {
-          mapName.set(tempValue, 1)
+        const tempValue = element?.status?.sw;
+        let reg = new RegExp(/^[-+]?[1-9]+\.[0-9]+\.[0-9]+$/);
+        let regMid = new RegExp(/^[-+]?[0]+\.[1-9]+\.[0-9]+$/);
+        let regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/); 
+        if(reg.test(tempValue)){
+          this.devices[0].data[0].y++;
         }
-      });
-
-      mapName.forEach((value, key) => {
-        const newDevice = {
-          x: key,
-          y: value
+        else if(regMid.test(tempValue)){
+          this.devices[0].data[1].y++;
         }
-        this.devices[0].data.push(newDevice);
+        else if(regLow.test(tempValue)){
+          this.devices[0].data[2].y++;
+        }
+        else{
+          this.devices[0].data[3].y++;
+        }
       });
     } catch (err) {
       this.error = err.message
@@ -76,7 +91,7 @@ export default {
     <div
       class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark2">
-        <apexchart type="area" height="160" :options="chartOptions" :series="devices"></apexchart>
+        <apexchart type="bar" height="160" :options="chartOptions" :series="devices"></apexchart>
       </div>
     </div>
   </div>

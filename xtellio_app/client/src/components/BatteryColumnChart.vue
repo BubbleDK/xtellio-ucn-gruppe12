@@ -59,6 +59,7 @@ export default {
         }
       },
     }
+    
 
   },
   async created() {
@@ -99,8 +100,12 @@ export default {
     }
   },  
   methods: {
-    showBat(){
-    }
+    showBat(event, chartContext, config){
+        console.log("click");
+        console.log(event);
+        console.log(chartContext);
+        console.log(config)
+    },
   }
 }
 
