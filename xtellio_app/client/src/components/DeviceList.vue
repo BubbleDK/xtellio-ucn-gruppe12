@@ -195,7 +195,7 @@ export default {
               </li>
             </ul>
           </div>
-          <input type="text" v-model="selectedOption" @click="showDropdown = true">
+          <input type="text" v-model="selectedOption" @click="showDropdown = true" readonly>
           <input type="text" v-model="firmwareFilterInput" name="firmwareFilter"
             class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             placeholder="Firmware..." />
