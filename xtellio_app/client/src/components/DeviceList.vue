@@ -143,20 +143,21 @@ export default {
       
       this.filters[0].options.forEach(element => {
         if(element.checked === true){
+          console.log(element.checked);
           this.filteredDevices.push(this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
-          console.log(this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()))
+          console.log(this.filteredDevices[0])
         }
       })
 
-      if (this.customerFilterInput.length > 0) {
-        this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
-      }
-      if (this.stateFilterInput.length > 0) {
-        this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
-      }
-      if (this.macFilterInput.length > 0) {
-        this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
-      }
+      // if (this.customerFilterInput.length > 0) {
+      //   this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
+      // }
+      // if (this.stateFilterInput.length > 0) {
+      //   this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
+      // }
+      // if (this.macFilterInput.length > 0) {
+      //   this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
+      // }
       // if (this.filters.batteryLevel.length > 0) {
       //   const batteryLevel = this.filters.batteryLevel[0];
       //   if (batteryLevel === '0') {
@@ -173,22 +174,22 @@ export default {
       //     this.temp = this.temp.filter(device => device.status.batt > 4000);
       //   }
       // }
-      if (this.firmwareFilterInput.length > 0) {
-        this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
-      }
+      // if (this.firmwareFilterInput.length > 0) {
+      //   this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
+      // }
       if(this.filteredDevices.length === 0){
         this.filteredDevices = this.temp;
         return this.filteredDevices;
       }
       else{
-        return this.filteredDevices;
+        return this.filteredDevices[0];
       }
     }
   },
   watch : {
     filters: {
     handler() {
-      console.log(this.filters[0].options)
+      // console.log(this.filters[0].options)
     },
     deep: true,
   }
