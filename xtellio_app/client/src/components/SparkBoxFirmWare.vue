@@ -39,6 +39,9 @@ export default {
               distributed: true,
           }
         },
+        dataLabels: {
+          enabled: true,
+        },
         stroke: {
           curve: 'straight',
         },
