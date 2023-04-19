@@ -24,20 +24,13 @@ export default {
     return {
       devices: [],
       temp: [],
-      orgFilterInput: "",
-      customerFilterInput: "",
-      stateFilterInput: "",
-      macFilterInput: "",
-      batteryFilterInput: "",
-      firmwareFilterInput: "",
-      options: [
-        { value: '0', label: '0' },
-        { value: '2000-2500', label: '2000 - 2500' },
-        { value: '2501-3000', label: '2501 - 3000' },
-        { value: '3001-3500', label: '3001 - 3500' },
-        { value: '3501-4000', label: '3501-4000' },
-        { value: '4000+', label: '4000+' }
-      ],
+      filteredDevices: [],
+      orgFilterInput: [],
+      customerFilterInput: [],
+      stateFilterInput: [],
+      macFilterInput: [],
+      batteryFilterInput: [],
+      firmwareFilterInput: [],
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
@@ -131,23 +124,37 @@ export default {
     }
   },
   computed: {
-    filteredList: function () {
+    filteredList() {
+      this.filteredDevices = [];
+
       if (this.lastLogOld === "true") {
         this.temp = this.lastLogOldList;
       }
       else {
         this.temp = this.devices;
       }
-      if (this.orgFilterInput !== "") {
-        this.temp = this.temp.filter((device) => device.org.toLowerCase() === this.orgFilterInput.toLowerCase());
-      }
-      if (this.customerFilterInput !== "") {
+
+      // if (this.orgFilterInput.length > 0) {
+      //   for (let i = 0; i < this.orgFilterInput.length; index++) {
+      //     const element = this.orgFilterInput[index];
+      //     this.filteredDevices.push(this.temp.filter((device) => device.org.toLowerCase() === element.toLowerCase()));
+      //   }
+      // }
+      
+      this.filters[0].options.forEach(element => {
+        if(element.checked === true){
+          this.filteredDevices.push(this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
+          console.log(this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()))
+        }
+      })
+
+      if (this.customerFilterInput.length > 0) {
         this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
       }
-      if (this.stateFilterInput !== "") {
+      if (this.stateFilterInput.length > 0) {
         this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
       }
-      if (this.macFilterInput !== "") {
+      if (this.macFilterInput.length > 0) {
         this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
       }
       // if (this.filters.batteryLevel.length > 0) {
@@ -166,11 +173,25 @@ export default {
       //     this.temp = this.temp.filter(device => device.status.batt > 4000);
       //   }
       // }
-      if (this.firmwareFilterInput !== "") {
+      if (this.firmwareFilterInput.length > 0) {
         this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
       }
-      return this.temp;
+      if(this.filteredDevices.length === 0){
+        this.filteredDevices = this.temp;
+        return this.filteredDevices;
+      }
+      else{
+        return this.filteredDevices;
+      }
+    }
+  },
+  watch : {
+    filters: {
+    handler() {
+      console.log(this.filters[0].options)
     },
+    deep: true,
+  }
   },
   methods: {
     goTodetail(mac) {
@@ -191,16 +212,6 @@ export default {
             this.lastLogOldList.push(device);
           }
         });
-      }
-    },
-    selectOption(option) {
-      this.selectedOption = option.label;
-      if (option.value === 'all') {
-        this.filters = {
-          batteryLevel: []
-        };
-      } else {
-        this.filters.batteryLevel = [option.value];
       }
     },
   }
@@ -360,7 +371,7 @@ const mobileFiltersOpen = ref(false)
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
                       <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="checkbox" :checked="option.checked"
+                        type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white">{{ option.label
                       }}</label>
@@ -428,16 +439,16 @@ const mobileFiltersOpen = ref(false)
                   <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     <tr v-for="device in filteredList">
                       <td class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap">
-                        {{ device.type }}
+                        {{ device?.type }}
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
-                        {{ device.org }}
+                        {{ device?.org }}
                       </td>
-                      <td v-if="device.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                         Unknown
                       </td>
                       <td v-else class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
-                        {{ device.customer }}
+                        {{ device?.customer }}
                       </td>
                       <td class="text-sm text-white-800 whitespace-nowrap">
                         <div v-if="device.state == 'Active'"
@@ -466,13 +477,13 @@ const mobileFiltersOpen = ref(false)
                         </div>
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
-                        {{ device.mac }}
+                        {{ device?.mac }}
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
-                        {{ device.status.batt }}
+                        {{ device?.status?.batt }}
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
-                        {{ device.status.sw }}
+                        {{ device?.status?.sw }}
                       </td>
                       <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <a class="text-green-500 hover:text-green-700" @click="goTodetail(device.mac)">
