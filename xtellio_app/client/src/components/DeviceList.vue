@@ -24,6 +24,7 @@ export default {
     return {
       devices: [],
       temp: [],
+      temp2: [],
       filteredDevices: [],
       orgFilterInput: [],
       customerFilterInput: [],
@@ -134,21 +135,32 @@ export default {
         this.temp = this.devices;
       }
 
-      // if (this.orgFilterInput.length > 0) {
-      //   for (let i = 0; i < this.orgFilterInput.length; index++) {
-      //     const element = this.orgFilterInput[index];
-      //     this.filteredDevices.push(this.temp.filter((device) => device.org.toLowerCase() === element.toLowerCase()));
-      //   }
-      // }
       
       this.filters[0].options.forEach(element => {
         if(element.checked === true){
-          console.log(element.checked);
-          this.filteredDevices.push(this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
-          console.log(this.filteredDevices[0])
+          // this.filteredDevices.push(...this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
+          this.temp2 = []
+          this.temp2.push(...this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
+          this.temp2.forEach(element => {
+            if(!this.filteredDevices.includes(element)){
+              this.filteredDevices.push(element)
+            }
+          });
         }
       })
 
+      this.filters[1].options.forEach(element => {
+        if(element.checked === true){
+          this.temp2 = []
+          this.temp2.push(...this.temp.filter((device) => device.customer.toLowerCase() === element.value.toLowerCase()));
+          this.temp2.forEach(element => {
+            if(!this.filteredDevices.includes(element)){
+              this.filteredDevices.push(element)
+            }
+          });
+        }
+      })
+      
       // if (this.customerFilterInput.length > 0) {
       //   this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
       // }
@@ -182,7 +194,7 @@ export default {
         return this.filteredDevices;
       }
       else{
-        return this.filteredDevices[0];
+        return this.filteredDevices;
       }
     }
   },
@@ -220,13 +232,6 @@ export default {
 </script>
 
 <script setup>
-// const subCategories = [
-//   { name: 'Totes', href: '#' },
-//   { name: 'Backpacks', href: '#' },
-//   { name: 'Travel Bags', href: '#' },
-//   { name: 'Hip Bags', href: '#' },
-//   { name: 'Laptop Sleeves', href: '#' },
-// ]
 
 const mobileFiltersOpen = ref(false)
 </script>
@@ -262,11 +267,6 @@ const mobileFiltersOpen = ref(false)
                 <!-- Filters -->
                 <form class="mt-4 border-t border-gray-200">
                   <h3 class="sr-only">Categories</h3>
-                  <ul role="list" class="px-2 py-3 font-medium text-white">
-                    <li v-for="category in subCategories" :key="category.name">
-                      <a :href="category.href" class="block px-2 py-3">{{ category.name }}</a>
-                    </li>
-                  </ul>
 
                   <Disclosure as="div" v-for="section in filters" :key="section.id"
                     class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
@@ -350,11 +350,6 @@ const mobileFiltersOpen = ref(false)
             <!-- Filters -->
             <form class="hidden lg:block">
               <h3 class="sr-only">Categories</h3>
-              <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-white">
-                <li v-for="category in subCategories" :key="category.name">
-                  <a :href="category.href">{{ category.name }}</a>
-                </li>
-              </ul>
 
               <Disclosure as="div" v-for="section in filters" :key="section.id" class="border-b border-gray-200 py-6"
                 v-slot="{ open }">
@@ -502,7 +497,7 @@ const mobileFiltersOpen = ref(false)
     </div>
   </div>
   <section class="container mx-auto">
-    <div class="flex flex-col">
+    <!-- <div class="flex flex-col">
       <div class="-mx-4 -my-2 overflow-x-auto">
         <div class="inline-block min-w-full py-2 align-middle">
           <div class="flex justify-between py-3 pl-2">
@@ -522,7 +517,7 @@ const mobileFiltersOpen = ref(false)
 
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="flex items-center justify-between mt-6">
       <a href="#"
         class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
