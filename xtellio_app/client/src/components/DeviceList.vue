@@ -137,9 +137,37 @@ export default {
       }
 
       return this.devices.filter(device => {
+        console.log(device)
         for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
-          if (!filterValues.includes(device[filterId])) {
-            return false;
+          if (filterId === 'battery') {
+            let batteryMatch = false;
+            for (const option of filterValues) {
+              const [min, max] = option.split('-');
+              console.log(typeof(min), max, device.status.batt)
+              if (min === '0' && device.status.batt === 0) {
+                batteryMatch = true;
+                break;
+              }
+              if (min === '0' && device.status.batt <= max) {
+                batteryMatch = true;
+                break;
+              }
+              if (max === '>4000' && device.status.batt >= min) {
+                batteryMatch = true;
+                break;
+              }
+              if (device.status.batt >= min && device.status.batt <= max) {
+                batteryMatch = true;
+                break;
+              }
+            }
+            if (!batteryMatch) {
+              return false;
+            }
+          } else {
+            if (!filterValues.includes(device[filterId])) {
+              return false;
+            }
           }
         }
         return true;
