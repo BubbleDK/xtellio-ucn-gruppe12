@@ -57,10 +57,7 @@ export default {
           id: 'mac',
           name: 'MAC',
           options: [
-            { value: 'Active', label: 'Active', checked: false },
-            { value: 'Inactive', label: 'Inactive', checked: false },
-            { value: 'Factory', label: 'Factory', checked: false },
-            { value: 'Unknown', label: 'Unknown', checked: false },
+            { value: '' },
           ],
         },
         {
@@ -261,9 +258,12 @@ const mobileFiltersOpen = ref(false)
                     <DisclosurePanel class="pt-6">
                       <div class="space-y-6">
                         <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                          <input :id="`filter-mobile-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
-                            :value="option.value" type="checkbox" :checked="option.checked"
-                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                          <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
+                        type="text" @change="option.value = this.value"
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
+                        type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
+                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                           <label :for="`filter-mobile-${section.id}-${optionIdx}`"
                             class="ml-3 min-w-0 flex-1 text-white">{{ option.label }}</label>
                         </div>
@@ -344,7 +344,10 @@ const mobileFiltersOpen = ref(false)
                 <DisclosurePanel class="pt-6">
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
+                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
+                        type="text" @change="option.value = this.value"
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
                         type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white">{{ option.label
