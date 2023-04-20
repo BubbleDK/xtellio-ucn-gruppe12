@@ -4,6 +4,7 @@ import App from './App.vue'
 import VueApexCharts from "vue3-apexcharts";
 import Router from './router'
 import Moment from 'moment'
+import "vue3-dropdown-navbar/preflight.css";
 
 const app = createApp(App);
 app.use(Router);
