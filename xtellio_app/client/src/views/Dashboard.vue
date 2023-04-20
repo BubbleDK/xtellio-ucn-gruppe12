@@ -51,8 +51,8 @@ export default {
           mapName.set(tempValue, + 1)
         }
       });
-      mapName.forEach((key) => {
-        this.customers.push(key);
+      mapName.forEach((key ,value) => {
+        this.customers.push(value);
       })
     } catch (err) {
       this.error = err.message
@@ -96,7 +96,7 @@ export default {
               Total Customers
             </dt>
 
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">{{ customers[0] }}</dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">{{ customers.length }}</dd>
           </div>
         </dl>
       </div>
