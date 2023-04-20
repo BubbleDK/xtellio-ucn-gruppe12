@@ -32,7 +32,6 @@ export default {
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
-      filteredList: [],
       filters: [
         {
           id: 'org',
@@ -137,13 +136,11 @@ export default {
       }
 
       return this.devices.filter(device => {
-        console.log(device)
         for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
           if (filterId === 'battery') {
             let batteryMatch = false;
             for (const option of filterValues) {
               const [min, max] = option.split('-');
-              console.log(typeof(min), max, device.status.batt)
               if (min === '0' && device.status.batt === 0) {
                 batteryMatch = true;
                 break;
