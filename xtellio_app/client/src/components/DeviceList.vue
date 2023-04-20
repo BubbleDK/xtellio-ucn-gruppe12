@@ -32,6 +32,7 @@ export default {
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
+      filteredList: [],
       filters: [
         {
           id: 'org',
@@ -123,113 +124,36 @@ export default {
   },
   computed: {
     filteredList() {
-      this.filteredDevices = [];
-      this.filterTriggered = false;
-
-      if (this.lastLogOld === "true") {
-        this.temp = this.lastLogOldList;
-      }
-      else {
-        this.temp = this.devices;
-      }
-
-      if(this.filteredDevices.length === 0){
-            this.deviceLengthOverZero = false;
-          }else{
-            this.deviceLengthOverZero = true;
-          }
-      this.filters[0].options.forEach(element => {
-        if(element.checked === true){
-          this.filterTriggered = true;
-          if(!this.deviceLengthOverZero){
-            this.temp2 = this.temp;
-          }else{
-            this.temp2 = this.filteredDevices;
-          }
-          // this.filteredDevices.push(...this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
-          this.filteredDevices = []
-          // this.temp2 = []
-          this.temp2 = this.temp2.filter((device) => device.org.toLowerCase() === element.value.toLowerCase());
-          this.temp2.forEach(element => {
-            if(!this.filteredDevices.includes(element)){
-              this.filteredDevices.push(element)
-            }
-          });
+      const checkedFilters = this.filters.reduce((acc, filter) => {
+        const checkedOptions = filter.options.filter(option => option.checked);
+        if (checkedOptions.length > 0) {
+          acc[filter.id] = checkedOptions.map(option => option.value);
         }
-      })
+        return acc;
+      }, {});
 
-      if(this.filteredDevices.length === 0){
-            this.deviceLengthOverZero = false;
-          }else{
-            this.deviceLengthOverZero = true;
-          }
-      this.filters[1].options.forEach(element => {
-        if(element.checked === true){
-          this.filterTriggered = true;
-          if(!this.deviceLengthOverZero){
-            this.temp2 = this.temp;
-          }else{
-            this.temp2 = this.filteredDevices;
-          }
-          this.filteredDevices = []
-          // this.temp2 = []
-          this.temp2 = this.temp2.filter((device) => device.customer.toLowerCase() === element.value.toLowerCase());
-          this.temp2.forEach(element => {
-            if(!this.filteredDevices.includes(element)){
-              this.filteredDevices.push(element)
-            }
-          });
-        }
-      })
-      
-      // if (this.customerFilterInput.length > 0) {
-      //   this.temp = this.temp.filter((device) => device.customer.toLowerCase() === this.customerFilterInput.toLowerCase());
-      // }
-      // if (this.stateFilterInput.length > 0) {
-      //   this.temp = this.temp.filter((device) => device.state.toLowerCase() === this.stateFilterInput.toLowerCase());
-      // }
-      // if (this.macFilterInput.length > 0) {
-      //   this.temp = this.temp.filter((device) => device.mac.toLowerCase() === this.macFilterInput.toLowerCase());
-      // }
-      // if (this.filters.batteryLevel.length > 0) {
-      //   const batteryLevel = this.filters.batteryLevel[0];
-      //   if (batteryLevel === '0') {
-      //     this.temp = this.temp.filter(device => device.status.batt === 0);
-      //   } else if (batteryLevel === '2000-2500') {
-      //     this.temp = this.temp.filter(device => device.status.batt >= 2000 && device.status.batt <= 2500);
-      //   } else if (batteryLevel === '2501-3000') {
-      //     this.temp = this.temp.filter(device => device.status.batt >= 2501 && device.status.batt <= 3000);
-      //   } else if (batteryLevel === '3001-3500') {
-      //     this.temp = this.temp.filter(device => device.status.batt >= 3001 && device.status.batt <= 3500);
-      //   } else if (batteryLevel === '3501-4000') {
-      //     this.temp = this.temp.filter(device => device.status.batt >= 3501 && device.status.batt <= 4000);
-      //   } else if (batteryLevel === '4000+') {
-      //     this.temp = this.temp.filter(device => device.status.batt > 4000);
-      //   }
-      // }
-      // if (this.firmwareFilterInput.length > 0) {
-      //   this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
-      // }
-      if(this.filteredDevices.length === 0){
-        if(this.filterTriggered === true){
-          return this.filteredDevices;
-        }else{
-          this.filteredDevices = this.temp;
-          return this.filteredDevices;
-        }
+      if (Object.keys(checkedFilters).length === 0) {
+        return this.devices;
       }
-      else{
-        return this.filteredDevices;
-      }
+
+      return this.devices.filter(device => {
+        for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
+          if (!filterValues.includes(device[filterId])) {
+            return false;
+          }
+        }
+        return true;
+      });
     }
   },
-  watch : {
+  watch: {
     filters: {
-    handler() {
-      // console.log(this.filters[0].options)
+      handler() {
+        // This will trigger the computed property filteredList to be updated
+        this.filteredList;
+      },
+      deep: true,
     },
-    deep: true,
-  }
   },
   methods: {
     goTodetail(mac) {
@@ -251,6 +175,12 @@ export default {
           }
         });
       }
+    },
+    getActiveFilters() {
+      return this.filters.filter((filter) => {
+        // For all other filters, check if an option is selected
+        return filter.options.some((option) => option.checked);
+      });
     },
   }
 }
@@ -291,8 +221,6 @@ const mobileFiltersOpen = ref(false)
 
                 <!-- Filters -->
                 <form class="mt-4 border-t border-gray-200">
-                  <h3 class="sr-only">Categories</h3>
-
                   <Disclosure as="div" v-for="section in filters" :key="section.id"
                     class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
                     <h3 class="-mx-2 -my-3 flow-root">
