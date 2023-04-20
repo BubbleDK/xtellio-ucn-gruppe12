@@ -18,20 +18,17 @@ import {
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
 
+
 export default {
   name: 'DeviceList',
   data() {
     return {
+      filterTriggered: false,
+      deviceLengthOverZero: false,
       devices: [],
       temp: [],
       temp2: [],
       filteredDevices: [],
-      orgFilterInput: [],
-      customerFilterInput: [],
-      stateFilterInput: [],
-      macFilterInput: [],
-      batteryFilterInput: [],
-      firmwareFilterInput: [],
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
@@ -127,6 +124,7 @@ export default {
   computed: {
     filteredList() {
       this.filteredDevices = [];
+      this.filterTriggered = false;
 
       if (this.lastLogOld === "true") {
         this.temp = this.lastLogOldList;
@@ -135,12 +133,23 @@ export default {
         this.temp = this.devices;
       }
 
-      
+      if(this.filteredDevices.length === 0){
+            this.deviceLengthOverZero = false;
+          }else{
+            this.deviceLengthOverZero = true;
+          }
       this.filters[0].options.forEach(element => {
         if(element.checked === true){
+          this.filterTriggered = true;
+          if(!this.deviceLengthOverZero){
+            this.temp2 = this.temp;
+          }else{
+            this.temp2 = this.filteredDevices;
+          }
           // this.filteredDevices.push(...this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
-          this.temp2 = []
-          this.temp2.push(...this.temp.filter((device) => device.org.toLowerCase() === element.value.toLowerCase()));
+          this.filteredDevices = []
+          // this.temp2 = []
+          this.temp2 = this.temp2.filter((device) => device.org.toLowerCase() === element.value.toLowerCase());
           this.temp2.forEach(element => {
             if(!this.filteredDevices.includes(element)){
               this.filteredDevices.push(element)
@@ -149,10 +158,22 @@ export default {
         }
       })
 
+      if(this.filteredDevices.length === 0){
+            this.deviceLengthOverZero = false;
+          }else{
+            this.deviceLengthOverZero = true;
+          }
       this.filters[1].options.forEach(element => {
         if(element.checked === true){
-          this.temp2 = []
-          this.temp2.push(...this.temp.filter((device) => device.customer.toLowerCase() === element.value.toLowerCase()));
+          this.filterTriggered = true;
+          if(!this.deviceLengthOverZero){
+            this.temp2 = this.temp;
+          }else{
+            this.temp2 = this.filteredDevices;
+          }
+          this.filteredDevices = []
+          // this.temp2 = []
+          this.temp2 = this.temp2.filter((device) => device.customer.toLowerCase() === element.value.toLowerCase());
           this.temp2.forEach(element => {
             if(!this.filteredDevices.includes(element)){
               this.filteredDevices.push(element)
@@ -190,8 +211,12 @@ export default {
       //   this.temp = this.temp.filter((device) => device.status.sw.toLowerCase() === this.firmwareFilterInput.toLowerCase());
       // }
       if(this.filteredDevices.length === 0){
-        this.filteredDevices = this.temp;
-        return this.filteredDevices;
+        if(this.filterTriggered === true){
+          return this.filteredDevices;
+        }else{
+          this.filteredDevices = this.temp;
+          return this.filteredDevices;
+        }
       }
       else{
         return this.filteredDevices;
