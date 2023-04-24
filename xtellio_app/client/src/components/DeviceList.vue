@@ -32,6 +32,7 @@ export default {
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
+      macAddress: '',
       filters: [
         {
           id: 'org',
@@ -128,11 +129,11 @@ export default {
         return acc;
       }, {});
 
-      if (Object.keys(checkedFilters).length === 0) {
+      if (Object.keys(checkedFilters).length === 0 && !this.macAddress) {
         return this.devices;
       }
 
-      return this.devices.filter(device => {
+      let filteredDevices = this.devices.filter(device => {
         for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
           if (filterId === 'battery') {
             let batteryMatch = false;
@@ -166,6 +167,15 @@ export default {
         }
         return true;
       });
+
+      // Filter the devices by the selected MAC address value
+      if (this.macAddress) {
+        filteredDevices = filteredDevices.filter(device => device.mac.toLowerCase().includes(this.macAddress.toLowerCase()));
+      }
+
+      console.log(filteredDevices)
+
+      return filteredDevices
     }
   },
   watch: {
@@ -344,12 +354,12 @@ const mobileFiltersOpen = ref(false)
                 <DisclosurePanel class="pt-6">
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="text" @change="option.value = this.value"
-                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
-                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="macAddress"
+                      type="text" @input="macAddress = $event.target.value"
+                      class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
+                      type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
+                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white">{{ option.label
                       }}</label>
                     </div>
