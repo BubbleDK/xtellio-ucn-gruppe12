@@ -85,10 +85,7 @@ export default {
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
-            <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
-              Hvad skal der stå her?
-            </dt>
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">0</dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl"><LastLogUndefined/></dd>
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
@@ -103,19 +100,19 @@ export default {
     </div>
 
     <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-      <div class="grid grid-flow-col gap-2 pb-4">
-        <SparkBoxBattery />
-        <SparkBoxFirmWare />
+      <div class="grid grid-flow-col gap-1 pb-4">
+        <!-- <SparkBoxBattery /> -->
+        <div>
+          <SparkBoxFirmWare />
         <StateBarChart />
+        </div>
+        <BatteryColumnChart />
+        
       </div>
     <div class="mt-8 sm:mt-4">
         <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <LastLogOld/>
-          </div>
-
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
-            <LastLogUndefined/>
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
@@ -125,11 +122,10 @@ export default {
       </div>
       <div class="flex mt-5">
         <div class="mr-5">
-          <DonutChartFirmware />
+          <!-- <DonutChartFirmware /> -->
           <DonutChartProvider />
         </div>
         <div class="ml-5">
-          <BatteryColumnChart />
           <!-- <GpsColumn/> -->
         </div>
       </div>

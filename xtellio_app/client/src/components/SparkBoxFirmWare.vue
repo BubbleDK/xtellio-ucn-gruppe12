@@ -96,7 +96,7 @@ export default {
 <template>
   <div>
     <div
-      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
       <div id="chart-spark2">
         <apexchart type="bar" height="160" :options="chartOptions" :series="devices"></apexchart>
       </div>
