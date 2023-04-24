@@ -183,7 +183,8 @@ export default {
     },
     showInactive() {
       if (this.inactiveInput) {
-        this.stateFilterInput = this.inactiveInput;
+        const inactiveVal = this.filters[2].options.find(x => x.value.toLowerCase() === "inactive");
+        inactiveVal.checked = true;
       }
     },
     showLastLogOld() {
@@ -194,6 +195,7 @@ export default {
           const hoursAgo24 = moment().subtract(24, 'hours').format("DD/MM/YYYY HH:mm:SS");
           if (lastLogToMoment < hoursAgo24) {
             this.lastLogOldList.push(device);
+            this.devices = this.lastLogOldList;
           }
         });
       }
