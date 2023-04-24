@@ -402,6 +402,10 @@ const mobileFiltersOpen = ref(false)
                       </th>
                       <th scope="col"
                         class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
+                        QR
+                      </th>
+                      <th scope="col"
+                        class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
                         Battery
                       </th>
                       <th scope="col"
@@ -455,6 +459,9 @@ const mobileFiltersOpen = ref(false)
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                         {{ device?.mac }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                        {{ device?.ids?.qr }}
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                         {{ device?.status?.batt }}
