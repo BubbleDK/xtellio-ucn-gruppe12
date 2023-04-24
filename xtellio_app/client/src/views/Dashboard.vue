@@ -57,6 +57,11 @@ export default {
     } catch (err) {
       this.error = err.message
     }
+  },
+  methods: {
+    goToCustomerList(){
+      this.$router.push({ name: 'OrgView'})
+    }
   }
 }
 
@@ -89,11 +94,12 @@ export default {
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
-            <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
-              Total Customers
-            </dt>
-
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">{{ customers.length }}</dd>
+            <router-link to="/orgview">
+            <dt class="text-lg font-medium text-gray-500 dark:text-gray-400">
+                <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToCustomerList()">{{ customers.length }} </dd>
+                Total Customers
+              </dt>
+            </router-link>
           </div>
         </dl>
       </div>
