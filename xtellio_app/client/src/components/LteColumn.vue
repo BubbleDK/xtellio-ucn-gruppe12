@@ -1,26 +1,24 @@
-<!-- <script>
+<script>
 import DeviceService from '../DeviceService';
 
 export default {
-  name: 'GpsColumn',
+  name: 'LteColumn',
   data() {
           return{
+          lteGps: [],
           series: [{
             name: "sales",
             data: [{
-              x: '0-25',
+              x: '>-65',
               y: 0
             }, {
-              x: '26-50',
+              x: '-66 til -75',
               y: 0
             }, {
-              x: '51-75',
+              x: '-76 til -85',
               y: 0
             }, {
-              x: '76-100',
-              y: 0
-            }, {
-              x: '101-150',
+              x: '-86 til -95',
               y: 0
             }]
           }],
@@ -33,7 +31,7 @@ export default {
               type: 'category',
             },
             title: {
-                text: 'Gps Track',
+                text: 'Lte Qual',
             },
             tooltip: {
               x: {
@@ -47,8 +45,29 @@ export default {
     try {
       this.temp = await DeviceService.getAllDevices();
       this.temp.forEach(x => {
-
+        const lo = x?.last_log?.data?.nbm_status;
+        if(lo !== undefined){
+        this.lteGps.push(lo);
+        }
       })
+      // console.log(this.lteGps)
+      this.lteGps.forEach(element => {
+        // console.log(element.lte_qual.rssi)
+        if(element.lte_qual.rssi >= -65) {
+          this.series[0].data[0].y++
+        }
+        else if(element.lte_qual.rssi >= -75){
+          this.series[0].data[1].y++
+          console.log(element.lte_qual.rssi)
+        }
+        else if(element.lte_qual.rssi >= -85){
+          this.series[0].data[2].y++
+        }
+        else if(element.lte_qual.rssi >= -95){
+          this.series[0].data[3].y++
+        }
+      });
+      console.log(lteGps)
     } catch (err) {
       this.error = err.message
     }
@@ -63,4 +82,4 @@ export default {
   </div>
 </template>
 
-<style></style> -->
+<style></style>
