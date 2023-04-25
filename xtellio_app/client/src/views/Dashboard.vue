@@ -11,7 +11,7 @@ import DeviceService from '../DeviceService';
 import BatteryColumnChart from '../components/BatteryColumnChart.vue';
 import LastLogOld from '../components/LastLogOld.vue';
 import LastLogUndefined from '../components/LastLogUndefined.vue';
-import GpsColumn from '../components/GpsColumn.vue';
+import LteColumn from '../components/LteColumn.vue';
 
 export default {
   name: 'App',
@@ -27,7 +27,7 @@ export default {
     LastStatusOld,
     LastLogOld,
     LastLogUndefined,
-    GpsColumn
+    LteColumn
   },
   data() {
     return {
@@ -132,7 +132,7 @@ export default {
           <DonutChartProvider />
         </div>
         <div class="ml-5">
-          <GpsColumn/>
+          <LteColumn/>
         </div>
       </div>
     </div>
