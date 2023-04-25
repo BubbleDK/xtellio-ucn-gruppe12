@@ -123,7 +123,7 @@ export default {
         return acc;
       }, {});
 
-      if (Object.keys(checkedFilters).length === 0 && !this.macAddress) {
+      if (Object.keys(checkedFilters).length === 0 && !this.macAddressInput && !this.firmwareInput) {
         return this.devices;
       }
 
@@ -170,8 +170,6 @@ export default {
       if (this.firmwareInput) {
         filteredDevices = filteredDevices.filter(device => device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase()));
       }
-
-      console.log(filteredDevices)
 
       return filteredDevices
     }
@@ -432,27 +430,6 @@ const mobileFiltersOpen = ref(false)
     </div>
   </div>
   <section class="container mx-auto">
-    <!-- <div class="flex flex-col">
-      <div class="-mx-4 -my-2 overflow-x-auto">
-        <div class="inline-block min-w-full py-2 align-middle">
-          <div class="flex justify-between py-3 pl-2">
-            <div class="relative max-w-xs">
-              <label for="search" class="sr-only"> Search </label>
-              <input type="text" v-model="input" name="search"
-                class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                placeholder="Search..." />
-              <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div> -->
     <div class="flex items-center justify-between mt-6">
       <a href="#"
         class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
@@ -494,53 +471,5 @@ const mobileFiltersOpen = ref(false)
 </template>
 
 <style>
-/* Dropdown Button */
-.dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
 
-/* Dropdown button on hover & focus */
-.dropbtn:hover,
-.dropbtn:focus {
-  background-color: #2980B9;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
-  display: block;
-}
 </style>
