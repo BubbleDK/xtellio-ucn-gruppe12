@@ -26,13 +26,12 @@ export default {
       filterTriggered: false,
       deviceLengthOverZero: false,
       devices: [],
-      temp: [],
-      temp2: [],
       filteredDevices: [],
       inactiveInput: window.history.state.st,
       lastLogOld: this.$route.query.lg,
       lastLogOldList: [],
-      macAddress: '',
+      macAddressInput: '',
+      firmwareInput: '',
       filters: [
         {
           id: 'org',
@@ -77,12 +76,7 @@ export default {
           id: 'firmware',
           name: 'Firmware',
           options: [
-            { value: '0', label: '0', checked: false },
-            { value: '2000-2500', label: '2000-2500', checked: false },
-            { value: '2501-3000', label: '2501-3000', checked: false },
-            { value: '3001-3500', label: '3001-3500', checked: false },
-            { value: '3501-4000', label: '3501-4000', checked: false },
-            { value: '>4000', label: '>4000', checked: false },
+            { value: '' },
           ],
         },
       ],
@@ -169,8 +163,12 @@ export default {
       });
 
       // Filter the devices by the selected MAC address value
-      if (this.macAddress) {
-        filteredDevices = filteredDevices.filter(device => device.mac.toLowerCase().includes(this.macAddress.toLowerCase()));
+      if (this.macAddressInput) {
+        filteredDevices = filteredDevices.filter(device => device.mac.toLowerCase().includes(this.macAddressInput.toLowerCase()));
+      }
+      // Filter the devices by the selected firmware value
+      if (this.firmwareInput) {
+        filteredDevices = filteredDevices.filter(device => device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase()));
       }
 
       console.log(filteredDevices)
@@ -228,67 +226,6 @@ const mobileFiltersOpen = ref(false)
 <template>
   <div>
     <div>
-      <!-- Mobile filter dialog -->
-      <TransitionRoot as="template" :show="mobileFiltersOpen">
-        <Dialog as="div" class="relative z-40 lg:hidden" @close="mobileFiltersOpen = false">
-          <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
-            enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100"
-            leave-to="opacity-0">
-            <div class="fixed inset-0 bg-black bg-opacity-25" />
-          </TransitionChild>
-
-          <div class="fixed inset-0 z-40 flex">
-            <TransitionChild as="template" enter="transition ease-in-out duration-300 transform"
-              enter-from="translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform"
-              leave-from="translate-x-0" leave-to="translate-x-full">
-              <DialogPanel
-                class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
-                <div class="flex items-center justify-between px-4">
-                  <h2 class="text-lg font-medium text-white">Filters</h2>
-                  <button type="button"
-                    class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-white"
-                    @click="mobileFiltersOpen = false">
-                    <span class="sr-only">Close menu</span>
-                    <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-
-                <!-- Filters -->
-                <form class="mt-4 border-t border-gray-200">
-                  <Disclosure as="div" v-for="section in filters" :key="section.id"
-                    class="border-t border-gray-200 px-4 py-6" v-slot="{ open }">
-                    <h3 class="-mx-2 -my-3 flow-root">
-                      <DisclosureButton
-                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-white">
-                        <span class="font-medium text-white">{{ section.name }}</span>
-                        <span class="ml-6 flex items-center">
-                          <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
-                          <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel class="pt-6">
-                      <div class="space-y-6">
-                        <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                          <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="text" @change="option.value = this.value"
-                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                        type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
-                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                          <label :for="`filter-mobile-${section.id}-${optionIdx}`"
-                            class="ml-3 min-w-0 flex-1 text-white">{{ option.label }}</label>
-                        </div>
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                </form>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </Dialog>
-      </TransitionRoot>
-
       <main class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
           <h1 class="text-4xl font-bold tracking-tight text-white">Devices</h1>
@@ -325,11 +262,6 @@ const mobileFiltersOpen = ref(false)
               <span class="sr-only">View grid</span>
               <Squares2X2Icon class="h-5 w-5" aria-hidden="true" />
             </button>
-            <button type="button" class="-m-2 ml-4 p-2 text-gray-400 hover:text-white sm:ml-6 lg:hidden"
-              @click="mobileFiltersOpen = true">
-              <span class="sr-only">Filters</span>
-              <FunnelIcon class="h-5 w-5" aria-hidden="true" />
-            </button>
           </div>
         </div>
 
@@ -356,8 +288,11 @@ const mobileFiltersOpen = ref(false)
                 <DisclosurePanel class="pt-6">
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="macAddress"
-                      type="text" @input="macAddress = $event.target.value"
+                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="macAddressInput"
+                      type="text" @input="macAddressInput = $event.target.value"
+                      class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="firmwareInput"
+                      type="text" @input="firmwareInput = $event.target.value"
                       class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
                       type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
