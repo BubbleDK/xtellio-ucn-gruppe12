@@ -176,9 +176,6 @@ export default {
 
       return filteredDevices
     },
-    sortedList() {
-      return this.filteredDevices
-    },
   },
   watch: {
     filters: {
@@ -188,12 +185,12 @@ export default {
       },
       deep: true,
     },
-    sortOptions: {
-      handler() {
-        this.sortedList;
-      },
-      deep: true,
-    },
+    // sortOptions: {
+    //   handler() {
+    //     this.sortedList;
+    //   },
+    //   deep: true,
+    // },
   },
   methods: {
     goTodetail(mac) {
@@ -232,8 +229,41 @@ export default {
         }
         else{
           element.current = true;
+          this.sortedList(element)
         }
       }
+    },
+    sortedList(sortOption) {
+      console.log(sortOption.name)
+      switch(sortOption.name) {
+      case 'Type A-Z':
+          this.devices.sort((a, b) => a.type.localeCompare(b.type));
+          break;
+        case 'Type Z-A':
+          this.devices.sort((a, b) => b.type.localeCompare(a.type));
+          break;
+        case 'Customer A-Z':
+          this.devices.sort((a, b) => a.customer.localeCompare(b.customer));
+          break;
+        case 'Customer Z-A':
+          this.devices.sort((a, b) => b.customer.localeCompare(a.customer));
+          break;
+        case 'State A-Z':
+          this.devices.sort((a, b) => a.state.localeCompare(b.state));
+          break;
+        case 'State Z-A':
+          this.devices.sort((a, b) => b.state.localeCompare(a.state));
+          break;
+        case 'Battery: High to Low':
+          this.devices.sort((a, b) => b.status.batt - a.status.batt);
+          break;
+        case 'Battery: Low to High':
+          this.devices.sort((a, b) => a.status.batt - b.status.batt);
+          break;
+        default:
+          break;
+      }
+      return this.devices;
     },
   }
 }
