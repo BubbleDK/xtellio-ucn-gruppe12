@@ -81,11 +81,14 @@ export default {
         },
       ],
       sortOptions: [
-        { name: 'Most Popular', href: '#', current: true },
-        { name: 'Best Rating', href: '#', current: false },
-        { name: 'Newest', href: '#', current: false },
-        { name: 'Price: Low to High', href: '#', current: false },
-        { name: 'Price: High to Low', href: '#', current: false },
+        { name: 'Type A-Z', current: true },
+        { name: 'Type Z-A', current: false },
+        { name: 'Customer A-Z', current: false },
+        { name: 'Customer Z-A', current: false },
+        { name: 'State A-Z', current: false },
+        { name: 'State Z-A', current: false },
+        { name: 'Battery: High to Low', current: false },
+        { name: 'Battery: Low to High', current: false },
       ]
     }
   },
@@ -172,13 +175,22 @@ export default {
       }
 
       return filteredDevices
-    }
+    },
+    sortedList() {
+      return this.filteredDevices
+    },
   },
   watch: {
     filters: {
       handler() {
         // This will trigger the computed property filteredList to be updated
         this.filteredList;
+      },
+      deep: true,
+    },
+    sortOptions: {
+      handler() {
+        this.sortedList;
       },
       deep: true,
     },
@@ -211,6 +223,17 @@ export default {
         // For all other filters, check if an option is selected
         return filter.options.some((option) => option.checked);
       });
+    },
+    currentSortOption(name) {
+      for (let index = 0; index < this.sortOptions.length; index++) {
+        const element = this.sortOptions[index];
+        if(element.name !== name){
+          element.current = false;
+        }
+        else{
+          element.current = true;
+        }
+      }
     },
   }
 }
@@ -247,9 +270,9 @@ const mobileFiltersOpen = ref(false)
                   class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div class="py-1">
                     <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
-                    <a :href="option.href"
-                      :class="[option.current ? 'font-medium text-white' : 'text-white', active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']">{{
-                        option.name }}</a>
+                    <a href="#"
+                      :class="[option.current ? 'font-medium text-black' : 'text-black', active ? 'bg-gray-200' : '', 'block px-4 py-2 text-sm']" @click="currentSortOption(option.name)">{{
+                        option.name }} </a>
                     </MenuItem>
                   </div>
                 </MenuItems>
