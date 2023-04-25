@@ -1,6 +1,6 @@
 <script>
 import SparkBoxBattery from '../components/SparkBoxBattery.vue';
-import DonutChartFirmware from '../components/DonutChartFirmware.vue';
+import DonutChartFirmware from '../components/LteQualDonutChart.vue';
 import GetDataExample from '../components/GetDataExample.vue';
 import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
 import StateBarChart from '../components/StateBarChart.vue';
@@ -27,7 +27,7 @@ export default {
     LastStatusOld,
     LastLogOld,
     LastLogUndefined,
-    LteColumn
+    LteColumn,
   },
   data() {
     return {
@@ -128,7 +128,7 @@ export default {
       </div>
       <div class="flex mt-5">
         <div class="mr-5">
-          <!-- <DonutChartFirmware /> -->
+          <DonutChartFirmware />
           <DonutChartProvider />
         </div>
         <div class="ml-5">

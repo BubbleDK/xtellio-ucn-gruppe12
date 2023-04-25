@@ -50,9 +50,7 @@ export default {
         this.lteGps.push(lo);
         }
       })
-      // console.log(this.lteGps)
       this.lteGps.forEach(element => {
-        // console.log(element.lte_qual.rssi)
         if(element.lte_qual.rssi >= -65) {
           this.series[0].data[0].y++
         }
