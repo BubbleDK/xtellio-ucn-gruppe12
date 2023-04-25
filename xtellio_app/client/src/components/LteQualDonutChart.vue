@@ -16,7 +16,7 @@ export default {
         dataLabels: {
           enabled: true,
         },
-        labels: ['>-65', '-66 til -75', '-76 til -85', '-86 til -95'],
+        labels: ['> -65', '-66 til -75', '-76 til -85', '-86 til -95'],
         responsive: [{
           breakpoint: 480,
           options: {
