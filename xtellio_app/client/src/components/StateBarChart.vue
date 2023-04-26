@@ -10,7 +10,7 @@ export default {
     return {
       series: [{
         name: 'Units',
-        data: [0, 0, 0]
+        data: [0, 0, 0, 0]
       }],
       chartOptions: {
         chart: {
@@ -40,7 +40,7 @@ export default {
           title: {
             text: 'State'
           },
-          categories: ['Active', 'Inactive', 'Factory'],
+          categories: ['Active', 'Inactive', 'Factory', "Unknown"],
         },
         title: {
           text: 'State',
@@ -79,6 +79,9 @@ export default {
         }
         else if (state === "Factory") {
           this.series[0].data[2]++;
+        }
+        else if (state === "Unknown") {
+          this.series[0].data[3]++;
         }
       });
     } catch (err) {
