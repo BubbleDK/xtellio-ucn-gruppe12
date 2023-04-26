@@ -196,8 +196,18 @@ export default {
       },
       deep: true,
     },
+    filteredList() {
+      this.adjustCurrentPage();
+    },
   },
   methods: {
+    adjustCurrentPage() {
+      if (this.currentPage > this.pageCount) {
+        this.currentPage = this.pageCount;
+      } else if (this.currentPage < 1 && this.pageCount > 0) {
+        this.currentPage = 1;
+      }
+    },
     goTodetail(mac) {
       this.$router.push({ name: 'DeviceView', params: { Mac: mac } })
     },
