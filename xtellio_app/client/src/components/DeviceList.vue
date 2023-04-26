@@ -33,6 +33,8 @@ export default {
       macAddressInput: '',
       firmwareInput: '',
       selected: 'Sort',
+      currentPage: 1,
+      pageSize: 10,
       filters: [
         {
           id: 'org',
@@ -177,6 +179,14 @@ export default {
 
       return filteredDevices
     },
+    paginatedFilteredList() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.filteredList.slice(start, end);
+    },
+    pageCount() {
+      return Math.ceil(this.filteredList.length / this.pageSize);
+    },
   },
   watch: {
     filters: {
@@ -186,12 +196,6 @@ export default {
       },
       deep: true,
     },
-    // sortOptions: {
-    //   handler() {
-    //     this.sortedList;
-    //   },
-    //   deep: true,
-    // },
   },
   methods: {
     goTodetail(mac) {
@@ -401,7 +405,7 @@ const mobileFiltersOpen = ref(false)
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                    <tr v-for="device in filteredList">
+                    <tr v-for="device in paginatedFilteredList">
                       <td class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap">
                         {{ device?.type }}
                       </td>
@@ -461,51 +465,44 @@ const mobileFiltersOpen = ref(false)
                   </tbody>
                 </table>
               </div>
+              <section class="container mx-auto">
+                <div class="flex items-center justify-between mt-6">
+                  <button @click="currentPage--" :disabled="currentPage <= 1"
+                    class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                      class="w-5 h-5 rtl:-scale-x-100">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                    </svg>
+                    <span>
+                      previous
+                    </span>
+                  </button>
+                  <div class="items-center hidden md:flex gap-x-3">
+                    <template v-for="(page, index) in pageCount" :key="index">
+                      <button v-if="Math.abs(currentPage - (index + 1)) <= 2 || index === 0 || index === pageCount - 1" @click="currentPage = index + 1" :class="[currentPage === index + 1 ? 'text-blue-500 bg-blue-100/60 dark:bg-gray-800' : 'text-white dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800', 'px-2 py-1 text-sm rounded-md']">
+                        {{ index + 1 }}
+                      </button>
+                      <span v-else-if="Math.abs(currentPage - (index + 1)) === 3" class="px-2 py-1 text-sm">...</span>
+                    </template>
+                  </div>
+                  <button @click="currentPage++" :disabled="currentPage >= pageCount"
+                    class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <span>
+                      Next
+                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                      class="w-5 h-5 rtl:-scale-x-100">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                  </button>
+                </div>
+              </section>
             </div>
           </div>
         </section>
       </main>
     </div>
   </div>
-  <section class="container mx-auto">
-    <div class="flex items-center justify-between mt-6">
-      <a href="#"
-        class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-5 h-5 rtl:-scale-x-100">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-        </svg>
-        <span>
-          previous
-        </span>
-      </a>
-      <div class="items-center hidden md:flex gap-x-3">
-        <a href="#" class="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60">1</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">2</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">3</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">...</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">12</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">13</a>
-        <a href="#"
-          class="px-2 py-1 text-sm text-white rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">14</a>
-      </div>
-      <a href="#"
-        class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-        <span>
-          Next
-        </span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-5 h-5 rtl:-scale-x-100">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-        </svg>
-      </a>
-    </div>
-  </section>
 </template>
 
 <style>
