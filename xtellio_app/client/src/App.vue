@@ -5,7 +5,6 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
-import HelloWorld from './components/HelloWorld.vue'
 import accordion from './components/DeviceList.vue'
 
 export default {
