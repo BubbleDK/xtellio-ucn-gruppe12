@@ -12,6 +12,9 @@ export default {
     try {
       this.customerDevices = await DeviceService.getAllCustomerDevices(this.customerName);
       console.log(this.customerDevices)
+      this.customerDevices.forEach(element => {
+        console.log(element.status?.sw)
+      });
     } catch (err) {
       this.error = err.message
     }
@@ -65,7 +68,8 @@ export default {
         </div>
         <div>
           <span class="text-sm font-medium text-gray-500 dark:text-gray-400">QR: </span>
-          <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ device?.ids?.qr }}</span>
+          <span v-if="device?.ids?.qr !== null" class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ device?.ids?.qr }}</span>
+          <span v-else class="text-sm font-medium text-gray-500 dark:text-gray-400">none</span>
         </div>
       </div>
         <h4 class="mt-1 text-xl font-semibold uppercase leading-tight truncate text-white-900">{{ device.mac }}</h4>
@@ -75,7 +79,8 @@ export default {
           <span class="text-white-600 text-sm"> {{ device.status?.batt }}</span>
           <div>
             <label class="text-sm text-white-900">Firmware: </label>
-          <span class="text-sm text-white-900"> {{ device.status?.sw }}</span>
+          <span v-if="device.status?.sw !== ''" class="text-sm text-white-900"> {{ device.status?.sw }}</span>
+          <span v-else class="text-sm text-white-900"> none</span>
         </div>
         </div>
         <div class="mt-4">
