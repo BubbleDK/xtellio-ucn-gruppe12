@@ -48,7 +48,8 @@ export default {
 
     <div class="grid grid-cols-4 gap-4 mx-auto max-w-7xl py-6">
       <div class="bg-gray-800 p-6 rounded-lg shadow-lg" v-for="device in customerDevices">
-        <div class="flex items-baseline">
+        <div class="flex justify-between items-baseline pb-2 ">
+        <div class="flex ">
           <span v-if="device.state == 'Active'" class="bg-teal-200 text-black text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
             {{ device.state }}
           </span>
@@ -62,12 +63,20 @@ export default {
             {{ device.state }}
           </span>
         </div>
-
+        <div>
+          <span class="text-sm font-medium text-gray-500 dark:text-gray-400">QR: </span>
+          <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ device?.ids?.qr }}</span>
+        </div>
+      </div>
         <h4 class="mt-1 text-xl font-semibold uppercase leading-tight truncate text-white-900">{{ device.mac }}</h4>
 
         <div class="mt-1 text-white-900">
           Battery:
           <span class="text-white-600 text-sm"> {{ device.status?.batt }}</span>
+          <div>
+            <label class="text-sm text-white-900">Firmware: </label>
+          <span class="text-sm text-white-900"> {{ device.status?.sw }}</span>
+        </div>
         </div>
         <div class="mt-4">
           <span class="text-teal-600 text-md font-semibold">Last timestamp: </span>
