@@ -75,7 +75,7 @@ export default {
 </script>
 
 <template>
-  <div id="chart">
+  <div id="chart" class="block max-w-xl p-6 border border-gray-200 rounded-lg shadow dark:border-gray-800">
     <apexchart height="350" type="bar" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>

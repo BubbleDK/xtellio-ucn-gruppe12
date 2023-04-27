@@ -6,8 +6,31 @@ export default {
   data() {
     return {
       series: [{
-        name: 'Units',
-        data: [0, 0, 0, 0, 0, 0],
+        name: 'Units battery',
+        data: [{
+          x: "0 mv",
+          y: 0,
+        },
+        {
+          x: "2000-2500 mv",
+          y: 0,
+        },
+        {
+          x: "2500-3000 mv",
+          y: 0,
+        },
+        {
+          x: "3000-3500 mv",
+          y: 0,
+        },
+        {
+          x: "3500-4000 mv",
+          y: 0,
+        },
+        {
+          x: ">4000 mv",
+          y: 0,
+        }]
       }],
       textVal: '',
       battTotal: 0,
@@ -19,10 +42,10 @@ export default {
         chart: {
           foreColor: "#FFFFFF",
           type: 'bar',
-          height: 350
         },
         plotOptions: {
           bar: {
+            distributed: true,
             horizontal: false,
             columnWidth: '55%',
             endingShape: 'rounded'
@@ -32,7 +55,7 @@ export default {
           enabled: true,
           style: {
             fontSize: '12px',
-            colors: ["#304758"]
+            colors: ["#FFFFFF"]
           }
         },
         stroke: {
@@ -41,19 +64,27 @@ export default {
           colors: ['transparent']
         },
         xaxis: {
-          title: {
-            text: 'Battery distribution'
-          },
-          categories: ['0 mV', '2000-2500 mV', '2501-3000 mV', '3001-3500 mV', '3501-4000 mV', '>4000 mV'],
+          labels: {
+            show: false,
+          }
         },
         yaxis: {
           title: {
             text: 'Units'
           },
           forceNiceScale: true,
+          tickAmount: 3,
+        },
+        title: {
+          text: 'Battery',
+          offsetX: 0,
+          style: {
+            fontSize: '24px',
+            color: '#FFFFFF'
+          }
         },
         fill: {
-          opacity: 1
+          opacity: 0.8,
         },
         tooltip: {
         }
@@ -69,22 +100,22 @@ export default {
       this.temp.forEach(device => {
         const battery = Number(device.status.batt);
         if(battery === 0 && device.state === 'Active'){
-          this.series[0].data[0]++;
+          this.series[0].data[0].y++;
         }
         else if (battery <= 2500 && battery >= 2000) {
-          this.series[0].data[1]++;
+          this.series[0].data[1].y++;
         }
         else if (battery > 2500 && battery <= 3000) {
-          this.series[0].data[2]++;
+          this.series[0].data[2].y++;
         }
         else if (battery > 3000 && battery <= 3500) {
-          this.series[0].data[3]++;
+          this.series[0].data[3].y++;
         }
         else if (battery > 3500 && battery <= 4000) {
-          this.series[0].data[4]++;
+          this.series[0].data[4].y++;
         }
         else if (battery > 4000) {
-          this.series[0].data[5]++;
+          this.series[0].data[5].y++;
         }
         if(battery !== 0){
           this.battTotal += battery;
@@ -113,8 +144,8 @@ export default {
 
 <template>
   <div id="chart"
-    class="block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart id="column" :key="textVal" type="bar" height="400" :options="chartOptions" :series="series" @click="showBat()"></apexchart>
+    class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @click="showBat()"></apexchart>
   </div>
 </template>
 
@@ -123,9 +154,9 @@ export default {
   color: black !important;
 }
 
-#column {
+/* #column {
   width: 31em;
-}
+} */
 
 #column .apexcharts-menu {
   color: black;

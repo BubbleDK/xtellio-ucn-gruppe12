@@ -29,10 +29,8 @@ export default {
       chartOptions: {
         chart: {
           type: 'bar',
-          height: 160,
-          sparkline: {
-            enabled: true
-          },
+          height: 200,
+          foreColor: "#FFFFFF",
         },
         plotOptions: {
           bar: {
@@ -41,15 +39,28 @@ export default {
         },
         dataLabels: {
           enabled: true,
+          style: {
+            fontSize: '12px',
+            colors: ["#FFFFFF"]
+          }
         },
         stroke: {
           curve: 'straight',
         },
         fill: {
-          opacity: 0.6,
+          opacity: 0.8,
+        },
+        xaxis:{
+          labels:{
+            show: false,
+          }
         },
         yaxis: {
-          min: 0
+          title: {
+            text: 'Units'
+          },
+          forceNiceScale: true,
+          tickAmount: 3,
         },
         title: {
           text: 'Firmware',
@@ -96,9 +107,9 @@ export default {
 <template>
   <div>
     <div
-      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-2">
+      class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark2">
-        <apexchart type="bar" height="160" :options="chartOptions" :series="devices"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="devices"></apexchart>
       </div>
     </div>
   </div>

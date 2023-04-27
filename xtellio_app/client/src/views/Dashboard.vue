@@ -74,14 +74,14 @@ export default {
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
           Xtellio Statistics
         </h2>
-        <p class="mt-4 text-gray-500 dark:text-gray-400 sm:text-xl">
-          Verdens flotteste dashboard
+        <p class="mt-4 text-white dark:text-white sm:text-xl">
+          Get familiar with the Xtellio device pool
         </p>
       </div>
       <div class="mt-8 sm:mt-12">
         <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
-            <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
+            <dt class="order-last text-lg font-medium text-white dark:text-white">
               Total Devices
             </dt>
             <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
@@ -95,7 +95,7 @@ export default {
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <router-link to="/orgview">
-            <dt class="text-lg font-medium text-gray-500 dark:text-gray-400">
+            <dt class="text-lg font-medium text-white dark:text-white">
                 <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToCustomerList()">{{ customers.length }} </dd>
                 Total Customers
               </dt>
@@ -105,23 +105,19 @@ export default {
       </div>
     </div>
 
-    <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-      <div class="grid grid-flow-col gap-1 pb-4">
-        <!-- <SparkBoxBattery /> -->
-        <div>
+    <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8 rounded-lg border border-gray-100 dark:border-gray-800">
+      <div class="grid grid-cols-1 gap-7 sm:grid-cols-3 pb-4">
           <SparkBoxFirmWare />
-        <StateBarChart />
-        </div>
-        <BatteryColumnChart />
-        
+          <StateBarChart />
+          <BatteryColumnChart />
       </div>
-    <div class="mt-8 sm:mt-4">
-        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+      <div class="mt-8 sm:mt-4">
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
             <LastLogOld/>
           </div>
 
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
             <LastStatusOld/>
           </div>
         </dl>
@@ -129,10 +125,13 @@ export default {
       <div class="flex mt-5">
         <div class="mr-5">
           <DonutChartFirmware />
-          <DonutChartProvider />
         </div>
         <div class="ml-5">
-          <LteColumn/>
+          <DonutChartProvider />
+          <!-- <LteColumn/> -->
+        </div>
+        <div class="ml-5">
+          <DonutChartProvider />
         </div>
       </div>
     </div>

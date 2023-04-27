@@ -43,7 +43,7 @@ export default {
     <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToList()">
       {{ this.devices[0].data[0] }}
     </dd>
-    <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
+    <dt class="order-last text-lg font-medium text-white dark:text-white">
       Devices that haven't logged in the last 24 hours
     </dt>
   </router-link>

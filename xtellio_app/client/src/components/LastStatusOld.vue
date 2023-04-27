@@ -30,7 +30,7 @@ export default {
 </script>
 
 <template>
-    <dt class="order-last text-lg font-medium text-gray-500 dark:text-gray-400">
+    <dt class="order-last text-lg font-medium text-white dark:text-white">
       Devices haven't sent status in the last 24 hours
     </dt>
     <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">

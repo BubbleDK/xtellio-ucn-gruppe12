@@ -10,7 +10,22 @@ export default {
     return {
       series: [{
         name: 'Units',
-        data: [0, 0, 0, 0]
+        data: [{
+          x: "Active",
+          y: 0,
+        },
+        {
+          x: "Inactive",
+          y: 0,
+        },
+        {
+          x: "Factory",
+          y: 0,
+        },
+        {
+          x: "Unknown",
+          y: 0,
+        }]
       }],
       chartOptions: {
         chart: {
@@ -21,7 +36,8 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'
+            endingShape: 'rounded',
+            distributed: true,
           },
         },
         dataLabels: {
@@ -37,10 +53,9 @@ export default {
           colors: ['transparent']
         },
         xaxis: {
-          title: {
-            text: 'State'
-          },
-          categories: ['Active', 'Inactive', 'Factory', "Unknown"],
+          labels:{
+            show: false,
+          }
         },
         title: {
           text: 'State',
@@ -72,16 +87,16 @@ export default {
       this.temp.forEach(device => {
         const state = device.state;
         if (state === "Active") {
-          this.series[0].data[0]++;
+          this.series[0].data[0].y++;
         }
         else if (state === "Inactive") {
-          this.series[0].data[1]++;
+          this.series[0].data[1].y++;
         }
         else if (state === "Factory") {
-          this.series[0].data[2]++;
+          this.series[0].data[2].y++;
         }
         else if (state === "Unknown") {
-          this.series[0].data[3]++;
+          this.series[0].data[3].y++;
         }
       });
     } catch (err) {
@@ -94,7 +109,7 @@ export default {
 <template>
   <div>
     <div
-      class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-blue-800 dark:border-gray-700">
+      class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark1">
         <apexchart type="bar" height="200" :options="chartOptions" :series="series"></apexchart>
       </div>
