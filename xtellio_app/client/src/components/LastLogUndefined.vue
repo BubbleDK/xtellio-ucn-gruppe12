@@ -31,8 +31,8 @@ export default {
 </script>
 
 <template>
-  <router-link to="/devicelistview">
-    <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToList()">
+  <router-link to="/devicelistview" @click="goToList()">
+    <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
       {{ this.undefinedLog }}
     </dd>
     <dt class="order-last text-lg font-medium text-white dark:text-white">
