@@ -136,22 +136,22 @@ export default {
         console.log('seriesIndex:'+seriesIndex)
         switch (seriesIndex) {
           case 0:
-            this.$router.push({ name: 'DeviceListView', query: {battery: "0"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: "0"} })
             break;
           case 1:
-            this.$router.push({ name: 'DeviceListView', query: {battery: "2000-2500"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: "2000-2500"} })
             break;
           case 2:
-            this.$router.push({ name: 'DeviceListView', query: {battery: "2501-3000"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: "2501-3000"} })
             break;
           case 3:
-            this.$router.push({ name: 'DeviceListView', query: {battery: "3000-3500"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: "3000-3500"} })
             break;
           case 4:
-            this.$router.push({ name: 'DeviceListView', query: {battery: "3501-4000"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: "3501-4000"} })
             break;
           case 5:
-            this.$router.push({ name: 'DeviceListView', query: {battery: ">4000"} })
+            this.$router.push({ name: 'DeviceListView', state: {battery: ">4000"} })
             break;
           default:
             break;

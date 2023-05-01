@@ -242,8 +242,8 @@ export default {
       }
     },
     showBattery() {
-      if(this.$route.query.battery){
-        const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === this.$route.query.battery.toLowerCase())
+      if(window.history.state.battery){
+        const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === window.history.state.battery)
         battVal.checked = true;
       }
     },
@@ -447,7 +447,10 @@ const mobileFiltersOpen = ref(false)
                       <td class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap">
                         {{ device?.type }}
                       </td>
-                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                        Unknown
+                      </td>
+                      <td v-else class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
                         {{ device?.org }}
                       </td>
                       <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
