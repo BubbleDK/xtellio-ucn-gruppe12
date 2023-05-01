@@ -240,8 +240,8 @@ export default {
       }
     },
     showFirmware(){
-      if(this.$route.query.firmware){
-        this.devices = JSON.parse(this.$route.query.firmware);
+      if(window.history.state.firmware){
+        this.devices = JSON.parse(window.history.state.firmware);
       }
     },
     showState(){

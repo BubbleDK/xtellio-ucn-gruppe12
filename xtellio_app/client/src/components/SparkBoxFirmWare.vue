@@ -113,16 +113,16 @@ export default {
     goToFirmwareList(chartContext, seriesIndex, config){
       switch (seriesIndex) {
           case 0:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listLow)} })
+            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listLow)} })
             break;
           case 1:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listMed)} })
+            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listMed)} })
             break;
           case 2:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listHigh)} })
+            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listHigh)} })
             break;
           case 3:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listDirty)} })
+            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listDirty)} })
             break;
           default:
             break;
