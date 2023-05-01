@@ -111,11 +111,19 @@ export default {
       for (let i = 0; i < this.devices.length; i++) {
         const element = this.devices[i]
         if (!this.filters[0].options.some(option => option.value === element.org)) {
-          this.filters[0].options.push({ value: element.org, label: element.org, checked: false })
+          if(element.org === ''){
+            this.filters[0].options.push({ value: element.org, label: "Unknown", checked: false })
+          } else {
+            this.filters[0].options.push({ value: element.org, label: element.org, checked: false })
+          }
         }
 
         if (!this.filters[1].options.some(option => option.value === element.customer)) {
-          this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
+          if(element.org === ''){
+            this.filters[1].options.push({ value: element.customer, label: "Unknown", checked: false })
+          } else {
+            this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
+          }
         }
       }
     } catch (err) {
