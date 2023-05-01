@@ -122,7 +122,7 @@ export default {
             this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listHigh)} })
             break;
           case 3:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listDirty)} })
             break;
           default:
             break;
