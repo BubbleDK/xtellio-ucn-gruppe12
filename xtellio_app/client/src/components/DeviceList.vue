@@ -103,6 +103,7 @@ export default {
       this.showLastLogOld();
       this.showBattery();
       this.showState();
+      this.showFirmware()
       this.devices.sort((a, b) => {
         return stateOrder[a.state] - stateOrder[b.state];
       });
@@ -236,6 +237,11 @@ export default {
       if(this.$route.query.battery){
         const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === this.$route.query.battery.toLowerCase())
         battVal.checked = true;
+      }
+    },
+    showFirmware(){
+      if(JSON.parse(this.$route.query.firmware)){
+        this.devices = JSON.parse(this.$route.query.firmware);
       }
     },
     showState(){

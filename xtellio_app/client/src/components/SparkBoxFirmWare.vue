@@ -6,6 +6,10 @@ export default {
   data() {
     return {
       temp: [],
+      listDirty: [],
+      listLow: [],
+      listMed: [],
+      listHigh: [],
       devices: [{
         name: 'Units on firmware',
         data: [{
@@ -86,15 +90,19 @@ export default {
         let regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/); 
         if(reg.test(tempValue)){
           this.devices[0].data[0].y++;
+          this.listHigh.push(element);
         }
         else if(regMid.test(tempValue)){
           this.devices[0].data[1].y++;
+          this.listMed.push(element);
         }
         else if(regLow.test(tempValue)){
           this.devices[0].data[2].y++;
+          this.listLow.push(element);
         }
         else{
           this.devices[0].data[3].y++;
+          this.listDirty.push(element);
         }
       });
     } catch (err) {
@@ -105,13 +113,13 @@ export default {
     goToFirmwareList(chartContext, seriesIndex, config){
       switch (seriesIndex) {
           case 0:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listLow)} })
             break;
           case 1:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listMed)} })
             break;
           case 2:
-            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            this.$router.push({ name: 'DeviceListView', query: {firmware: JSON.stringify(this.listHigh)} })
             break;
           case 3:
             this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
