@@ -102,6 +102,26 @@ export default {
     } catch (err) {
       this.error = err.message
     }
+  },
+  methods: {
+    goToStateList(chartContext, seriesIndex, config){
+      switch (seriesIndex) {
+          case 0:
+            this.$router.push({ name: 'DeviceListView', query: {state: "Active"} })
+            break;
+          case 1:
+            this.$router.push({ name: 'DeviceListView', query: {state: "Inactive"} })
+            break;
+          case 2:
+            this.$router.push({ name: 'DeviceListView', query: {state: "Factory"} })
+            break;
+          case 3:
+            this.$router.push({ name: 'DeviceListView', query: {state: "Unknown"} })
+            break;
+          default:
+            break;
+        }
+    }
   }
 }
 </script>
@@ -111,7 +131,7 @@ export default {
     <div
       class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark1">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="series" @legendClick="goToStateList"></apexchart>
       </div>
     </div>
   </div>

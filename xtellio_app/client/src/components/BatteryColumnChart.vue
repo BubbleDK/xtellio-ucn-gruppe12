@@ -131,11 +131,31 @@ export default {
     }
   },  
   methods: {
-    showBat(event, chartContext, config){
+    showBat(chartContext, seriesIndex, config){
         console.log("click");
-        console.log(event);
-        console.log(chartContext);
-        console.log(config)
+        console.log('seriesIndex:'+seriesIndex)
+        switch (seriesIndex) {
+          case 0:
+            this.$router.push({ name: 'DeviceListView', query: {battery: "0"} })
+            break;
+          case 1:
+            this.$router.push({ name: 'DeviceListView', query: {battery: "2000-2500"} })
+            break;
+          case 2:
+            this.$router.push({ name: 'DeviceListView', query: {battery: "2501-3000"} })
+            break;
+          case 3:
+            this.$router.push({ name: 'DeviceListView', query: {battery: "3000-3500"} })
+            break;
+          case 4:
+            this.$router.push({ name: 'DeviceListView', query: {battery: "3501-4000"} })
+            break;
+          case 5:
+            this.$router.push({ name: 'DeviceListView', query: {battery: ">4000"} })
+            break;
+          default:
+            break;
+        }
     },
   }
 }
@@ -145,7 +165,7 @@ export default {
 <template>
   <div id="chart"
     class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @click="showBat()"></apexchart>
+    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @legendClick="showBat"></apexchart>
   </div>
 </template>
 

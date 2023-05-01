@@ -1,5 +1,4 @@
 <script>
-import SparkBoxBattery from '../components/SparkBoxBattery.vue';
 import DonutChartFirmware from '../components/LteQualDonutChart.vue';
 import GetDataExample from '../components/GetDataExample.vue';
 import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
@@ -16,7 +15,6 @@ import LteColumn from '../components/LteColumn.vue';
 export default {
   name: 'App',
   components: {
-    SparkBoxBattery,
     DonutChartFirmware,
     GetDataExample,
     SparkBoxFirmWare,

@@ -101,6 +101,8 @@ export default {
       const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
       this.showInactive();
       this.showLastLogOld();
+      this.showBattery();
+      this.showState();
       this.devices.sort((a, b) => {
         return stateOrder[a.state] - stateOrder[b.state];
       });
@@ -228,6 +230,18 @@ export default {
             this.devices = this.lastLogOldList;
           }
         });
+      }
+    },
+    showBattery() {
+      if(this.$route.query.battery){
+        const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === this.$route.query.battery.toLowerCase())
+        battVal.checked = true;
+      }
+    },
+    showState(){
+      if(this.$route.query.state){
+        const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === this.$route.query.state.toLowerCase())
+        stateVal.checked = true;
       }
     },
     getActiveFilters() {

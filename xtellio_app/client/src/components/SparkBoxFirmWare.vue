@@ -100,6 +100,26 @@ export default {
     } catch (err) {
       this.error = err.message
     }
+  },
+  methods: {
+    goToFirmwareList(chartContext, seriesIndex, config){
+      switch (seriesIndex) {
+          case 0:
+            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            break;
+          case 1:
+            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            break;
+          case 2:
+            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            break;
+          case 3:
+            this.$router.push({ name: 'DeviceListView', query: {firmware: ""} })
+            break;
+          default:
+            break;
+      }
+    }
   }
 }
 </script>
@@ -109,7 +129,7 @@ export default {
     <div
       class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark2">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="devices"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="devices" @legendClick="goToFirmwareList"></apexchart>
       </div>
     </div>
   </div>
