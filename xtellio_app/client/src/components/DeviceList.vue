@@ -253,8 +253,8 @@ export default {
       }
     },
     showState(){
-      if(this.$route.query.state){
-        const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === this.$route.query.state.toLowerCase())
+      if(window.history.state.state){
+        const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === window.history.state.state.toLowerCase())
         stateVal.checked = true;
       }
     },

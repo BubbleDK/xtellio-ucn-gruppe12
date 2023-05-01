@@ -107,16 +107,16 @@ export default {
     goToStateList(chartContext, seriesIndex, config){
       switch (seriesIndex) {
           case 0:
-            this.$router.push({ name: 'DeviceListView', query: {state: "Active"} })
+            this.$router.push({ name: 'DeviceListView', state: {state: "Active"} })
             break;
           case 1:
-            this.$router.push({ name: 'DeviceListView', query: {state: "Inactive"} })
+            this.$router.push({ name: 'DeviceListView', state: {state: "Inactive"} })
             break;
           case 2:
-            this.$router.push({ name: 'DeviceListView', query: {state: "Factory"} })
+            this.$router.push({ name: 'DeviceListView', state: {state: "Factory"} })
             break;
           case 3:
-            this.$router.push({ name: 'DeviceListView', query: {state: "Unknown"} })
+            this.$router.push({ name: 'DeviceListView', state: {state: "Unknown"} })
             break;
           default:
             break;
