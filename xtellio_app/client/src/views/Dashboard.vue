@@ -49,7 +49,7 @@ export default {
           mapName.set(tempValue, + 1)
         }
       });
-      mapName.forEach((key ,value) => {
+      mapName.forEach((key, value) => {
         this.customers.push(value);
       })
     } catch (err) {
@@ -57,8 +57,8 @@ export default {
     }
   },
   methods: {
-    goToCustomerList(){
-      this.$router.push({ name: 'OrgView'})
+    goToCustomerList() {
+      this.$router.push({ name: 'OrgView' })
     }
   }
 }
@@ -88,14 +88,17 @@ export default {
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl"><LastLogUndefined/></dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
+              <LastLogUndefined />
+            </dd>
           </div>
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <router-link to="/orgview">
-            <dt class="text-lg font-medium text-white dark:text-white">
-                <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToCustomerList()">{{ customers.length }} </dd>
-                Total Customers
+              <dt class="text-lg font-medium text-white dark:text-white">
+              <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl" @click="goToCustomerList()">{{
+                customers.length }} </dd>
+              Total Customers
               </dt>
             </router-link>
           </div>
@@ -103,20 +106,23 @@ export default {
       </div>
     </div>
 
-    <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8 rounded-lg border border-gray-100 dark:border-gray-800">
+    <div
+      class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-4 lg:px-4 rounded-lg border border-gray-100 dark:border-gray-800">
       <div class="grid grid-cols-1 gap-7 sm:grid-cols-3 pb-4">
-          <SparkBoxFirmWare />
-          <StateBarChart />
-          <BatteryColumnChart />
+        <SparkBoxFirmWare />
+        <StateBarChart />
+        <BatteryColumnChart />
       </div>
       <div class="mt-8 sm:mt-4">
         <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
-            <LastLogOld/>
+          <div
+            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
+            <LastLogOld />
           </div>
 
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
-            <LastStatusOld/>
+          <div
+            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
+            <LastStatusOld />
           </div>
         </dl>
       </div>
@@ -130,8 +136,7 @@ export default {
         </div>
         <div class="ml-5">
           <DonutChartProvider />
-        </div>
       </div>
     </div>
-  </section>
-</template>
+  </div>
+</section></template>
