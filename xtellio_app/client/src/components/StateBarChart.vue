@@ -31,6 +31,9 @@ export default {
         chart: {
           foreColor: "#FFFFFF",
           type: 'bar',
+          toolbar: {
+            show: false,
+          }
         },
         plotOptions: {
           bar: {
@@ -40,6 +43,7 @@ export default {
             distributed: true,
           },
         },
+        colors: ['#3e65cf', '#595555', '#fab711', '#ff0000'],
         dataLabels: {
           enabled: true,
           style: {
@@ -61,7 +65,7 @@ export default {
           text: 'State Distribution',
           offsetX: 0,
           style: {
-            fontSize: '24px',
+            fontSize: '18px',
             color: '#FFFFFF'
           }
         },
@@ -73,7 +77,7 @@ export default {
           tickAmount: 3,
         },
         fill: {
-          opacity: 1
+          opacity: 0.8,
         },
         tooltip: {
         }
