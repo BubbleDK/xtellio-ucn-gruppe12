@@ -113,9 +113,9 @@ export default {
     }
   },
   methods: {
-    goToFirmwareList(chartContext, seriesIndex, config){
-      switch (seriesIndex) {
-          case 0:
+    goToFirmwareList(data){
+      switch (data) {
+        case 0:
             this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listLow)} })
             break;
           case 1:
@@ -129,8 +129,14 @@ export default {
             break;
           default:
             break;
-      }
-    }
+        }
+    },
+    goToFirmwareListDataPoint(event, chartContext, config){
+      this.goToFirmwareList(config.dataPointIndex)
+    },
+    goToFirmwareListLegend(chartContext, seriesIndex, config){
+      this.goToFirmwareList(seriesIndex)
+    },
   }
 }
 </script>
@@ -140,7 +146,7 @@ export default {
     <div
       class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark2">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="devices" @legendClick="goToFirmwareList"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="devices" @dataPointSelection="goToFirmwareListDataPoint" @legendClick="goToFirmwareListLegend"></apexchart>
       </div>
     </div>
   </div>

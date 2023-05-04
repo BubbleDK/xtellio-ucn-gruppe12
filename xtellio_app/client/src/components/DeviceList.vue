@@ -126,7 +126,7 @@ export default {
                 batteryMatch = true;
                 break;
               }
-              if (max === '>4000' && device.status.batt >= min) {
+              if (min === '>4000' && device.status.batt >= min.substring(1)) {
                 batteryMatch = true;
                 break;
               }

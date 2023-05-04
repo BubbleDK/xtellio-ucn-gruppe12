@@ -108,8 +108,8 @@ export default {
     }
   },
   methods: {
-    goToStateList(chartContext, seriesIndex, config){
-      switch (seriesIndex) {
+    goToStateList(data){
+      switch (data) {
           case 0:
             this.$router.push({ name: 'DeviceListView', state: {state: "Active"} })
             break;
@@ -125,6 +125,12 @@ export default {
           default:
             break;
         }
+    },
+    goToStateListDataPoint(event, chartContext, config){
+      this.goToStateList(config.dataPointIndex)
+    },
+    goToStateListLegend(chartContext, seriesIndex, config){
+      this.goToStateList(seriesIndex)
     }
   }
 }
@@ -135,7 +141,7 @@ export default {
     <div
       class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark1">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="series" @legendClick="goToStateList"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="goToStateListDataPoint" @legendClick="goToStateListLegend"></apexchart>
       </div>
     </div>
   </div>

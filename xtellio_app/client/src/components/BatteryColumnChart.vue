@@ -135,10 +135,8 @@ export default {
     }
   },  
   methods: {
-    showBat(event, chartContext, config){
-        console.log("click");
-        console.log(config.dataPointIndex)
-        switch (config.dataPointIndex) {
+    goToBattList(data){
+      switch (data) {
           case 0:
             this.$router.push({ name: 'DeviceListView', state: {battery: "0"} })
             break;
@@ -161,6 +159,12 @@ export default {
             break;
         }
     },
+    goToBattListDataPoint(event, chartContext, config){
+        this.goToBattList(config.dataPointIndex)
+    },
+    goToBattListLegend(chartContext, seriesIndex, config){
+        this.goToBattList(seriesIndex)
+    },
   }
 }
 
@@ -169,7 +173,7 @@ export default {
 <template>
   <div id="chart"
     class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="showBat"></apexchart>
+    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="goToBattListDataPoint" @legendClick="goToBattListLegend"></apexchart>
   </div>
 </template>
 
