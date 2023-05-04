@@ -70,14 +70,14 @@ export default {
     <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       <div class="mx-auto max-w-3xl text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-          Xtellio Statistics
+          Xtellio
         </h2>
         <p class="mt-4 text-white dark:text-white sm:text-xl">
-          Get familiar with the Xtellio device pool
+          Statistics across devices and customers 
         </p>
       </div>
       <div class="mt-8 sm:mt-12">
-        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <dt class="order-last text-lg font-medium text-white dark:text-white">
               Total Devices
@@ -87,11 +87,11 @@ export default {
             </dd>
           </div>
 
-          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
+          <!-- <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
               <LastLogUndefined />
             </dd>
-          </div>
+          </div> -->
 
           <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:border-gray-800">
             <router-link to="/orgview">
@@ -104,28 +104,29 @@ export default {
           </div>
         </dl>
       </div>
+      <div class="mt-8 sm:mt-4">
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div
+            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
+            <LastLogOld />
+          </div>
+
+          <div
+            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
+            <LastStatusOld />
+          </div>
+        </dl>
+      </div>
     </div>
 
     <div
       class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 md:py-4 lg:px-4 rounded-lg border border-gray-100 dark:border-gray-800">
       <div class="grid grid-cols-1 gap-7 sm:grid-cols-3 pb-4">
-        <SparkBoxFirmWare />
-        <StateBarChart />
         <BatteryColumnChart />
+        <StateBarChart />
+        <SparkBoxFirmWare />
       </div>
-      <div class="mt-8 sm:mt-4">
-        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div
-            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
-            <LastLogOld />
-          </div>
-
-          <div
-            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center dark:bg-gray-800 dark:border-gray-700">
-            <LastStatusOld />
-          </div>
-        </dl>
-      </div>
+      
       <div class="flex mt-5">
         <div class="mr-5">
           <DonutChartFirmware />

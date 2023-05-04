@@ -67,7 +67,7 @@ export default {
           tickAmount: 3,
         },
         title: {
-          text: 'Firmware',
+          text: 'Firmware Distrubution',
           offsetX: 0,
           style: {
             fontSize: '24px',

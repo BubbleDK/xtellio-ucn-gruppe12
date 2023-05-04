@@ -76,7 +76,7 @@ export default {
           tickAmount: 3,
         },
         title: {
-          text: 'Battery',
+          text: 'Battery Distribution',
           offsetX: 0,
           style: {
             fontSize: '24px',

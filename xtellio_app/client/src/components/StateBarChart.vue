@@ -58,7 +58,7 @@ export default {
           }
         },
         title: {
-          text: 'State',
+          text: 'State Distribution',
           offsetX: 0,
           style: {
             fontSize: '24px',

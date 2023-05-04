@@ -77,6 +77,11 @@ export default {
             { value: '' },
           ],
         },
+        {
+          id: 'provider',
+          name: 'Provider',
+          options: [],
+        },
       ],
       sortOptions: [
         { name: 'Type A-Z', current: false },
@@ -269,6 +274,9 @@ export default {
             } else {
               this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
             }
+          }
+          if (!this.filters[6].options.some(option => option.value === element.sim.provider)) {
+              this.filters[6].options.push({ value: element.sim.provider, label: element.sim.provider, checked: false })
           }
         }
       } catch (err) {
