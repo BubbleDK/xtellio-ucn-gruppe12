@@ -56,7 +56,6 @@ export default {
         }
         else if(element.lte_qual.rssi >= -75){
           this.series[0].data[1].y++
-          console.log(element.lte_qual.rssi)
         }
         else if(element.lte_qual.rssi >= -85){
           this.series[0].data[2].y++
@@ -65,7 +64,6 @@ export default {
           this.series[0].data[3].y++
         }
       });
-      console.log(lteGps)
     } catch (err) {
       this.error = err.message
     }
