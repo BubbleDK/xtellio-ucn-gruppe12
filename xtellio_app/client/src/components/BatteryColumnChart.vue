@@ -48,9 +48,10 @@ export default {
             distributed: true,
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'
+            endingShape: 'rounded',
           },
         },
+        colors:['#595555', '#a83632', '#cc6c12', '#07eb45', '#1cc74a', '#32a852'],
         dataLabels: {
           enabled: true,
           style: {
@@ -84,7 +85,7 @@ export default {
           }
         },
         fill: {
-          opacity: 0.8,
+          opacity: 0.9,
         },
         tooltip: {
         }
@@ -131,9 +132,9 @@ export default {
     }
   },  
   methods: {
-    showBat(chartContext, seriesIndex, config){
+    showBat(event, chartContext, config){
         console.log("click");
-        console.log('seriesIndex:'+seriesIndex)
+        console.log('seriesIndex:'+chartContext)
         switch (seriesIndex) {
           case 0:
             this.$router.push({ name: 'DeviceListView', state: {battery: "0"} })
@@ -165,7 +166,7 @@ export default {
 <template>
   <div id="chart"
     class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @legendClick="showBat"></apexchart>
+    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="showBat"></apexchart>
   </div>
 </template>
 
