@@ -56,8 +56,13 @@ export default {
         }
       });
       mapName.forEach((key, value) => {
+        if(value === ''){
+          this.chartOptions.labels.push("None");
+          this.devices.push(key);
+        } else {
           this.chartOptions.labels.push(value);
           this.devices.push(key);
+        }
       });
     } catch (err) {
       this.error = err.message
