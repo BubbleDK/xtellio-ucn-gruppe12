@@ -13,9 +13,12 @@
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div class="flex flex-shrink-0 items-center">
-            <img class="hidden h-8 w-auto lg:block"
-              src="https://assets.website-files.com/62220ed2c8d90b8198d472f3/62989ce3fb258e42723edd10_Xtellio.png"
-              alt="Your Company" />
+            <a href="https://www.xtellio.com/">
+              <img class="hidden h-8 w-auto lg:block"
+                src="https://assets.website-files.com/62220ed2c8d90b8198d472f3/62989ce3fb258e42723edd10_Xtellio.png"
+                alt="Your Company" 
+              />
+            </a>
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
