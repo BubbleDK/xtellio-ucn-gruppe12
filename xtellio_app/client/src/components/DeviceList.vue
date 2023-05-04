@@ -138,6 +138,18 @@ export default {
             if (!batteryMatch) {
               return false;
             }
+          } else if (filterId === 'provider') {
+            let providerMatch = false;
+            for (const option of filterValues) {
+              if (device.sim.provider === option) {
+                providerMatch = true;
+                break;
+              }
+
+              if (!providerMatch) {
+                return false;
+              }
+            }
           } else {
             if (!filterValues.includes(device[filterId])) {
               return false;
@@ -226,12 +238,6 @@ export default {
         stateVal.checked = true;
       }
     },
-    getActiveFilters() {
-      return this.filters.filter((filter) => {
-        // For all other filters, check if an option is selected
-        return filter.options.some((option) => option.checked);
-      });
-    },
     currentSortOption(name) {
       for (let index = 0; index < this.sortOptions.length; index++) {
         const element = this.sortOptions[index];
@@ -276,7 +282,11 @@ export default {
             }
           }
           if (!this.filters[6].options.some(option => option.value === element.sim.provider)) {
+            if(element.sim.provider === '') {
+              this.filters[6].options.push({ value: element.sim.provider, label: "None", checked: false })
+            } else {
               this.filters[6].options.push({ value: element.sim.provider, label: element.sim.provider, checked: false })
+            }
           }
         }
       } catch (err) {
