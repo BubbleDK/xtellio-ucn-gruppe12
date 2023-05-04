@@ -36,9 +36,6 @@ export default {
       battTotal: 0,
       battAverage: 0,
       chartOptions: {
-        title: {
-          text: this.textVal
-        },
         chart: {
           foreColor: "#FFFFFF",
           type: 'bar',
@@ -121,15 +118,8 @@ export default {
         else if (battery > 4000) {
           this.series[0].data[5].y++;
         }
-        if(battery !== 0){
-          this.battTotal += battery;
-          unitsWithBatteryOverZero++;
-        }
       },
       );
-        this.battAverage = this.battTotal/unitsWithBatteryOverZero,
-        this.textVal = 'Current average excluding 0 values: ' + Math.floor(this.battAverage) + 'mV',
-        this.chartOptions.title.text = this.textVal
     } catch (err) {
       this.error = err.message
     }
