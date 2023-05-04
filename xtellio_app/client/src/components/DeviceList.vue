@@ -3,8 +3,6 @@ import DeviceService from '../DeviceService';
 import moment from 'moment';
 import { ref } from 'vue'
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -12,11 +10,8 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  TransitionChild,
-  TransitionRoot,
 } from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, MinusIcon, PlusIcon } from '@heroicons/vue/20/solid'
 
 
 export default {
@@ -278,7 +273,6 @@ export default {
       }
     },
     sortedList(sortOption) {
-      console.log(sortOption.name)
       switch(sortOption.name) {
       case 'Type A-Z':
           this.devices.sort((a, b) => a.type.localeCompare(b.type));
