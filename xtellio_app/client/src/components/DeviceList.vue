@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/vue'
-import { ChevronDownIcon, MinusIcon, PlusIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, MinusIcon, PlusIcon, ArrowPathIcon } from '@heroicons/vue/20/solid'
 
 
 export default {
@@ -90,40 +90,8 @@ export default {
       ]
     }
   },
-  async created() {
-    try {
-      this.devices = await DeviceService.getAllDevices();
-      const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
-      this.showInactive();
-      this.showLastLogOld();
-      this.showBattery();
-      this.showState();
-      this.showFirmware()
-      this.devices.sort((a, b) => {
-        return stateOrder[a.state] - stateOrder[b.state];
-      });
-
-      for (let i = 0; i < this.devices.length; i++) {
-        const element = this.devices[i]
-        if (!this.filters[0].options.some(option => option.value === element.org)) {
-          if(element.org === ''){
-            this.filters[0].options.push({ value: element.org, label: "Unknown", checked: false })
-          } else {
-            this.filters[0].options.push({ value: element.org, label: element.org, checked: false })
-          }
-        }
-
-        if (!this.filters[1].options.some(option => option.value === element.customer)) {
-          if(element.org === ''){
-            this.filters[1].options.push({ value: element.customer, label: "Unknown", checked: false })
-          } else {
-            this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
-          }
-        }
-      }
-    } catch (err) {
-      this.error = err.message
-    }
+  created() {
+    this.reloadFilter();
   },
   computed: {
     filteredList() {
@@ -224,7 +192,7 @@ export default {
       }
     },
     showLastLogOld() {
-      if (this.lastLogOld === "true") {
+      if (this.lastLogOld) {
         this.devices.forEach(device => {
           const lastLog = device?.last_log?.ts;
           const lastLogToMoment = moment.utc(lastLog).format("DD/MM/YYYY HH:mm:SS")
@@ -272,6 +240,41 @@ export default {
         }
       }
     },
+    async reloadFilter() {
+      try {
+        this.devices = await DeviceService.getAllDevices();
+        const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
+        this.showInactive();
+        this.showLastLogOld();
+        this.showBattery();
+        this.showState();
+        this.showFirmware()
+        this.devices.sort((a, b) => {
+          return stateOrder[a.state] - stateOrder[b.state];
+        });
+
+        for (let i = 0; i < this.devices.length; i++) {
+          const element = this.devices[i]
+          if (!this.filters[0].options.some(option => option.value === element.org)) {
+            if(element.org === ''){
+              this.filters[0].options.push({ value: element.org, label: "Unknown", checked: false })
+            } else {
+              this.filters[0].options.push({ value: element.org, label: element.org, checked: false })
+            }
+          }
+
+          if (!this.filters[1].options.some(option => option.value === element.customer)) {
+            if(element.org === ''){
+              this.filters[1].options.push({ value: element.customer, label: "Unknown", checked: false })
+            } else {
+              this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
+            }
+          }
+        }
+      } catch (err) {
+        this.error = err.message
+      }
+    },
     sortedList(sortOption) {
       switch(sortOption.name) {
       case 'Type A-Z':
@@ -303,6 +306,19 @@ export default {
       }
       return this.devices;
     },
+    async resetOptions() {
+      this.filters.forEach((filter) => {
+        filter.options.forEach((option) => {
+          option.checked = false;
+        });
+      });
+      this.macAddressInput = "";
+      this.firmwareInput = "";
+      this.inactiveInput = false;
+      this.lastLogOld = false;
+      this.currentPage = 1;
+      this.reloadFilter();
+    },
   }
 }
 </script>
@@ -322,10 +338,18 @@ const mobileFiltersOpen = ref(false)
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
               <div>
+                <div
+                  class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-white mr-4 cursor-pointer"
+                  @click="resetOptions()"
+                >
+                  <p>Reset</p>
+                  <ArrowPathIcon class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-white" aria-hidden="true" />
+                </div>
+
                 <MenuButton
                   class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-white"
                   >
-                  <p>{{ selected }}</p>
+                  <p>Sort</p>
                   <ChevronDownIcon class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-white"
                     aria-hidden="true" />
                 </MenuButton>
@@ -394,7 +418,7 @@ const mobileFiltersOpen = ref(false)
             <div class="lg:col-span-3">
               <!-- Your content -->
               <div class="overflow-hidden border border-gray-200 dark:border-gray-700">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 table-fixed">
                   <thead class="dark:bg-gray-800">
                     <tr>
                       <th scope="col"
@@ -438,22 +462,22 @@ const mobileFiltersOpen = ref(false)
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     <tr v-for="device in paginatedFilteredList">
-                      <td class="px-6 py-4 text-sm font-medium text-white-800 whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm font-medium text-white-800 whitespace">
                         {{ device?.type }}
                       </td>
-                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace">
                         Unknown
                       </td>
-                      <td v-else class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-else class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.org }}
                       </td>
-                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-if="device?.customer === ''" class="px-6 py-4 text-sm text-white-800 whitespace">
                         Unknown
                       </td>
-                      <td v-else class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td v-else class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.customer }}
                       </td>
-                      <td class="text-sm text-white-800 whitespace-nowrap">
+                      <td class="text-sm text-white-800 whitespace">
                         <div v-if="device.state == 'Active'"
                           class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 dark:bg-gray-800">
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -479,19 +503,19 @@ const mobileFiltersOpen = ref(false)
                           <h2 class="text-sm font-normal">{{ device.state }}</h2>
                         </div>
                       </td>
-                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.mac }}
                       </td>
-                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.ids?.qr }}
                       </td>
-                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.status?.batt }}
                       </td>
-                      <td class="px-6 py-4 text-sm text-white-800 whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.status?.sw }}
                       </td>
-                      <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                      <td class="px-6 py-4 text-sm font-medium text-right whitespace">
                         <button class="text-green-500 hover:text-green-700" @click="goTodetail(device.mac)">
                           View
                         </button>
