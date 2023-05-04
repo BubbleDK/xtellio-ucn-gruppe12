@@ -35,6 +35,9 @@ export default {
           type: 'bar',
           height: 200,
           foreColor: "#FFFFFF",
+          toolbar: {
+            show: false,
+          }
         },
         plotOptions: {
           bar: {
@@ -67,10 +70,10 @@ export default {
           tickAmount: 3,
         },
         title: {
-          text: 'Firmware Distrubution',
+          text: 'Firmware Distribution',
           offsetX: 0,
           style: {
-            fontSize: '24px',
+            fontSize: '18px',
             color: '#FFFFFF'
           }
         },

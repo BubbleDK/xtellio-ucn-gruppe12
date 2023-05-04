@@ -42,6 +42,9 @@ export default {
         chart: {
           foreColor: "#FFFFFF",
           type: 'bar',
+          toolbar: {
+            show: false,
+          }
         },
         plotOptions: {
           bar: {
@@ -51,7 +54,7 @@ export default {
             endingShape: 'rounded',
           },
         },
-        colors:['#595555', '#a83632', '#cc6c12', '#07eb45', '#1cc74a', '#32a852'],
+        colors:['#595555', '#ff0000', '#fab711', '#08c73c', '#1cc74a', '#32a852'],
         dataLabels: {
           enabled: true,
           style: {
@@ -80,7 +83,7 @@ export default {
           text: 'Battery Distribution',
           offsetX: 0,
           style: {
-            fontSize: '24px',
+            fontSize: '18px',
             color: '#FFFFFF'
           }
         },
@@ -88,7 +91,7 @@ export default {
           opacity: 0.9,
         },
         tooltip: {
-        }
+        },
       },
     }
     
@@ -134,8 +137,8 @@ export default {
   methods: {
     showBat(event, chartContext, config){
         console.log("click");
-        console.log('seriesIndex:'+chartContext)
-        switch (seriesIndex) {
+        console.log(config.dataPointIndex)
+        switch (config.dataPointIndex) {
           case 0:
             this.$router.push({ name: 'DeviceListView', state: {battery: "0"} })
             break;
@@ -181,4 +184,5 @@ export default {
 
 #column .apexcharts-menu {
   color: black;
-}</style>
+}
+</style>
