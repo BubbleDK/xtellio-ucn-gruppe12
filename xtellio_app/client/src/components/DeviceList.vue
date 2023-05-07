@@ -199,6 +199,11 @@ export default {
         this.currentPage = 1;
       }
     },
+    currentDate(temp) {
+      const current = new Date(temp);
+      const date = current.toLocaleString();
+      return date;
+    },
     goTodetail(mac) {
       this.$router.push({ name: 'DeviceView', params: { Mac: mac } })
     },
@@ -471,6 +476,18 @@ const mobileFiltersOpen = ref(false)
                         class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
                         Firmware
                       </th>
+                      <th scope="col"
+                        class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
+                        Last Log
+                      </th>
+                      <th scope="col"
+                        class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
+                        Last status
+                      </th>
+                      <th scope="col"
+                        class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
+                        Lte_qual
+                      </th>
                       <th scope="col" 
                         class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
                         Details
@@ -532,6 +549,15 @@ const mobileFiltersOpen = ref(false)
                       </td>
                       <td class="px-6 py-4 text-sm text-white-800 whitespace">
                         {{ device?.status?.sw }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
+                        {{ currentDate(device?.last_log?.ts) }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
+                        {{ currentDate(device?.status?.ts) }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-white-800 whitespace">
+                        {{ device?.last_log?.data?.nbm_status?.lte_qual.rssi }}
                       </td>
                       <td class="px-6 py-4 text-sm font-medium text-right whitespace">
                         <button class="text-green-500 hover:text-green-700" @click="goTodetail(device.mac)">

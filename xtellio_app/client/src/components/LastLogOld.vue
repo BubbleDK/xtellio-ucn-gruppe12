@@ -44,7 +44,7 @@ export default {
       {{ this.devices[0].data[0] }}
     </dd>
     <dt class="order-last text-lg font-medium text-white dark:text-white">
-      Devices that haven't logged in the last 24 hours
+      Devices where last transmission older than 24 hours
     </dt>
   </router-link>
 </template>
