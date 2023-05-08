@@ -99,82 +99,80 @@ export default {
     this.reloadFilter();
   },
   computed: {
-    filteredList() {
-      const checkedFilters = this.filters.reduce((acc, filter) => {
-        const checkedOptions = filter.options.filter(option => option.checked);
-        if (checkedOptions.length > 0) {
-          acc[filter.id] = checkedOptions.map(option => option.value);
-        }
-        return acc;
-      }, {});
+  filteredList() {
+    const checkedFilters = this.filters.reduce((acc, filter) => {
+      const checkedOptions = filter.options.filter(option => option.checked);
+      if (checkedOptions.length > 0) {
+        acc[filter.id] = checkedOptions.map(option => option.value);
+      }
+      return acc;
+    }, {});
 
-      if (Object.keys(checkedFilters).length === 0 && !this.macAddressInput && !this.firmwareInput) {
-        return this.devices;
+    if (!Object.keys(checkedFilters).length && !this.macAddressInput && !this.firmwareInput) {
+      return this.devices;
+    }
+
+    return this.devices.filter(device => {
+      if (this.macAddressInput && !device.mac.toLowerCase().includes(this.macAddressInput.toLowerCase())) {
+        return false;
       }
 
-      let filteredDevices = this.devices.filter(device => {
-        for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
-          if (filterId === 'battery') {
-            let batteryMatch = false;
-            for (const option of filterValues) {
-              const [min, max] = option.split('-');
-              if (min === '0' && device.status.batt === 0) {
-                batteryMatch = true;
-                break;
-              }
-              if (min === '0' && device.status.batt <= max) {
-                batteryMatch = true;
-                break;
-              }
-              if (min === '>4000' && device.status.batt >= min.substring(1)) {
-                batteryMatch = true;
-                break;
-              }
-              if (device.status.batt >= min && device.status.batt <= max) {
-                batteryMatch = true;
-                break;
-              }
-            }
-            if (!batteryMatch) {
-              return false;
-            }
-          } else if (filterId === 'provider') {
-            let providerMatch = false;
-            for (const option of filterValues) {
-              if (device.sim.provider === option) {
-                providerMatch = true;
-                break;
-              }
+      if (this.firmwareInput && !device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase())) {
+        return false;
+      }
 
-              if (!providerMatch) {
-                return false;
-              }
+      for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
+        if (filterId === 'battery') {
+          let batteryMatch = false;
+          for (const option of filterValues) {
+            const [min, max] = option.split('-');
+            if (min === '0' && device.status.batt === 0) {
+              batteryMatch = true;
+              break;
             }
-          } else {
-            if (!filterValues.includes(device[filterId])) {
-              return false;
+            if (min === '0' && device.status.batt <= max) {
+              batteryMatch = true;
+              break;
+            }
+            if (min === '>4000' && device.status.batt >= min.substring(1)) {
+              batteryMatch = true;
+              break;
+            }
+            if (device.status.batt >= min && device.status.batt <= max) {
+              batteryMatch = true;
+              break;
             }
           }
+          if (!batteryMatch) {
+            return false;
+          }
+        } else if (filterId === 'provider') {
+          let providerMatch = false;
+          for (const option of filterValues) {
+            if (device.sim.provider === option) {
+              providerMatch = true;
+              break;
+            }
+          }
+          if (!providerMatch) {
+            return false;
+          }
+        } else {
+          if (!filterValues.includes(device[filterId])) {
+            return false;
+          }
         }
+      }
         return true;
       });
-
-      // Filter the devices by the selected MAC address value
-      if (this.macAddressInput) {
-        filteredDevices = filteredDevices.filter(device => device.mac.toLowerCase().includes(this.macAddressInput.toLowerCase()));
-      }
-      // Filter the devices by the selected firmware value
-      if (this.firmwareInput) {
-        filteredDevices = filteredDevices.filter(device => device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase()));
-      }
-
-      return filteredDevices
     },
+
     paginatedFilteredList() {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       return this.filteredList.slice(start, end);
     },
+
     pageCount() {
       return Math.ceil(this.filteredList.length / this.pageSize);
     },
@@ -258,44 +256,35 @@ export default {
     },
     async reloadFilter() {
       try {
+        // Load devices and sort them by state order
         this.devices = await DeviceService.getAllDevices();
         const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
-        this.showInactive();
-        this.showLastLogOld();
-        this.showBattery();
-        this.showState();
-        this.showFirmware()
-        this.devices.sort((a, b) => {
-          return stateOrder[a.state] - stateOrder[b.state];
-        });
+        this.devices.sort((a, b) => stateOrder[a.state] - stateOrder[b.state]);
 
-        for (let i = 0; i < this.devices.length; i++) {
-          const element = this.devices[i]
-          if (!this.filters[0].options.some(option => option.value === element.org)) {
-            if(element.org === ''){
-              this.filters[0].options.push({ value: element.org, label: "Unknown", checked: false })
-            } else {
-              this.filters[0].options.push({ value: element.org, label: element.org, checked: false })
-            }
-          }
+        // Update filter options
+        this.updateFilterOption(this.filters[0], 'org', 'Unknown');
+        this.updateFilterOption(this.filters[1], 'customer', 'Unknown');
+        this.updateFilterOption(this.filters[6], 'sim.provider', 'None');
 
-          if (!this.filters[1].options.some(option => option.value === element.customer)) {
-            if(element.org === ''){
-              this.filters[1].options.push({ value: element.customer, label: "Unknown", checked: false })
-            } else {
-              this.filters[1].options.push({ value: element.customer, label: element.customer, checked: false })
-            }
-          }
-          if (!this.filters[6].options.some(option => option.value === element.sim.provider)) {
-            if(element.sim.provider === '') {
-              this.filters[6].options.push({ value: element.sim.provider, label: "None", checked: false })
-            } else {
-              this.filters[6].options.push({ value: element.sim.provider, label: element.sim.provider, checked: false })
-            }
-          }
+        for (const element of this.devices) {
+          this.addFilterOptionIfNotExists(this.filters[0], 'org', element.org);
+          this.addFilterOptionIfNotExists(this.filters[1], 'customer', element.customer);
+          this.addFilterOptionIfNotExists(this.filters[6], 'sim.provider', element.sim.provider);
         }
       } catch (err) {
-        this.error = err.message
+        this.error = err.message;
+      }
+    },
+
+    updateFilterOption(filter, key, unknownLabel) {
+      if (!filter.options.some(option => option.value === '')) {
+        filter.options.push({ value: '', label: unknownLabel, checked: false });
+      }
+    },
+
+    addFilterOptionIfNotExists(filter, key, value) {
+      if (!filter.options.some(option => option.value === value)) {
+        filter.options.push({ value: value, label: value || 'Unknown', checked: false });
       }
     },
     sortedList(sortOption) {
