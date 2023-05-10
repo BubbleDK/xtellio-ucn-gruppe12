@@ -1,5 +1,4 @@
 const express = require('express');
-const mongodb = require('mongodb');
 const axios = require('axios');
 
 const router = express.Router();
