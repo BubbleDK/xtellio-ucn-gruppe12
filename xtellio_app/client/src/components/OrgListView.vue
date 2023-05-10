@@ -99,7 +99,8 @@ export default {
         <div class="border dark:border-gray-700 transition duration-500 ease-in-out"></div>
         <div class="flex flex-col mt-2">
           <div class="flex flex-row">
-            <div class="flex w-full items-center justify-between bg-white dark:bg-gray-800 px-8 py-4 border-l-4 border-green-500 dark:border-green-300">
+            <div
+              class="flex w-full items-center justify-between bg-white dark:bg-gray-800 px-8 py-4 border-l-4 border-green-500 dark:border-green-300">
               <!-- card -->
               <div class="flex justify-center">
                 <div class="flex justify-center">
@@ -159,7 +160,9 @@ export default {
                 </div>
               </div>
 
-              <button class="float-right py-1 px-2 bg-transparent text-green-400 font-semibold border border-green-400 rounded hover:bg-green-400 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0" @click="goTodetail(key)">
+              <button
+                class="float-right py-1 px-2 bg-transparent text-green-400 font-semibold border border-green-400 rounded hover:bg-green-400 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                @click="goTodetail(key)">
                 View
               </button>
             </div>
@@ -167,5 +170,4 @@ export default {
         </div>
       </div>
     </div>
-  </section>
-</template>
+</section></template>

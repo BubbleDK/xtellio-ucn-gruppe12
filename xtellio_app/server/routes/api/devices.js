@@ -21,8 +21,8 @@ const startCountdown = () => {
 }
 
 router.get('/', async (req, res) => {
-  if (hasRecentlyUpdated) { 
-    res.send(resDevices) 
+  if (hasRecentlyUpdated) {
+    res.send(resDevices)
   } else {
     while (true) {
       try {
@@ -30,11 +30,11 @@ router.get('/', async (req, res) => {
           headers: { Authorization: `Bearer ${token}` }
         });
         const json_data = response.data.results;
-  
+
         if (json_data.length === 0) {
           break;
         }
-  
+
         resDevices = resDevices.concat(json_data);
         page += 1;
       } catch (error) {

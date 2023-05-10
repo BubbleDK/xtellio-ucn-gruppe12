@@ -65,7 +65,7 @@ export default {
           Xtellio
         </h2>
         <p class="mt-4 text-white dark:text-white sm:text-xl">
-          Statistics across devices and customers 
+          Statistics across devices and customers
         </p>
       </div>
       <div class="mt-8 sm:mt-12">
@@ -98,13 +98,11 @@ export default {
       </div>
       <div class="mt-8 sm:mt-4">
         <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div
-            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
             <LastLogOld />
           </div>
 
-          <div
-            class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
+          <div class="flex flex-col rounded-lg border border-gray-100 px-4 py-8 text-center  dark:border-gray-800">
             <LastStatusOld />
           </div>
         </dl>
@@ -118,7 +116,7 @@ export default {
         <StateBarChart />
         <SparkBoxFirmWare />
       </div>
-      
+
       <div class="flex mt-5">
         <div class="mr-5">
           <LteQualDonutChart />
@@ -129,7 +127,8 @@ export default {
         </div>
         <div class="ml-5">
           <DonutChartProvider />
+        </div>
       </div>
     </div>
-  </div>
-</section></template>
+  </section>
+</template>

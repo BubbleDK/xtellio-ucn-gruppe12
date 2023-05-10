@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     goToList() {
-      this.$router.push({ name: 'DeviceListView', query: {lg: true} })
+      this.$router.push({ name: 'DeviceListView', query: { lg: true } })
     }
   }
 }

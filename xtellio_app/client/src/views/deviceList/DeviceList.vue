@@ -101,7 +101,7 @@ export default {
   computed: {
     filteredList() {
       const checkedFilters = this.filters.reduce((acc, filter) => {
-      const checkedOptions = filter.options.filter(option => option.checked);
+        const checkedOptions = filter.options.filter(option => option.checked);
         if (checkedOptions.length > 0) {
           acc[filter.id] = checkedOptions.map(option => option.value);
         }
@@ -230,12 +230,12 @@ export default {
         battVal.checked = true;
       }
     },
-    showFirmware(){
+    showFirmware() {
       if (window.history.state.firmware) {
         this.devices = JSON.parse(window.history.state.firmware);
       }
     },
-    showState(){
+    showState() {
       if (window.history.state.state) {
         const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === window.history.state.state.toLowerCase())
         stateVal.checked = true;
@@ -244,7 +244,7 @@ export default {
     currentSortOption(name) {
       for (let index = 0; index < this.sortOptions.length; index++) {
         const element = this.sortOptions[index];
-        if (element.name !== name){
+        if (element.name !== name) {
           element.current = false;
         } else {
           element.current = true;
@@ -286,10 +286,10 @@ export default {
         filter.options.push({ value: value, label: value || 'Unknown', checked: false });
       }
     },
-    
+
     sortedList(sortOption) {
-      switch(sortOption.name) {
-      case 'Type A-Z':
+      switch (sortOption.name) {
+        case 'Type A-Z':
           this.devices.sort((a, b) => a.type.localeCompare(b.type));
           break;
         case 'Type Z-A':
@@ -325,7 +325,7 @@ export default {
           option.checked = false;
         });
       });
-      
+
       this.macAddressInput = "";
       this.firmwareInput = "";
       this.inactiveInput = false;
@@ -354,15 +354,13 @@ const mobileFiltersOpen = ref(false)
               <div>
                 <div
                   class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-white mr-4 cursor-pointer"
-                  @click="resetOptions()"
-                >
+                  @click="resetOptions()">
                   <p>Reset</p>
-                  <ArrowPathIcon class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-white" aria-hidden="true" />
+                  <ArrowPathIcon class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-white"
+                    aria-hidden="true" />
                 </div>
 
-                <MenuButton
-                  class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-white"
-                  >
+                <MenuButton class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-white">
                   <p>Sort</p>
                   <ChevronDownIcon class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-white"
                     aria-hidden="true" />
@@ -378,7 +376,8 @@ const mobileFiltersOpen = ref(false)
                   <div class="py-1">
                     <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
                     <a href="#"
-                      :class="[option.current ? 'font-medium text-black' : 'text-black', active ? 'bg-gray-200' : '', 'block px-4 py-2 text-sm']" @click="currentSortOption(option.name)">{{
+                      :class="[option.current ? 'font-medium text-black' : 'text-black', active ? 'bg-gray-200' : '', 'block px-4 py-2 text-sm']"
+                      @click="currentSortOption(option.name)">{{
                         option.name }} </a>
                     </MenuItem>
                   </div>
@@ -411,15 +410,18 @@ const mobileFiltersOpen = ref(false)
                 <DisclosurePanel class="pt-6">
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="macAddressInput"
-                      type="text" @input="macAddressInput = $event.target.value"
-                      class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                      <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="firmwareInput"
-                      type="text" @input="firmwareInput = $event.target.value"
-                      class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                      <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value"
-                      type="checkbox" :checked="option.checked" @change="option.checked = !option.checked"
-                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`"
+                        :name="`${section.id}[]`" :value="macAddressInput" type="text"
+                        @input="macAddressInput = $event.target.value"
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`"
+                        :name="`${section.id}[]`" :value="firmwareInput" type="text"
+                        @input="firmwareInput = $event.target.value"
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
+                        :value="option.value" type="checkbox" :checked="option.checked"
+                        @change="option.checked = !option.checked"
+                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white">{{ option.label
                       }}</label>
                     </div>
@@ -479,7 +481,7 @@ const mobileFiltersOpen = ref(false)
                         class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
                         Lte_qual
                       </th>
-                      <th scope="col" 
+                      <th scope="col"
                         class="px-6 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-gray-400">
                         Details
                         <span class="sr-only">Actions</span>
@@ -563,8 +565,8 @@ const mobileFiltersOpen = ref(false)
                 <div class="flex items-center justify-between mt-6">
                   <button @click="currentPage--" :disabled="currentPage <= 1"
                     class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                      class="w-5 h-5 rtl:-scale-x-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                     </svg>
                     <span>
@@ -573,7 +575,9 @@ const mobileFiltersOpen = ref(false)
                   </button>
                   <div class="items-center hidden md:flex gap-x-3">
                     <template v-for="(page, index) in pageCount" :key="index">
-                      <button v-if="Math.abs(currentPage - (index + 1)) <= 2 || index === 0 || index === pageCount - 1" @click="currentPage = index + 1" :class="[currentPage === index + 1 ? 'text-blue-500 bg-blue-100/60 dark:bg-gray-800' : 'text-white dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800', 'px-2 py-1 text-sm rounded-md']">
+                      <button v-if="Math.abs(currentPage - (index + 1)) <= 2 || index === 0 || index === pageCount - 1"
+                        @click="currentPage = index + 1"
+                        :class="[currentPage === index + 1 ? 'text-blue-500 bg-blue-100/60 dark:bg-gray-800' : 'text-white dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800', 'px-2 py-1 text-sm rounded-md']">
                         {{ index + 1 }}
                       </button>
                       <span v-else-if="Math.abs(currentPage - (index + 1)) === 3" class="px-2 py-1 text-sm">...</span>
@@ -584,8 +588,8 @@ const mobileFiltersOpen = ref(false)
                     <span>
                       Next
                     </span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                      class="w-5 h-5 rtl:-scale-x-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                     </svg>
                   </button>
@@ -599,6 +603,4 @@ const mobileFiltersOpen = ref(false)
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

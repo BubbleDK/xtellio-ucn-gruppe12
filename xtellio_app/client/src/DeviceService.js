@@ -12,7 +12,7 @@ class DeviceService {
         const data = res.data;
 
         resolve(data);
-      } catch(err) {
+      } catch (err) {
         reject(err.message)
       }
     });
@@ -26,7 +26,7 @@ class DeviceService {
         const data = res.data;
 
         resolve(data);
-      } catch(err) {
+      } catch (err) {
         reject(err.message)
       }
     })
@@ -46,7 +46,7 @@ class DeviceService {
         }
 
         resolve(resData);
-      } catch(err) {
+      } catch (err) {
         reject(err.message)
       }
     });

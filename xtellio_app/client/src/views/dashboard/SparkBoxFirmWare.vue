@@ -41,7 +41,7 @@ export default {
         },
         plotOptions: {
           bar: {
-              distributed: true,
+            distributed: true,
           }
         },
         dataLabels: {
@@ -57,8 +57,8 @@ export default {
         fill: {
           opacity: 0.8,
         },
-        xaxis:{
-          labels:{
+        xaxis: {
+          labels: {
             show: false,
           }
         },
@@ -90,7 +90,7 @@ export default {
         const tempValue = element?.status?.sw;
         const reg = new RegExp(/^[-+]?[1-9]+\.[0-9]+\.[0-9]+$/);
         const regMid = new RegExp(/^[-+]?[0]+\.[1-9]+\.[0-9]+$/);
-        const regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/); 
+        const regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/);
         if (reg.test(tempValue)) {
           this.devices[0].data[0].y++;
           this.listHigh.push(element);
@@ -113,28 +113,28 @@ export default {
     }
   },
   methods: {
-    goToFirmwareList(data){
+    goToFirmwareList(data) {
       switch (data) {
         case 0:
-            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listLow)} })
-            break;
-          case 1:
-            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listMed)} })
-            break;
-          case 2:
-            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listHigh)} })
-            break;
-          case 3:
-            this.$router.push({ name: 'DeviceListView', state: {firmware: JSON.stringify(this.listDirty)} })
-            break;
-          default:
-            break;
-        }
+          this.$router.push({ name: 'DeviceListView', state: { firmware: JSON.stringify(this.listLow) } })
+          break;
+        case 1:
+          this.$router.push({ name: 'DeviceListView', state: { firmware: JSON.stringify(this.listMed) } })
+          break;
+        case 2:
+          this.$router.push({ name: 'DeviceListView', state: { firmware: JSON.stringify(this.listHigh) } })
+          break;
+        case 3:
+          this.$router.push({ name: 'DeviceListView', state: { firmware: JSON.stringify(this.listDirty) } })
+          break;
+        default:
+          break;
+      }
     },
-    goToFirmwareListDataPoint(event, chartContext, config){
+    goToFirmwareListDataPoint(event, chartContext, config) {
       this.goToFirmwareList(config.dataPointIndex)
     },
-    goToFirmwareListLegend(chartContext, seriesIndex, config){
+    goToFirmwareListLegend(chartContext, seriesIndex, config) {
       this.goToFirmwareList(seriesIndex)
     },
   }
@@ -143,10 +143,10 @@ export default {
 
 <template>
   <div>
-    <div
-      class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark2">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="devices" @dataPointSelection="goToFirmwareListDataPoint" @legendClick="goToFirmwareListLegend"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="devices"
+          @dataPointSelection="goToFirmwareListDataPoint" @legendClick="goToFirmwareListLegend"></apexchart>
       </div>
     </div>
   </div>

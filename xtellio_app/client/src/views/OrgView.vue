@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-<div>
+  <div>
     <OrgListView />
-</div>
+  </div>
 </template>

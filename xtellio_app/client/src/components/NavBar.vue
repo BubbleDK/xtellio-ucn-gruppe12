@@ -16,14 +16,13 @@
             <a href="https://www.xtellio.com/">
               <img class="hidden h-8 w-auto lg:block"
                 src="https://assets.website-files.com/62220ed2c8d90b8198d472f3/62989ce3fb258e42723edd10_Xtellio.png"
-                alt="Your Company" 
-              />
+                alt="Your Company" />
             </a>
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <router-link v-for="item in navigation" :key="item.name" :to="item.href"
-              :class="[{ 'bg-gray-900 text-white': item.href === $route.path, 'text-gray-300 hover:bg-gray-700 hover:text-white': item.href !== $route.path }, 'rounded-md px-3 py-2 text-sm font-medium']"
+                :class="[{ 'bg-gray-900 text-white': item.href === $route.path, 'text-gray-300 hover:bg-gray-700 hover:text-white': item.href !== $route.path }, 'rounded-md px-3 py-2 text-sm font-medium']"
                 :aria-current="item.current ? 'page' : undefined">{{ item.name }}
               </router-link>
             </div>
@@ -31,7 +30,8 @@
         </div>
       </div>
     </div>
-</Disclosure></template>
+  </Disclosure>
+</template>
 
 <script setup>
 import { Disclosure, DisclosureButton } from '@headlessui/vue';

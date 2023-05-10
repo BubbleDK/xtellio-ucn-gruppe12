@@ -14,7 +14,7 @@ export default {
       devices.forEach(device => {
         const lastLog = device?.last_log?.ts;
         if (lastLog === undefined) {
-            this.undefinedLog++;
+          this.undefinedLog++;
         }
       });
     } catch (err) {
@@ -24,7 +24,7 @@ export default {
   methods: {
     goToList() {
       const status = "inactive";
-      this.$router.push({ name: 'DeviceListView', state: {st: status} })
+      this.$router.push({ name: 'DeviceListView', state: { st: status } })
     }
   }
 }
