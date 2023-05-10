@@ -40,6 +40,5 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
   { name: 'Devices', href: '/devicelistview', current: false },
-  { name: 'Customers', href: '/orgview', current: false },
 ]
 </script>
