@@ -1,5 +1,5 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 
 export default {
   name: "SparkBoxFirmWare",
@@ -85,25 +85,25 @@ export default {
   },
   async created() {
     try {
-      this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(element => {
+      const allDevices = await DeviceService.getAllDevices();
+      allDevices.forEach(element => {
         const tempValue = element?.status?.sw;
-        let reg = new RegExp(/^[-+]?[1-9]+\.[0-9]+\.[0-9]+$/);
-        let regMid = new RegExp(/^[-+]?[0]+\.[1-9]+\.[0-9]+$/);
-        let regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/); 
-        if(reg.test(tempValue)){
+        const reg = new RegExp(/^[-+]?[1-9]+\.[0-9]+\.[0-9]+$/);
+        const regMid = new RegExp(/^[-+]?[0]+\.[1-9]+\.[0-9]+$/);
+        const regLow = new RegExp(/^[-+]?[0]+\.[0]+\.[1-9]+$/); 
+        if (reg.test(tempValue)) {
           this.devices[0].data[0].y++;
           this.listHigh.push(element);
         }
-        else if(regMid.test(tempValue)){
+        else if (regMid.test(tempValue)) {
           this.devices[0].data[1].y++;
           this.listMed.push(element);
         }
-        else if(regLow.test(tempValue)){
+        else if (regLow.test(tempValue)) {
           this.devices[0].data[2].y++;
           this.listLow.push(element);
         }
-        else{
+        else {
           this.devices[0].data[3].y++;
           this.listDirty.push(element);
         }

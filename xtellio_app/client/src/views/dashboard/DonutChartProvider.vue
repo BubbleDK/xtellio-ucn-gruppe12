@@ -1,12 +1,11 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 export default {
-  name: 'LteQualDonutChart',
+  name: 'DonutChartProvider',
   data() {
     return {
       temp: [],
-      lteGps: [],
-          series: [0,0,0,0],
+      devices: [],
       chartOptions: {
         chart: {
           foreColor: '#FFFFFF',
@@ -16,7 +15,7 @@ export default {
         dataLabels: {
           enabled: true,
         },
-        labels: ['> -65', '-66 til -75', '-76 til -85', '-86 til -95'],
+        labels: [],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -34,7 +33,7 @@ export default {
           height: 230,
         },
         title: {
-          text: 'Lte Qual:',
+          text: 'Providers:',
           style: {
             color: '#FFFFFF'
           }
@@ -45,30 +44,19 @@ export default {
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(x => {
-        const lo = x?.last_log?.data?.nbm_status;
-        if(lo !== undefined){
-        this.lteGps.push(lo);
-        }
-      })
-      this.lteGps.forEach(element => {
-        if(element.lte_qual.rssi >= -65) {
-          this.series[0]++
-        }
-        else if(element.lte_qual.rssi >= -75){
-          this.series[1]++
-        }
-        else if(element.lte_qual.rssi >= -85){
-          this.series[2]++
-        }
-        else if(element.lte_qual.rssi >= -95){
-          this.series[3]++
-        }
+      const mapName = new Map();
+      this.temp.forEach(element => {
+        const tempValue = element.sim.provider;
+        mapName.set(tempValue, (mapName.get(tempValue) || 0) + 1);
+      });
+      mapName.forEach((key, value) => {
+        this.chartOptions.labels.push(value || "None");
+        this.devices.push(key);
       });
     } catch (err) {
-      this.error = err.message
+      console.error(err.message);
     }
-  }
+  },
 }
 
 </script>
@@ -77,7 +65,7 @@ export default {
   <div>
     <div class="chart-wrap">
       <div id="chart">
-        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
+        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="devices"></apexchart>
       </div>
     </div>
   </div>

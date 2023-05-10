@@ -1,11 +1,11 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 export default {
-  name: 'DonutChartProvider',
+  name: 'LteQualDonutChart',
   data() {
     return {
-      temp: [],
-      devices: [],
+      lteGps: [],
+      series: [0, 0, 0, 0],
       chartOptions: {
         chart: {
           foreColor: '#FFFFFF',
@@ -15,7 +15,7 @@ export default {
         dataLabels: {
           enabled: true,
         },
-        labels: [],
+        labels: ['> -65', '-66 til -75', '-76 til -85', '-86 til -95'],
         responsive: [{
           breakpoint: 480,
           options: {
@@ -33,7 +33,7 @@ export default {
           height: 230,
         },
         title: {
-          text: 'Providers:',
+          text: 'Lte Qual:',
           style: {
             color: '#FFFFFF'
           }
@@ -43,31 +43,31 @@ export default {
   },
   async created() {
     try {
-      this.temp = await DeviceService.getAllDevices();
-      const mapName = new Map();
-      this.temp.forEach(element => {
-        const tempValue = element.sim.provider;
-        if (mapName.has(tempValue)) {
-          mapName.set(tempValue, mapName.get(tempValue) + 1)
-          tempValue
+      const devices = await DeviceService.getAllDevices();
+      devices.forEach(x => {
+        const lo = x?.last_log?.data?.nbm_status;
+        if (lo !== undefined) {
+          this.lteGps.push(lo);
         }
-        else {
-          mapName.set(tempValue, 1)
+      })
+      this.lteGps.forEach(element => {
+        if (element.lte_qual.rssi >= -65) {
+          this.series[0]++
         }
-      });
-      mapName.forEach((key, value) => {
-        if(value === ''){
-          this.chartOptions.labels.push("None");
-          this.devices.push(key);
-        } else {
-          this.chartOptions.labels.push(value);
-          this.devices.push(key);
+        else if (element.lte_qual.rssi >= -75) {
+          this.series[1]++
+        }
+        else if (element.lte_qual.rssi >= -85) {
+          this.series[2]++
+        }
+        else if (element.lte_qual.rssi >= -95) {
+          this.series[3]++
         }
       });
     } catch (err) {
       this.error = err.message
     }
-  },
+  }
 }
 
 </script>
@@ -76,7 +76,7 @@ export default {
   <div>
     <div class="chart-wrap">
       <div id="chart">
-        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="devices"></apexchart>
+        <apexchart class="donut" type="donut" width="380" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 import moment from 'moment';
 import { ref } from 'vue'
 import {
@@ -99,70 +99,70 @@ export default {
     this.reloadFilter();
   },
   computed: {
-  filteredList() {
-    const checkedFilters = this.filters.reduce((acc, filter) => {
+    filteredList() {
+      const checkedFilters = this.filters.reduce((acc, filter) => {
       const checkedOptions = filter.options.filter(option => option.checked);
-      if (checkedOptions.length > 0) {
-        acc[filter.id] = checkedOptions.map(option => option.value);
-      }
-      return acc;
-    }, {});
+        if (checkedOptions.length > 0) {
+          acc[filter.id] = checkedOptions.map(option => option.value);
+        }
+        return acc;
+      }, {});
 
-    if (!Object.keys(checkedFilters).length && !this.macAddressInput && !this.firmwareInput) {
-      return this.devices;
-    }
-
-    return this.devices.filter(device => {
-      if (this.macAddressInput && !device.mac.toLowerCase().includes(this.macAddressInput.toLowerCase())) {
-        return false;
+      if (!Object.keys(checkedFilters).length && !this.macAddressInput && !this.firmwareInput) {
+        return this.devices;
       }
 
-      if (this.firmwareInput && !device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase())) {
-        return false;
-      }
+      return this.devices.filter(device => {
+        if (this.macAddressInput && !device.mac.toLowerCase().includes(this.macAddressInput.toLowerCase())) {
+          return false;
+        }
 
-      for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
-        if (filterId === 'battery') {
-          let batteryMatch = false;
-          for (const option of filterValues) {
-            const [min, max] = option.split('-');
-            if (min === '0' && device.status.batt === 0) {
-              batteryMatch = true;
-              break;
+        if (this.firmwareInput && !device.status.sw.toLowerCase().includes(this.firmwareInput.toLowerCase())) {
+          return false;
+        }
+
+        for (const [filterId, filterValues] of Object.entries(checkedFilters)) {
+          if (filterId === 'battery') {
+            let batteryMatch = false;
+            for (const option of filterValues) {
+              const [min, max] = option.split('-');
+              if (min === '0' && device.status.batt === 0) {
+                batteryMatch = true;
+                break;
+              }
+              if (min === '0' && device.status.batt <= max) {
+                batteryMatch = true;
+                break;
+              }
+              if (min === '>4000' && device.status.batt >= min.substring(1)) {
+                batteryMatch = true;
+                break;
+              }
+              if (device.status.batt >= min && device.status.batt <= max) {
+                batteryMatch = true;
+                break;
+              }
             }
-            if (min === '0' && device.status.batt <= max) {
-              batteryMatch = true;
-              break;
+            if (!batteryMatch) {
+              return false;
             }
-            if (min === '>4000' && device.status.batt >= min.substring(1)) {
-              batteryMatch = true;
-              break;
+          } else if (filterId === 'provider') {
+            let providerMatch = false;
+            for (const option of filterValues) {
+              if (device.sim.provider === option) {
+                providerMatch = true;
+                break;
+              }
             }
-            if (device.status.batt >= min && device.status.batt <= max) {
-              batteryMatch = true;
-              break;
+            if (!providerMatch) {
+              return false;
             }
-          }
-          if (!batteryMatch) {
-            return false;
-          }
-        } else if (filterId === 'provider') {
-          let providerMatch = false;
-          for (const option of filterValues) {
-            if (device.sim.provider === option) {
-              providerMatch = true;
-              break;
+          } else {
+            if (!filterValues.includes(device[filterId])) {
+              return false;
             }
-          }
-          if (!providerMatch) {
-            return false;
-          }
-        } else {
-          if (!filterValues.includes(device[filterId])) {
-            return false;
           }
         }
-      }
         return true;
       });
     },
@@ -225,18 +225,18 @@ export default {
       }
     },
     showBattery() {
-      if(window.history.state.battery){
+      if (window.history.state.battery) {
         const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === window.history.state.battery)
         battVal.checked = true;
       }
     },
     showFirmware(){
-      if(window.history.state.firmware){
+      if (window.history.state.firmware) {
         this.devices = JSON.parse(window.history.state.firmware);
       }
     },
     showState(){
-      if(window.history.state.state){
+      if (window.history.state.state) {
         const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === window.history.state.state.toLowerCase())
         stateVal.checked = true;
       }
@@ -244,10 +244,9 @@ export default {
     currentSortOption(name) {
       for (let index = 0; index < this.sortOptions.length; index++) {
         const element = this.sortOptions[index];
-        if(element.name !== name){
+        if (element.name !== name){
           element.current = false;
-        }
-        else{
+        } else {
           element.current = true;
           this.sortedList(element)
           this.selected = element.name
@@ -287,6 +286,7 @@ export default {
         filter.options.push({ value: value, label: value || 'Unknown', checked: false });
       }
     },
+    
     sortedList(sortOption) {
       switch(sortOption.name) {
       case 'Type A-Z':
@@ -318,12 +318,14 @@ export default {
       }
       return this.devices;
     },
+
     async resetOptions() {
       this.filters.forEach((filter) => {
         filter.options.forEach((option) => {
           option.checked = false;
         });
       });
+      
       this.macAddressInput = "";
       this.firmwareInput = "";
       this.inactiveInput = false;

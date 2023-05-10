@@ -1,6 +1,6 @@
 <script>
 import moment from 'moment'
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 
 moment().format("MMM Do YY");
 
@@ -57,7 +57,7 @@ export default {
           colors: ['transparent']
         },
         xaxis: {
-          labels:{
+          labels: {
             show: false,
           }
         },
@@ -87,8 +87,8 @@ export default {
   },
   async created() {
     try {
-      this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(device => {
+      const devices = await DeviceService.getAllDevices();
+      devices.forEach(device => {
         const state = device.state;
         if (state === "Active") {
           this.series[0].data[0].y++;
@@ -108,28 +108,28 @@ export default {
     }
   },
   methods: {
-    goToStateList(data){
+    goToStateList(data) {
       switch (data) {
-          case 0:
-            this.$router.push({ name: 'DeviceListView', state: {state: "Active"} })
-            break;
-          case 1:
-            this.$router.push({ name: 'DeviceListView', state: {state: "Inactive"} })
-            break;
-          case 2:
-            this.$router.push({ name: 'DeviceListView', state: {state: "Factory"} })
-            break;
-          case 3:
-            this.$router.push({ name: 'DeviceListView', state: {state: "Unknown"} })
-            break;
-          default:
-            break;
-        }
+        case 0:
+          this.$router.push({ name: 'DeviceListView', state: { state: "Active" } })
+          break;
+        case 1:
+          this.$router.push({ name: 'DeviceListView', state: { state: "Inactive" } })
+          break;
+        case 2:
+          this.$router.push({ name: 'DeviceListView', state: { state: "Factory" } })
+          break;
+        case 3:
+          this.$router.push({ name: 'DeviceListView', state: { state: "Unknown" } })
+          break;
+        default:
+          break;
+      }
     },
-    goToStateListDataPoint(event, chartContext, config){
+    goToStateListDataPoint(event, chartContext, config) {
       this.goToStateList(config.dataPointIndex)
     },
-    goToStateListLegend(chartContext, seriesIndex, config){
+    goToStateListLegend(chartContext, seriesIndex, config) {
       this.goToStateList(seriesIndex)
     }
   }
@@ -138,10 +138,10 @@ export default {
 
 <template>
   <div>
-    <div
-      class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div id="chart-spark1">
-        <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="goToStateListDataPoint" @legendClick="goToStateListLegend"></apexchart>
+        <apexchart type="bar" height="200" :options="chartOptions" :series="series"
+          @dataPointSelection="goToStateListDataPoint" @legendClick="goToStateListLegend"></apexchart>
       </div>
     </div>
   </div>

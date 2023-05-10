@@ -11,7 +11,6 @@ export default {
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      console.log(this.devices)
       this.devices.forEach(element => {
         const tempValue = element.customer;
         if (this.mapName.has(tempValue)) {

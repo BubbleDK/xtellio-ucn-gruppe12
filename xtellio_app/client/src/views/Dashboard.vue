@@ -1,31 +1,23 @@
 <script>
-import DonutChartFirmware from '../components/LteQualDonutChart.vue';
-import GetDataExample from '../components/GetDataExample.vue';
-import SparkBoxFirmWare from '../components/SparkBoxFirmWare.vue';
-import StateBarChart from '../components/StateBarChart.vue';
-import SimProviderBarChart from '../components/SimProviderBarChart.vue';
-import LastStatusOld from '../components/LastStatusOld.vue';
-import DonutChartProvider from '../components/DonutChartProvider.vue';
+import SparkBoxFirmWare from './dashboard/SparkBoxFirmWare.vue';
+import StateBarChart from './dashboard/StateBarChart.vue';
+import LastStatusOld from './dashboard/LastStatusOld.vue';
+import DonutChartProvider from './dashboard/DonutChartProvider.vue';
 import DeviceService from '../DeviceService';
-import BatteryColumnChart from '../components/BatteryColumnChart.vue';
-import LastLogOld from '../components/LastLogOld.vue';
-import LastLogUndefined from '../components/LastLogUndefined.vue';
-import LteColumn from '../components/LteColumn.vue';
+import BatteryColumnChart from './dashboard/BatteryColumnChart.vue';
+import LastLogOld from './dashboard/LastLogOld.vue';
+import LteQualDonutChart from './dashboard/LteQualDonutChart.vue';
 
 export default {
   name: 'App',
   components: {
-    DonutChartFirmware,
-    GetDataExample,
     SparkBoxFirmWare,
     StateBarChart,
-    SimProviderBarChart,
     DonutChartProvider,
     BatteryColumnChart,
     LastStatusOld,
     LastLogOld,
-    LastLogUndefined,
-    LteColumn,
+    LteQualDonutChart,
   },
   data() {
     return {
@@ -129,7 +121,7 @@ export default {
       
       <div class="flex mt-5">
         <div class="mr-5">
-          <DonutChartFirmware />
+          <LteQualDonutChart />
         </div>
         <div class="ml-5">
           <DonutChartProvider />

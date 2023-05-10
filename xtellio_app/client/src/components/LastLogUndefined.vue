@@ -5,15 +5,15 @@ export default {
   name: "LastLogUndefined",
   data() {
     return {
-      undefinedLog:[],
+      undefinedLog: 0,
     }
   },
   async created() {
     try {
-      this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(device => {
+      const devices = await DeviceService.getAllDevices();
+      devices.forEach(device => {
         const lastLog = device?.last_log?.ts;
-        if(lastLog === undefined) {
+        if (lastLog === undefined) {
             this.undefinedLog++;
         }
       });

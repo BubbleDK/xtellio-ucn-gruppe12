@@ -1,25 +1,23 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 import moment from 'moment';
 
 export default {
   name: "LastStatusOld",
   data() {
     return {
-      devices: [{
-        data: [0]
-      }],
+      oldStatuses: 0,
     }
   },
   async created() {
     try {
-      this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(device => {
+      const devices = await DeviceService.getAllDevices();
+      devices.forEach(device => {
         const lastStatus = device.status.ts;
         const lastStatusToMoment = moment.utc(lastStatus).format("DD/MM/YYYY HH:mm:SS")
         const hoursAgo24 = moment().subtract(24, 'hours').format("DD/MM/YYYY HH:mm:SS");
         if (lastStatusToMoment < hoursAgo24) {
-          this.devices[0].data[0]++;
+          this.oldStatuses++;
         }
       });
     } catch (err) {
@@ -34,6 +32,6 @@ export default {
       Devices where last status older than 24 hours
     </dt>
     <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
-      {{ this.devices[0].data[0] }}
+      {{ oldStatuses }}
     </dd>
 </template>

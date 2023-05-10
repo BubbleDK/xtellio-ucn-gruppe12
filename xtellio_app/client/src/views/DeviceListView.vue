@@ -1,5 +1,5 @@
 <script>
-import DeviceList from '../components/DeviceList.vue';
+import DeviceList from './deviceList/DeviceList.vue';
 
 export default {
   name: 'DeviceListView',
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-<div>
+  <div>
     <DeviceList />
-</div>
+  </div>
 </template>

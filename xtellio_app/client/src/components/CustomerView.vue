@@ -11,10 +11,6 @@ export default {
   async created() {
     try {
       this.customerDevices = await DeviceService.getAllCustomerDevices(this.customerName);
-      console.log(this.customerDevices)
-      this.customerDevices.forEach(element => {
-        console.log(element.status?.sw)
-      });
     } catch (err) {
       this.error = err.message
     }

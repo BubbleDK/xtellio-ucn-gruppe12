@@ -1,5 +1,5 @@
 <script>
-import DeviceService from '../DeviceService';
+import DeviceService from '../../DeviceService';
 
 export default {
   name: 'BatteryColumnChart',
@@ -51,7 +51,7 @@ export default {
             endingShape: 'rounded',
           },
         },
-        colors:['#595555', '#ff0000', '#fab711', '#08c73c', '#1cc74a', '#32a852'],
+        colors: ['#595555', '#ff0000', '#fab711', '#08c73c', '#1cc74a', '#32a852'],
         dataLabels: {
           enabled: true,
           style: {
@@ -91,16 +91,13 @@ export default {
         },
       },
     }
-    
-
   },
   async created() {
     try {
-      let unitsWithBatteryOverZero = 0;
-      this.temp = await DeviceService.getAllDevices();
-      this.temp.forEach(device => {
+      const devices = await DeviceService.getAllDevices();
+      devices.forEach(device => {
         const battery = Number(device.status.batt);
-        if(battery === 0 && device.state === 'Active'){
+        if (battery === 0 && device.state === 'Active') {
           this.series[0].data[0].y++;
         }
         else if (battery <= 2500 && battery >= 2000) {
@@ -118,42 +115,41 @@ export default {
         else if (battery > 4000) {
           this.series[0].data[5].y++;
         }
-      },
-      );
+      });
     } catch (err) {
       this.error = err.message
     }
-  },  
+  },
   methods: {
-    goToBattList(data){
+    goToBattList(data) {
       switch (data) {
-          case 0:
-            this.$router.push({ name: 'DeviceListView', state: {battery: "0"} })
-            break;
-          case 1:
-            this.$router.push({ name: 'DeviceListView', state: {battery: "2000-2500"} })
-            break;
-          case 2:
-            this.$router.push({ name: 'DeviceListView', state: {battery: "2501-3000"} })
-            break;
-          case 3:
-            this.$router.push({ name: 'DeviceListView', state: {battery: "3000-3500"} })
-            break;
-          case 4:
-            this.$router.push({ name: 'DeviceListView', state: {battery: "3501-4000"} })
-            break;
-          case 5:
-            this.$router.push({ name: 'DeviceListView', state: {battery: ">4000"} })
-            break;
-          default:
-            break;
-        }
+        case 0:
+          this.$router.push({ name: 'DeviceListView', state: { battery: "0" } })
+          break;
+        case 1:
+          this.$router.push({ name: 'DeviceListView', state: { battery: "2000-2500" } })
+          break;
+        case 2:
+          this.$router.push({ name: 'DeviceListView', state: { battery: "2501-3000" } })
+          break;
+        case 3:
+          this.$router.push({ name: 'DeviceListView', state: { battery: "3000-3500" } })
+          break;
+        case 4:
+          this.$router.push({ name: 'DeviceListView', state: { battery: "3501-4000" } })
+          break;
+        case 5:
+          this.$router.push({ name: 'DeviceListView', state: { battery: ">4000" } })
+          break;
+        default:
+          break;
+      }
     },
-    goToBattListDataPoint(event, chartContext, config){
-        this.goToBattList(config.dataPointIndex)
+    goToBattListDataPoint(event, chartContext, config) {
+      this.goToBattList(config.dataPointIndex)
     },
-    goToBattListLegend(chartContext, seriesIndex, config){
-        this.goToBattList(seriesIndex)
+    goToBattListLegend(chartContext, seriesIndex, config) {
+      this.goToBattList(seriesIndex)
     },
   }
 }
@@ -163,7 +159,8 @@ export default {
 <template>
   <div id="chart"
     class="block max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <apexchart type="bar" height="200" :options="chartOptions" :series="series" @dataPointSelection="goToBattListDataPoint" @legendClick="goToBattListLegend"></apexchart>
+    <apexchart type="bar" height="200" :options="chartOptions" :series="series"
+      @dataPointSelection="goToBattListDataPoint" @legendClick="goToBattListLegend"></apexchart>
   </div>
 </template>
 
