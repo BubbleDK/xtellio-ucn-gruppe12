@@ -226,7 +226,7 @@ export default {
     },
     showBattery() {
       if (window.history.state.battery) {
-        const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === window.history.state.battery)
+        const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === window.history.state.battery.toLowerCase())
         battVal.checked = true;
       }
     },
@@ -259,7 +259,7 @@ export default {
         this.devices = await DeviceService.getAllDevices();
         const stateOrder = { Active: 1, Inactive: 2, Factory: 3, Unknown: 4 };
         this.devices.sort((a, b) => stateOrder[a.state] - stateOrder[b.state]);
-
+      
         // Update filter options
         this.updateFilterOption(this.filters[0], 'org', 'Unknown');
         this.updateFilterOption(this.filters[1], 'customer', 'Unknown');
@@ -270,6 +270,12 @@ export default {
           this.addFilterOptionIfNotExists(this.filters[1], 'customer', element.customer);
           this.addFilterOptionIfNotExists(this.filters[6], 'sim.provider', element.sim.provider);
         }
+        //pushed filters from dashboard
+        this.showBattery();
+        this.showFirmware();
+        this.showState();
+        this.showInactive();
+        this.showLastLogOld();
       } catch (err) {
         this.error = err.message;
       }
