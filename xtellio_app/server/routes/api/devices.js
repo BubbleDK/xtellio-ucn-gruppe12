@@ -35,9 +35,13 @@ router.get('/', async (req, res) => {
         }
 
         resDevices = resDevices.concat(json_data);
+
+        if (json_data.length < 100) {
+          break;
+        }
+
         page += 1;
       } catch (error) {
-        console.error(error);
         break;
       }
     }
