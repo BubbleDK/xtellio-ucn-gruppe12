@@ -97,6 +97,11 @@ export default {
   },
   created() {
     this.reloadFilter();
+    this.showBattery();
+    this.showFirmware();
+    this.showState();
+    this.showInactive();
+    this.showLastLogOld();
   },
   computed: {
     filteredList() {
@@ -270,12 +275,8 @@ export default {
           this.addFilterOptionIfNotExists(this.filters[1], 'customer', element.customer);
           this.addFilterOptionIfNotExists(this.filters[6], 'sim.provider', element.sim.provider);
         }
-        //pushed filters from dashboard
-        this.showBattery();
-        this.showFirmware();
-        this.showState();
-        this.showInactive();
-        this.showLastLogOld();
+
+
       } catch (err) {
         this.error = err.message;
       }

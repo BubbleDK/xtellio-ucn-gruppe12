@@ -29,7 +29,7 @@ export default {
 
 <template>
   <dt class="order-last text-lg font-medium text-white dark:text-white">
-    Devices where last status older than 24 hours
+    Last status older than 24 hours
   </dt>
   <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">
     {{ oldStatuses }}

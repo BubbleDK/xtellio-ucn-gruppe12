@@ -38,7 +38,7 @@ export default {
       {{ oldLogs }}
     </dd>
     <dt class="order-last text-lg font-medium text-white dark:text-white">
-      Devices where last transmission older than 24 hours
+      Transmission older than 24 hours
     </dt>
   </router-link>
 </template>
