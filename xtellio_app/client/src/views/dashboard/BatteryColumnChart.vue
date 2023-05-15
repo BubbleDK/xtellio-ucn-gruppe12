@@ -133,7 +133,7 @@ export default {
           this.$router.push({ name: 'DeviceListView', state: { battery: "2501-3000" } })
           break;
         case 3:
-          this.$router.push({ name: 'DeviceListView', state: { battery: "3000-3500" } })
+          this.$router.push({ name: 'DeviceListView', state: { battery: "3001-3500" } })
           break;
         case 4:
           this.$router.push({ name: 'DeviceListView', state: { battery: "3501-4000" } })
