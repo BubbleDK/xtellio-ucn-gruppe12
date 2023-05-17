@@ -421,16 +421,15 @@ const mobileFiltersOpen = ref(false)
                         :name="`${section.id}[]`" :value="macAddressInput" type="text" :placeholder="section.id"
                         @input="macAddressInput = $event.target.value"
                         class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                      <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`"
-                        :name="`${section.id}[]`" :value="firmwareInput" type="text"
+                      <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :data-testid="`input-${section.id}`"
+                        :name="`${section.id}[]`" :value="firmwareInput" type="text" :placeholder="section.id"
                         @input="firmwareInput = $event.target.value"
                         class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <input v-else :id="`filter-${section.id}-${optionIdx}`" :name="`${section.id}[]`"
                         :value="option.value" type="checkbox" :checked="option.checked"
                         @change="option.checked = !option.checked"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                      <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white">{{ option.label
-                      }}</label>
+                      <label :for="`filter-${section.id}-${optionIdx}`" class="ml-3 text-sm text-white" :data-testid="`input-${option.label}`">{{ option.label}}</label>
                     </div>
                   </div>
                 </DisclosurePanel>
