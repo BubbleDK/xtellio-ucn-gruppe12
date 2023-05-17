@@ -403,7 +403,7 @@ const mobileFiltersOpen = ref(false)
               <h3 class="sr-only">Categories</h3>
 
               <Disclosure as="div" v-for="section in filters" :key="section.id" class="border-b border-gray-200 py-6"
-                v-slot="{ open }">
+                v-slot="{ open }" :data-testid="`${section.id}`">
                 <h3 class="-my-3 flow-root">
                   <DisclosureButton
                     class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-white">
@@ -417,8 +417,8 @@ const mobileFiltersOpen = ref(false)
                 <DisclosurePanel class="pt-6">
                   <div class="space-y-4">
                     <div v-for="(option, optionIdx) in section.options" :key="option.value" class="flex items-center">
-                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`"
-                        :name="`${section.id}[]`" :value="macAddressInput" type="text"
+                      <input v-if="'mac' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`" :data-testid="`input-${section.id}`"
+                        :name="`${section.id}[]`" :value="macAddressInput" type="text" :placeholder="section.id"
                         @input="macAddressInput = $event.target.value"
                         class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                       <input v-else-if="'firmware' === `${section.id}`" :id="`filter-${section.id}-${optionIdx}`"
