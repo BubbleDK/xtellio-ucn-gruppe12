@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('page loads correctly', async ({ page }) => {
-  await page.goto('http://localhost:5173'); // Your Vue app's URL
+  await page.goto('http://localhost:5173');
   const app = await page.$('#app');
   expect(app).not.toBeNull();
 });
@@ -10,7 +10,7 @@ test('page loads correctly', async ({ page }) => {
 test('goToDeviceList navigation works', async ({ page }) => {
   await page.goto('http://localhost:5173'); 
   await page.getByTestId('Devices').click();
-  expect(page.url()).toBe('http://localhost:5173/devicelistview'); // The URL your app should navigate to
+  expect(page.url()).toBe('http://localhost:5173/devicelistview');
 });
 
 test('check mac (D0:83:D4:00:D6:C5) filter test', async ({ page }) => {
