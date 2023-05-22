@@ -85,6 +85,12 @@ export default {
     }
 
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * It fetches all devices and counts the number of devices per state.
+   * Each count is then assigned to the corresponding data in the series array.
+   * @async
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();
@@ -108,6 +114,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Redirects to the 'DeviceListView' page based on the provided data.
+     * The state corresponding to the data index is passed in the router state.
+     * @param {number} data - The index of the state.
+     */
     goToStateList(data) {
       switch (data) {
         case 0:
@@ -126,9 +137,21 @@ export default {
           break;
       }
     },
+    /**
+     * Calls the `goToStateList` method when a data point is clicked in the chart.
+     * @param {Event} event - The click event.
+     * @param {Object} chartContext - The context of the chart.
+     * @param {Object} config - The configuration of the chart, including the clicked data point index.
+     */
     goToStateListDataPoint(event, chartContext, config) {
       this.goToStateList(config.dataPointIndex)
     },
+    /**
+     * Calls the `goToStateList` method when a legend is clicked in the chart.
+     * @param {Object} chartContext - The context of the chart.
+     * @param {number} seriesIndex - The index of the clicked legend.
+     * @param {Object} config - The configuration of the chart.
+     */
     goToStateListLegend(chartContext, seriesIndex, config) {
       this.goToStateList(seriesIndex)
     }

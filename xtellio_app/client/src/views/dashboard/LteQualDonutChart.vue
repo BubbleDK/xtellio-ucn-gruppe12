@@ -41,6 +41,14 @@ export default {
       },
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * Fetches all devices and iterates over them to extract the 'nbm_status' from the 'last_log' data of each device.
+   * If 'nbm_status' exists, it is added to the 'lteGps' array.
+   * Afterwards, the 'lteGps' array is iterated over to categorize each device based on the 'rssi' value of 'lte_qual'.
+   * The counts of each category are incremented in the 'series' array accordingly.
+   * @async
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();

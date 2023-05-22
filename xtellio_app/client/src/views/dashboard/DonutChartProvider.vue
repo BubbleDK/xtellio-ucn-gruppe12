@@ -41,6 +41,15 @@ export default {
       },
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * It fetches all devices and populates the 'mapName' Map object with the count of each unique 'sim.provider'.
+   * The 'sim.provider' property is used as the key and the occurrence count as the value.
+   * After the 'mapName' Map object is fully populated, it is iterated over to fill 'chartOptions.labels' and 'devices' arrays.
+   * The key (count) is pushed into 'chartOptions.labels' and the value (provider) is pushed into 'devices'.
+   * If the 'sim.provider' is not available, 'None' is pushed into the 'chartOptions.labels' array.
+   * @async
+   */
   async created() {
     try {
       this.temp = await DeviceService.getAllDevices();

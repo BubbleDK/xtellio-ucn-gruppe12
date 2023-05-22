@@ -92,6 +92,12 @@ export default {
       },
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * It fetches all devices and increments the appropriate count in the 'series' array
+   * based on the battery level and the state of each device.
+   * @async
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();
@@ -121,6 +127,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Navigates to the 'DeviceListView' with the 'battery' state query parameter set
+     * to represent the range of battery levels that corresponds to the given data index.
+     * @param {number} data - The index of the clicked data point or legend in the chart.
+     */
     goToBattList(data) {
       switch (data) {
         case 0:
@@ -145,9 +156,23 @@ export default {
           break;
       }
     },
+    /**
+     * Triggered when a data point in the chart is clicked.
+     * Calls the 'goToBattList' method with the index of the clicked data point.
+     * @param {Event} event - The click event.
+     * @param {Object} chartContext - The chart context.
+     * @param {Object} config - The configuration object.
+     */
     goToBattListDataPoint(event, chartContext, config) {
       this.goToBattList(config.dataPointIndex)
     },
+    /**
+     * Triggered when a legend in the chart is clicked.
+     * Calls the 'goToBattList' method with the index of the clicked legend.
+     * @param {Object} chartContext - The chart context.
+     * @param {number} seriesIndex - The index of the clicked legend.
+     * @param {Object} config - The configuration object.
+     */
     goToBattListLegend(chartContext, seriesIndex, config) {
       this.goToBattList(seriesIndex)
     },

@@ -9,6 +9,13 @@ export default {
       oldStatuses: 0,
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * Fetches all devices and iterates over each one to check the timestamp of the last status update.
+   * The timestamp is formatted and compared with the timestamp 24 hours ago.
+   * If the last status update of a device is older than 24 hours, the 'oldStatuses' counter is incremented.
+   * @async
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();

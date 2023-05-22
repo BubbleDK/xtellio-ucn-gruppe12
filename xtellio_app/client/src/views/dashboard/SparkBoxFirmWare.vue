@@ -83,6 +83,13 @@ export default {
       },
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * It fetches all devices, categorizes them by firmware version using regular expressions,
+   * counts the number of devices per category, and assigns each count to the corresponding data in the devices array.
+   * Each device is also added to the corresponding list.
+   * @async
+   */
   async created() {
     try {
       const allDevices = await DeviceService.getAllDevices();
@@ -113,6 +120,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * Redirects to the 'DeviceListView' page based on the provided data.
+     * The list corresponding to the data index is passed in the router state.
+     * @param {number} data - The index of the list.
+     */
     goToFirmwareList(data) {
       switch (data) {
         case 0:
@@ -131,9 +143,21 @@ export default {
           break;
       }
     },
+    /**
+     * Calls the `goToFirmwareList` method when a data point is clicked in the chart.
+     * @param {Event} event - The click event.
+     * @param {Object} chartContext - The context of the chart.
+     * @param {Object} config - The configuration of the chart, including the clicked data point index.
+     */
     goToFirmwareListDataPoint(event, chartContext, config) {
       this.goToFirmwareList(config.dataPointIndex)
     },
+    /**
+     * Calls the `goToFirmwareList` method when a legend is clicked in the chart.
+     * @param {Object} chartContext - The context of the chart.
+     * @param {number} seriesIndex - The index of the clicked legend.
+     * @param {Object} config - The configuration of the chart.
+     */
     goToFirmwareListLegend(chartContext, seriesIndex, config) {
       this.goToFirmwareList(seriesIndex)
     },

@@ -9,6 +9,13 @@ export default {
       oldLogs: 0,
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created.
+   * Fetches all devices and iterates over each one to check the timestamp of the last log entry.
+   * The timestamp is formatted and compared with the timestamp 24 hours ago.
+   * If the last log entry of a device is older than 24 hours, the 'oldLogs' counter is incremented.
+   * @async
+   */
   async created() {
     try {
       const allDevices = await DeviceService.getAllDevices();
@@ -25,6 +32,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Method used for routing to the 'DeviceListView' with a query parameter 'lg'.
+     * This query parameter can be used in the 'DeviceListView' to filter or display certain data.
+     */
     goToList() {
       this.$router.push({ name: 'DeviceListView', query: { lg: true } })
     }
