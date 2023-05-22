@@ -25,30 +25,36 @@ export default {
       customers: [],
     }
   },
+  /**
+   * Asynchronously called when the Vue instance is created. 
+   * It fetches all devices and counts the number of devices per customer.
+   * Each customer is then added to the customers array.
+   * @async
+   */
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
-      var mapName = new Map();
+      const mapName = new Map();
       this.devices.forEach(element => {
-        var tempValue = element.customer;
-        if (mapName.has(!tempValue)) {
-          mapName.set(tempValue, mapName.get(tempValue) + 1)
-        }
-        else if (mapName.has(tempValue)) {
-          mapName.set(tempValue, 1)
-        }
-        else {
-          mapName.set(tempValue, + 1)
+        const tempValue = element.customer;
+        if (mapName.has(tempValue)) {
+          mapName.set(tempValue, mapName.get(tempValue) + 1);
+        } else {
+          mapName.set(tempValue, 1);
         }
       });
-      mapName.forEach((key, value) => {
-        this.customers.push(value);
+
+      mapName.forEach((value, key) => {
+        this.customers.push(key);
       })
     } catch (err) {
       this.error = err.message
     }
   },
   methods: {
+    /**
+     * Redirects to the 'OrgView' page.
+     */
     goToCustomerList() {
       this.$router.push({ name: 'OrgView' })
     }

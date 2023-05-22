@@ -95,6 +95,9 @@ export default {
       ]
     }
   },
+  /**
+   * Called when the Vue instance is created. This triggers all the methods that load and filter the device data.
+   */
   created() {
     this.reloadFilter();
     this.showBattery();
@@ -104,6 +107,10 @@ export default {
     this.showLastLogOld();
   },
   computed: {
+    /**
+     * Computes a list of devices filtered based on the checked options in filters, macAddressInput, and firmwareInput.
+     * @returns {Array} A list of filtered devices.
+     */
     filteredList() {
       const checkedFilters = this.filters.reduce((acc, filter) => {
         const checkedOptions = filter.options.filter(option => option.checked);
@@ -172,17 +179,28 @@ export default {
       });
     },
 
+    /**
+     * Divides the filtered device list into pages based on currentPage and pageSize.
+     * @returns {Array} The devices for the current page.
+     */
     paginatedFilteredList() {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       return this.filteredList.slice(start, end);
     },
 
+    /**
+     * Calculates the total number of pages based on the number of filtered devices and the page size.
+     * @returns {number} The total number of pages.
+     */
     pageCount() {
       return Math.ceil(this.filteredList.length / this.pageSize);
     },
   },
   watch: {
+    /**
+     * A watcher for the filters property. When any filter option changes, it triggers an update of the filteredList computed property.
+     */
     filters: {
       handler() {
         // This will trigger the computed property filteredList to be updated
@@ -190,6 +208,9 @@ export default {
       },
       deep: true,
     },
+    /**
+     * A watcher for the filteredList computed property. When the filtered list changes, it ensures the currentPage value is within the valid range.
+     */
     filteredList() {
       this.adjustCurrentPage();
     },
