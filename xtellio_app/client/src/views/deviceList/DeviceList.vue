@@ -195,6 +195,11 @@ export default {
     },
   },
   methods: {
+    /**
+     * Ensures that the value of currentPage stays within the valid range.
+     * If currentPage exceeds the pageCount, it resets to pageCount.
+     * If currentPage is less than 1 and pageCount is greater than 0, it resets to 1.
+     */
     adjustCurrentPage() {
       if (this.currentPage > this.pageCount) {
         this.currentPage = this.pageCount;
@@ -202,20 +207,35 @@ export default {
         this.currentPage = 1;
       }
     },
+    /**
+     * Converts a date into a locale string.
+     * @param {string} temp - A string representing a date.
+     * @returns {string} A localized string representation of the date.
+     */
     currentDate(temp) {
       const current = new Date(temp);
       const date = current.toLocaleString();
       return date;
     },
+    /**
+     * Redirects to the 'DeviceView' page with the specified MAC address.
+     * @param {string} mac - The MAC address of the device.
+     */
     goTodetail(mac) {
       this.$router.push({ name: 'DeviceView', params: { Mac: mac } })
     },
+    /**
+     * If the inactiveInput is true, sets the checked value of the filter option with the "inactive" value to true.
+     */
     showInactive() {
       if (this.inactiveInput) {
         const inactiveVal = this.filters[2].options.find(x => x.value.toLowerCase() === "inactive");
         inactiveVal.checked = true;
       }
     },
+    /**
+     * If lastLogOld is true, pushes all devices with logs older than 24 hours to the lastLogOldList.
+     */
     showLastLogOld() {
       if (this.lastLogOld) {
         this.devices.forEach(device => {
@@ -229,23 +249,36 @@ export default {
         });
       }
     },
+    /**
+     * If the history state has a battery property, checks the filter option with the same battery value.
+     */
     showBattery() {
       if (window.history.state.battery) {
         const battVal = this.filters[4].options.find(x => x.value.toLowerCase() === window.history.state.battery.toLowerCase())
         battVal.checked = true;
       }
     },
+    /**
+     * If the history state has a firmware property, updates the devices with the JSON parsed value of the firmware.
+     */
     showFirmware() {
       if (window.history.state.firmware) {
         this.devices = JSON.parse(window.history.state.firmware);
       }
     },
+    /**
+     * If the history state has a state property, checks the filter option with the same state value.
+     */
     showState() {
       if (window.history.state.state) {
         const stateVal = this.filters[2].options.find(x => x.value.toLowerCase() === window.history.state.state.toLowerCase())
         stateVal.checked = true;
       }
     },
+    /**
+     * Updates the selected sort option and deselects all other options.
+     * @param {string} name - The name of the selected sort option.
+     */
     currentSortOption(name) {
       for (let index = 0; index < this.sortOptions.length; index++) {
         const element = this.sortOptions[index];
@@ -258,6 +291,10 @@ export default {
         }
       }
     },
+    /**
+     * Asynchronously reloads the devices and their filter options, and sorts the devices by state order.
+     * @async
+     */
     async reloadFilter() {
       try {
         // Load devices and sort them by state order
@@ -281,19 +318,33 @@ export default {
         this.error = err.message;
       }
     },
-
+    /**
+     * Updates a filter option to include an "unknown" option if it does not already exist.
+     * @param {object} filter - The filter to be updated.
+     * @param {string} key - The key of the filter.
+     * @param {string} unknownLabel - The label to be used for the "unknown" option.
+     */
     updateFilterOption(filter, key, unknownLabel) {
       if (!filter.options.some(option => option.value === '')) {
         filter.options.push({ value: '', label: unknownLabel, checked: false });
       }
     },
-
+    /**
+     * Adds a new filter option if it does not already exist.
+     * @param {object} filter - The filter to be updated.
+     * @param {string} key - The key of the filter.
+     * @param {string} value - The value of the new filter option.
+     */
     addFilterOptionIfNotExists(filter, key, value) {
       if (!filter.options.some(option => option.value === value)) {
         filter.options.push({ value: value, label: value || 'Unknown', checked: false });
       }
     },
-
+    /**
+     * Sorts the devices list based on the selected sort option.
+     * @param {object} sortOption - The selected sort option.
+     * @returns {Array} The sorted list of devices.
+     */
     sortedList(sortOption) {
       switch (sortOption.name) {
         case 'Type A-Z':
@@ -325,7 +376,10 @@ export default {
       }
       return this.devices;
     },
-
+    /**
+     * Asynchronously resets all filter options, clears the input fields, resets the currentPage to 1, and reloads the filter.
+     * @async
+     */
     async resetOptions() {
       this.filters.forEach((filter) => {
         filter.options.forEach((option) => {
