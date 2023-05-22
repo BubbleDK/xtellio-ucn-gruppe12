@@ -8,6 +8,14 @@ export default {
       customerName: this.$route.params.customerName,
     }
   },
+  /**
+   * Vue Lifecycle Method: created
+   * This method is automatically invoked when this Vue instance is created. 
+   * Here, it is used to fetch all devices associated with a particular customer using the `getAllCustomerDevices` service method. 
+   * The result is then assigned to `this.customerDevices`.
+   * 
+   * In case of an error during the fetch operation, the error message is assigned to `this.error`.
+   */
   async created() {
     try {
       this.customerDevices = await DeviceService.getAllCustomerDevices(this.customerName);
@@ -16,6 +24,13 @@ export default {
     }
   },
   methods: {
+    /**
+     * Method: currentDate
+     * This method is used to convert a date to its string representation in the locale of the user.
+     *
+     * @param {string} temp - A string representing the date in ISO 8601 format (e.g. "2020-08-19T14:12:00Z").
+     * @returns {string} The string representation of the date in the format "mm/dd/yyyy, hh:mm:ss AM/PM", where AM/PM is determined by a 12-hour clock.
+     */
     currentDate(temp) {
       const current = new Date(temp);
       const date = current.toLocaleString();

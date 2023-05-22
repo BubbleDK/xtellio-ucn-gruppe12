@@ -41,6 +41,23 @@ export default {
 
     }
   },
+  /**
+   * `created` lifecycle method in Vue component
+   *
+   * This is an asynchronous method that is triggered once the Vue component has been created.
+   * It fetches all device information from the server.
+   * Then it loops through all the devices, specifically looking at the 'nbm_status' property of 'last_log' in each device.
+   * If 'nbm_status' is not undefined, it pushes it to the `lteGps` array.
+   * 
+   * After processing all devices, it loops through all elements in the `lteGps` array.
+   * Depending on the 'rssi' value of 'lte_qual' in each element, it increments a corresponding value in the 'series' array. 
+   * 
+   * If an error occurs during this process, it catches the error and stores the error message in the `error` data property.
+   *
+   * @async
+   * @function created
+   * @throws Will throw an error if the promise from `DeviceService.getAllDevices` is rejected.
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();

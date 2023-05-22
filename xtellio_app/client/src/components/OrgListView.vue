@@ -8,6 +8,20 @@ export default {
       mapName: new Map(),
     }
   },
+  /**
+   * `created` lifecycle method in Vue component
+   *
+   * This is an asynchronous method that is triggered once the Vue component has been created.
+   * It fetches all device information from the server.
+   * Then it loops through all the devices, and increments the count of each customer in the `mapName` Map object.
+   * 
+   * If a customer's entry does not exist in `mapName`, it creates a new entry with a count of 1.
+   * If an error occurs during this process, it catches the error and stores the error message in the `error` data property.
+   *
+   * @async
+   * @function created
+   * @throws Will throw an error if the promise from `DeviceService.getAllDevices` is rejected.
+   */
   async created() {
     try {
       this.devices = await DeviceService.getAllDevices();
@@ -25,6 +39,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * `goTodetail` method in Vue component
+     *
+     * This method is used to navigate to the 'CustomerView' route, passing the selected customer's name as a route parameter.
+     * 
+     * @function goTodetail
+     * @param {string} customerName - The name of the customer to pass as a route parameter.
+     */
     goTodetail(customerName) {
       this.$router.push({ name: 'CustomerView', params: { customerName: customerName } })
     },

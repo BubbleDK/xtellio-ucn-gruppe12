@@ -8,6 +8,18 @@ export default {
       macVal: this.$route.params.Mac,
     }
   },
+  /**
+   * `created` lifecycle method in Vue component
+   *
+   * This is an asynchronous method that is triggered once the Vue component has been created. 
+   * It fetches a specific device information from the server using its MAC address (macVal). 
+   * The fetched device information is then stored in the `device` data property of the Vue component.
+   * If an error occurs during this process, it catches the error and stores the error message in the `error` data property.
+   *
+   * @async
+   * @function created
+   * @throws Will throw an error if the promise from `DeviceService.getDevice` is rejected.
+   */
   async created() {
     try {
       this.device = await DeviceService.getDevice(this.macVal);
@@ -16,6 +28,16 @@ export default {
     }
   },
   methods: {
+    /**
+     * `currentDate` method in Vue component
+     *
+     * This is a method that takes a timestamp (temp) as an argument and converts it into a human-readable date string.
+     * It creates a new Date object using the timestamp and then converts it to a localized string.
+     *
+     * @function currentDate
+     * @param {string} temp - The timestamp that needs to be converted to a date string.
+     * @returns {string} date - Returns the timestamp converted to a local date and time string.
+     */
     currentDate(temp) {
       const current = new Date(temp);
       const date = current.toLocaleString();

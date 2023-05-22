@@ -8,6 +8,19 @@ export default {
       undefinedLog: 0,
     }
   },
+  /**
+   * `created` lifecycle method in Vue component
+   *
+   * This is an asynchronous method that is triggered once the Vue component has been created. 
+   * It fetches all device information from the server. 
+   * Then it loops through all the devices and checks if the 'last_log' property of each device is undefined.
+   * If 'last_log' is undefined, the `undefinedLog` counter is incremented.
+   * If an error occurs during this process, it catches the error and stores the error message in the `error` data property.
+   *
+   * @async
+   * @function created
+   * @throws Will throw an error if the promise from `DeviceService.getAllDevices` is rejected.
+   */
   async created() {
     try {
       const devices = await DeviceService.getAllDevices();
@@ -22,6 +35,15 @@ export default {
     }
   },
   methods: {
+    /**
+     * `goToList` method in Vue component
+     *
+     * This is a method that pushes a new route to the router. 
+     * The route name is 'DeviceListView' and it carries a state object where the property 'st' is set to 'inactive'.
+     * This method can be used to navigate to a list of inactive devices.
+     *
+     * @function goToList
+     */
     goToList() {
       const status = "inactive";
       this.$router.push({ name: 'DeviceListView', state: { st: status } })
