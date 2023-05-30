@@ -63,7 +63,7 @@ test('check active amount filter test', async ({ page }) => {
     
     // Count items on the current page
     await page.locator('tr').first().waitFor();
-    totalCount += await page.locator('tr').count();
+    totalCount += await page.locator('tr').count() - 1;
 
     // Check if 'next-page' button is present and enabled, if not, break the loop
     const nextPageButton = page.getByTestId('next-page');
@@ -75,10 +75,8 @@ test('check active amount filter test', async ({ page }) => {
     await nextPageButton.click();
   }
 
-  totalCount -= 1; // Subtract one for the header row
   const res = await axios.get('http://localhost:5000/api/devices');
   const data = res.data;
-  console.log(data.filter(device => device.state === 'Active').length);
-  console.log(totalCount);
+
   expect(totalCount === data.filter(device => device.state === 'Active').length);
 });
