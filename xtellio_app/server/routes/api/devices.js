@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
   if (hasRecentlyUpdated) {
     res.send(resDevices)
   } else {
-    while (true) {
+    for (let counter = 0; ; counter++) {
       try {
         const response = await axios.get(`${url}&page=${page}`, {
           headers: { Authorization: `Bearer ${token}` }
