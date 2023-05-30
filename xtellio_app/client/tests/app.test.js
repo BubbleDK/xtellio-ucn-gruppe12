@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import axios from 'axios';
 
 test('page loads correctly', async ({ page }) => {
   await page.goto('http://localhost:5173');
@@ -54,6 +55,30 @@ test('check active amount filter test', async ({ page }) => {
   await page.getByTestId('state').click();
   await page.getByTestId('input-Active').click();
 
-  await page.locator('tr').first().waitFor();
-  expect(await page.locator('tr').count() - 1 === 80);
+  let totalCount = 0;
+
+  while (true) {
+    // Add some delay to ensure that the page is fully loaded
+    await page.waitForTimeout(1000);
+    
+    // Count items on the current page
+    await page.locator('tr').first().waitFor();
+    totalCount += await page.locator('tr').count();
+
+    // Check if 'next-page' button is present and enabled, if not, break the loop
+    const nextPageButton = page.getByTestId('next-page');
+    if (!(await nextPageButton.isVisible()) || !(await nextPageButton.isEnabled())) {
+      break;
+    }
+
+    // Click next page button
+    await nextPageButton.click();
+  }
+
+  totalCount -= 1; // Subtract one for the header row
+  const res = await axios.get('http://localhost:5000/api/devices');
+  const data = res.data;
+  console.log(data.filter(device => device.state === 'Active').length);
+  console.log(totalCount);
+  expect(totalCount === data.filter(device => device.state === 'Active').length);
 });
