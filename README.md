@@ -1,4 +1,4 @@
-# Consent Management Platform
+# Dashboard for monitoring Key Performance Indicators on IOT Devices
 
 ## Overview
 
